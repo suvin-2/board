@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suvin.project.dao.ProjectDAO">
+
+ <select id="selectProjectList" resultType="projectVO">
+	SELECT 	PRO_ID, 
+		PRO_TITLE, 
+		PRO_BODY, 
+		PRO_DATE 
+		FROM TB_PROJECT
+	ORDER BY PRO_ID DESC
+ </select>
+
+</mapper>
