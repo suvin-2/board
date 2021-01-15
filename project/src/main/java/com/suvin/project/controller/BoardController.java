@@ -1,4 +1,4 @@
-package com.suvin.project;
+package com.suvin.project.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -11,22 +11,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.suvin.project.service.ProjectService;
-import com.suvin.project.vo.ProjectVO;
+import com.suvin.project.service.BoardService;
+import com.suvin.project.vo.BoardVO;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class BoardController {
 	
-	@Resource(name = "projectService")
-	private ProjectService service;
+	@Resource(name = "boardService")
+	private BoardService service;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -53,13 +55,27 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/projectList.do")
+	// 게시판 전체 글 목록
+	@RequestMapping(value = "/boardList.do")
 	public String projectList(Model model) throws Exception {
 		
-		List<ProjectVO> list = service.selectProjectList();
+		List<BoardVO> list = service.selectBoardList();
 		logger.info(list.toString());
 		model.addAttribute("list",list);
-		return "projectList";
+		return "/board/boardList";
+	}
+	
+	// 게시판 글 등록폼 
+	@RequestMapping(value = "/boardInsertForm.do")
+	public String boardInsertForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+		return "board/boardInsert";
+	}
+	
+	// 게시판 글 등록
+	@RequestMapping(value = "/boardInsert.do")
+	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) {
+		service.boardInsert(vo);
+		return "redirect:/boardList.do";
 	}
 	
 }

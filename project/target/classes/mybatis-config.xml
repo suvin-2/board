@@ -8,6 +8,6 @@
           <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-          <typeAlias alias="projectVO" type="com.suvin.project.vo.ProjectVO"/>
+          <typeAlias alias="boardVO" type="com.suvin.project.vo.BoardVO"/>
     </typeAliases>
 </configuration>

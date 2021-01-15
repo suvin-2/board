@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.suvin.project.dao.ProjectDAO">
+<mapper namespace="com.suvin.project.dao.BoardDAO">
 
- <select id="selectProjectList" resultType="projectVO">
-	SELECT 	PRO_ID, 
-		PRO_TITLE, 
-		PRO_BODY, 
-		PRO_DATE 
-		FROM TB_PROJECT
-	ORDER BY PRO_ID DESC
- </select>
+	<!-- 게시판 글 모두 조회 -->
+	 <select id="selectBoardList" resultType="boardVO">
+		SELECT BNO,
+			   TITLE,
+			   CONTENT,
+			   CNT,
+			   BDATE,
+			   WRITER 
+		FROM BOARD
+		ORDER BY BNO DESC
+	 </select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="boardInsert">
+		<selectKey resultType="int" keyProperty="bNo" order="BEFORE">
+			SELECT NVL(MAX(BNO),0)+1 FROM BOARD
+		</selectKey>
+		INSERT INTO BOARD (
+			BNO,
+			TITLE,
+			CONTENT,
+			CNT,
+			BDATE,
+			WRITER
+		) VALUES (
+			#{bNo},
+			#{title},
+			#{content},
+			0,
+			SYSDATE,
+			#{writer}
+		)
+	</insert>
 
 </mapper>

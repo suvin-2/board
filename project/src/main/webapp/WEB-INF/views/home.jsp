@@ -10,5 +10,8 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<form action="/boardList.do" method="post">
+	<button onclick="submit">board list</button>
+</form>
 </body>
 </html>
