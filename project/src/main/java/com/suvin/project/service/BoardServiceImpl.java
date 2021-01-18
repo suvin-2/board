@@ -17,23 +17,28 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public List<BoardVO> selectBoardList() throws Exception {
-		return dao.selectBoardList();
+	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
+		return dao.boardSelect(vo);
 	}
 
 	@Override
-	public void boardInsert(BoardVO vo) {
-		dao.boardInsert(vo);
+	public int boardInsert(BoardVO vo) {
+		return dao.boardInsert(vo);
 	}
 
 	@Override
-	public void boardUpdate(BoardVO vo) {
-		dao.boardUpdate(vo);		
+	public int boardUpdate(BoardVO vo) {
+		return dao.boardUpdate(vo);		
 	}
 
 	@Override
-	public void boardDelete(int bNo) {
-		dao.boardDelete(bNo);		
+	public int boardDelete(int bNo) {
+		return dao.boardDelete(bNo);		
+	}
+
+	@Override
+	public BoardVO boardSelectOne(BoardVO vo) {
+		return dao.boardSelectOne(vo);
 	}
 	
 }

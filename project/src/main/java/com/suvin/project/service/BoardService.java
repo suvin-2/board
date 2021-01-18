@@ -6,11 +6,18 @@ import com.suvin.project.vo.BoardVO;
 
 public interface BoardService {
 
-	List<BoardVO> selectBoardList() throws Exception;
+	// 게시글 전체 조회
+	public List<BoardVO> boardSelect(BoardVO vo) throws Exception;
 	
-	void boardInsert(BoardVO vo);
-	
-	void boardUpdate(BoardVO vo);
-	
-	void boardDelete(int bNo);
+	// 게시글 등록
+	public int boardInsert(BoardVO vo);
+		
+	// 게시글 수정
+	public int boardUpdate(BoardVO vo);
+		
+	// 게시글 삭제
+	public int boardDelete(int bNo);
+		
+	// 게시글 단건 조회
+	public BoardVO boardSelectOne(BoardVO vo);
 }

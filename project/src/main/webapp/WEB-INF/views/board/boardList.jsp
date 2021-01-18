@@ -25,20 +25,19 @@
 	<tbody>
 	<c:forEach var="item" items="${list}">
 	  <tr>
-	    <td>${item.bNo}</td>
-	    <td>${item.title}</td>
-	    <td>${item.content}</td>
-	    <td>${item.bDate}</td>
-	    <td>${item.cnt}</td>
-	    <td>${item.writer}</td>
+	    <td id="bNo">${item.bNo}</td>
+	    <td id="title">${item.title}</td>
+	    <td id="content">${item.content}</td>
+	    <td id="bDate">${item.bDate}</td>
+	    <td id="cnt">${item.cnt}</td>
+	    <td id="writer">${item.writer}</td>
 	    <td><a href="${path}/boardUpdateForm.do?bNo=${item.bNo}">수정</a></td>
-	    <td><a href="${path}/boardDelete.do?bNo=${item.bNo}">삭제</a></td>
+	    <td><a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');">삭제</a></td>
 	  </tr>
 	</c:forEach>
 	</tbody>
 </table>
 <br>
 <a href="boardInsertForm.do">글쓰기</a>
-
 </body>
 </html>
