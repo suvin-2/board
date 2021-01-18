@@ -36,5 +36,22 @@
 			#{writer}
 		)
 	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="boardUpdate">
+		UPDATE
+			BOARD
+		SET
+			TITLE = #{title},
+			CONTENT = #{content},
+			WRITER = #{writer}
+		WHERE
+			BNO = #{bNo}
+	</update>
 
+	<delete id="boardDelete">
+		DELETE FROM 
+				BOARD
+		WHERE BNO = #{bNo}
+	</delete>
 </mapper>

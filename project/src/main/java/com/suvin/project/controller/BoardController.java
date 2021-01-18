@@ -65,7 +65,7 @@ public class BoardController {
 		return "/board/boardList";
 	}
 	
-	// 게시판 글 등록폼 
+	// 게시판 글 등록 폼 
 	@RequestMapping(value = "/boardInsertForm.do")
 	public String boardInsertForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
 		return "board/boardInsert";
@@ -77,5 +77,24 @@ public class BoardController {
 		service.boardInsert(vo);
 		return "redirect:/boardList.do";
 	}
+
+	// 게시판 글 수정 폼 
+	@RequestMapping(value = "/boardUpdateForm.do")
+	public String boardUpdateForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+		return "board/boardUpdate";
+	}
 	
+	// 게시판 글 수정
+	@RequestMapping(value = "/boardUpdate.do")
+	public String boardUpdate(@ModelAttribute("boardVO") BoardVO vo, Model model) {
+		service.boardUpdate(vo);
+		return "redirect:/boardList.do";
+	}
+	
+	// 게시판 글 수정
+	@RequestMapping(value = "/boardDelete.do")
+	public String boardDelete(int bNo) {
+		service.boardDelete(bNo);
+		return "redirect:/boardList.do";
+	}
 }

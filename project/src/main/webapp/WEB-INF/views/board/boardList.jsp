@@ -18,6 +18,8 @@
 	    <th>작성일</th>
 	    <th>조회수</th>
 	    <th>작성자</th>
+	    <th>수정</th>
+	    <th>삭제</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -29,6 +31,8 @@
 	    <td>${item.bDate}</td>
 	    <td>${item.cnt}</td>
 	    <td>${item.writer}</td>
+	    <td><a href="${path}/boardUpdateForm.do?bNo=${item.bNo}">수정</a></td>
+	    <td><a href="${path}/boardDelete.do?bNo=${item.bNo}">삭제</a></td>
 	  </tr>
 	</c:forEach>
 	</tbody>

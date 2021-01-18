@@ -9,4 +9,8 @@ public interface BoardService {
 	List<BoardVO> selectBoardList() throws Exception;
 	
 	void boardInsert(BoardVO vo);
+	
+	void boardUpdate(BoardVO vo);
+	
+	void boardDelete(int bNo);
 }

@@ -25,5 +25,15 @@ public class BoardServiceImpl implements BoardService {
 	public void boardInsert(BoardVO vo) {
 		dao.boardInsert(vo);
 	}
+
+	@Override
+	public void boardUpdate(BoardVO vo) {
+		dao.boardUpdate(vo);		
+	}
+
+	@Override
+	public void boardDelete(int bNo) {
+		dao.boardDelete(bNo);		
+	}
 	
 }
