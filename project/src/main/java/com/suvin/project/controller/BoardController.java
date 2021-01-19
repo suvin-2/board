@@ -59,7 +59,6 @@ public class BoardController {
 	// 게시판 전체 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public String boardSelect(BoardVO vo, Model model) throws Exception {
-		System.out.println("========== boardList.do controller in ==========");
 		List<BoardVO> list = service.boardSelect(vo);
 		logger.info(list.toString());
 		model.addAttribute("list",list);

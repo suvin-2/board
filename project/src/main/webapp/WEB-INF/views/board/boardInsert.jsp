@@ -7,28 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <title>board insert</title>
-<script>
-function check(form) {
-	
-	var title = form.title.value;
-	var writer = form.writer.value;
-	var content = form.content.value;
-	
-	if (title.trim() == '' || title.trim() == null){
-		alert("제목을 입력해주세요");
-		return false;
-	}
-	if (writer.trim() == '' || writer.trim() == null){
-		alert("작성자를 입력해주세요");
-		return false;
-	}
-	if (content.trim() == '' || content.trim() == null){
-		alert("내용을 입력해주세요");
-		return false;
-	}
-	
-	form.submit();
-}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#submit").click(function(){
+		if($("#title").val().length==0) { 
+			alert("제목을 입력하세요."); 
+			$("#title").focus(); 
+			return false; 
+		}
+		if($("#writer").val().length==0) { 
+			alert("작성자를 입력하세요."); 
+			$("#writer").focus(); 
+			return false; 
+		}
+		if($("#content").val().length==0) { 
+			alert("내용을 입력하세요."); 
+			$("#content").focus(); 
+			return false; 
+		}
+	});
+});
+
 </script>
 </head>
 <body>
@@ -51,7 +53,7 @@ function check(form) {
 			   <td><form:textarea path="content" id="content" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="등록" onclick="check()"/></td>
+				<td colspan="2"><input type="submit" id="submit" value="등록"/></td>
 			</tr>
 		</tbody>
 	</table>

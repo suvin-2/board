@@ -2,8 +2,6 @@ package com.suvin.project.dao;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,6 +27,7 @@ public class BoardDAO {
 	
 	// 게시글 수정
 	public int boardUpdate(BoardVO vo) {
+		System.out.println("vo : " + vo);
 		return mybatis.update("BoardDAO.boardUpdate",vo);
 	}
 	

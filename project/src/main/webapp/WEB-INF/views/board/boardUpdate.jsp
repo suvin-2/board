@@ -19,7 +19,26 @@
 
 	// boardInfo() 함수를 즉시 실행
 	$(function(){
+		
 		boardInfo();
+		
+		$("#submit").click(function(){
+			if($("#title").val().length==0) { 
+				alert("제목을 입력하세요."); 
+				$("#title").focus(); 
+				return false; 
+			}
+			if($("#writer").val().length==0) { 
+				alert("작성자를 입력하세요."); 
+				$("#writer").focus(); 
+				return false; 
+			}
+			if($("#content").val().length==0) { 
+				alert("내용을 입력하세요."); 
+				$("#content").focus(); 
+				return false; 
+			}
+		});
 	});
 	
 	// 수정할 게시글 내용 가지고 오는 ajax
@@ -48,6 +67,7 @@
 <h3>글 수정</h3>
 <c:url var="update" value="${path}/boardUpdate.do" />
 <form:form commandName="boardVO" action="${update}" name="boardVO" method="post">
+<form:input type="hidden" path="bNo" id="bNo" value="${item.bNo}"/>
 	<table>
 		<tbody>
 			<tr>
@@ -63,7 +83,7 @@
 			   <td><form:textarea path="content" name="content" id="content" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="수정"/></td>
+				<td colspan="2"><input type="submit" id="submit" value="수정"/></td>
 			</tr>
 		</tbody>
 	</table>
