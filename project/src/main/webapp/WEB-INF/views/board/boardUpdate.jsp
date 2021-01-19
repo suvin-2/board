@@ -48,6 +48,7 @@
 <h3>글 수정</h3>
 <c:url var="update" value="${path}/boardUpdate.do" />
 <form:form commandName="boardVO" action="${update}" name="boardVO" method="post">
+<form:input type="hidden" path="bNo" id="bNo" value="${item.bNo}"/>
 	<table>
 		<tbody>
 			<tr>
