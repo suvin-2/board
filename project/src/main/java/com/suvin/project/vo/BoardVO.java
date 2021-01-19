@@ -49,6 +49,11 @@ public class BoardVO {
 		this.writer = writer;
 	}
 	
+	// 게시글 단건조회
+	public Integer getbNo(int bNo) {
+		return bNo;
+	}
+	
 	@Override
 	public String toString() {
 		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
