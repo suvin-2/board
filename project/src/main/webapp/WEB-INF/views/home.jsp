@@ -3,7 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ include file="board/boardHeader.jsp" %>
 <title>suvin's cooking class</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -16,6 +15,15 @@
 		<!-- Main -->
 			<div id="main">
 				<div class="inner">	
+					<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>Suvin's Cooking Class</strong> by suvin</a>
+						<ul class="icons">
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						</ul>
+					</header>
 					<!-- Banner -->
 						<section id="banner">
 							<div class="content">
@@ -93,15 +101,22 @@
 										<li><a href="#" class="button">More</a></li>
 									</ul>
 								</article>
+								<article>
+									<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+									<h3>Tempus ullamcorper</h3>
+									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</article>
 							</div>
 						</section>
 	
 				</div>
 			</div>
 			<!-- side var -->
-				<aside>
-		           <jsp:include page = "board/boardSide.jsp" /> 
-		        </aside>
+				<jsp:include page="board/boardSide.jsp" flush="false"/>
+				
 	</div>
 
 <!-- Scripts -->
