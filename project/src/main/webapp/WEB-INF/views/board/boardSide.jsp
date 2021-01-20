@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -25,8 +26,7 @@
 							</header>
 							<ul>
 								<li><a href="html/index.html">Homepage</a></li>
-								<li><a href="html/generic.html">Generic</a></li>
-								<li><a href="html/elements.html">Elements</a></li>
+								<li><a href="/boardList.do">자유게시판</a></li>
 								<li>
 									<span class="opener">Submenu</span>
 									<ul>

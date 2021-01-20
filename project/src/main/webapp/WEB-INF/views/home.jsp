@@ -1,4 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -45,37 +48,30 @@
 					<!-- Section -->
 						<section>
 							<header class="major">
-								<h2>Erat lacinia</h2>
+								<h2>전체글</h2>
 							</header>
 							<div class="features">
-								<article>
-									<span class="icon fa-gem"></span>
-									<div class="content">
-										<h3>Portitor ullamcorper</h3>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									</div>
-								</article>
-								<article>
-									<span class="icon solid fa-paper-plane"></span>
-									<div class="content">
-										<h3>Sapien veroeros</h3>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									</div>
-								</article>
-								<article>
-									<span class="icon solid fa-rocket"></span>
-									<div class="content">
-										<h3>Quam lorem ipsum</h3>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									</div>
-								</article>
-								<article>
-									<span class="icon solid fa-signal"></span>
-									<div class="content">
-										<h3>Sed magna finibus</h3>
-										<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									</div>
-								</article>
+								<!-- 카페 내 전체 글 -->
+								<table border="1">
+									<thead>
+									  <tr>
+									    <th>제목</th>
+									    <th>카테고리</th>
+									    <th>작성일</th>
+									  </tr>
+									</thead>
+									<tbody>
+									<c:forEach var="item" items="${list}">
+									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+									  <tr>
+									    <td id="title">${item.title}</td>
+									    <td id="c_name">${item.c_name}</td>
+									    <td id="bDate">${bDate}</td>
+									  </tr>
+									</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</section>
 	
@@ -108,6 +104,30 @@
 									<ul class="actions">
 										<li><a href="#" class="button">More</a></li>
 									</ul>
+								</article>
+								<article>
+									<h3>베이킹</h3>
+									<table border="1">
+											<thead>
+											  <tr>
+											    <th>제목</th>
+											    <th>작성일</th>
+											  </tr>
+											</thead>
+											<tbody>
+											<c:forEach var="item" items="${list}">
+											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+											  <tr>
+											    <td id="title">${item.title}</td>
+											    <td id="bDate">${bDate}</td>
+											  </tr>
+											</c:forEach>
+											</tbody>
+										</table>
+										<ul class="actions">
+											<li><a href="#" class="button">More</a></li>
+										</ul>
 								</article>
 							</div>
 						</section>
