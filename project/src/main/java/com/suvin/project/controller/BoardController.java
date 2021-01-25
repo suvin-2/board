@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.suvin.project.service.BoardService;
 import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.CategoryVO;
 
 /**
  * Handles requests for the application home page.
@@ -41,6 +42,7 @@ public class BoardController {
 	public String home(BoardVO vo, Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
+		/*
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
@@ -48,11 +50,10 @@ public class BoardController {
 		
 		// 모델(서블릿의 request 객체를 대체한 것)
 		model.addAttribute("serverTime", formattedDate );
-		
+		*/
 		List<BoardVO> list = service.boardSelect(vo);
 		logger.info(list.toString());
 		model.addAttribute("list",list);
-		
 		
 		// home.jsp로 포워딩
         // servlet-context.xml
@@ -71,6 +72,30 @@ public class BoardController {
 		return "/board/boardList";
 	}
 	
+	/*
+	// 게시글 단건 조회
+	@RequestMapping(value = "/boardSelectOne.do", method= RequestMethod.GET)
+	public String boardSelectOne2(@ModelAttribute("vo") BoardVO vo, Model model) throws Exception {
+		List<BoardVO> list = service.boardSelectOne2(vo.getbNo());	
+		model.addAttribute("list",list);
+		return "/board/boardDetail";
+	}
+	*/
+	// 카테고리 전체 조회
+	@RequestMapping(value = "/categoryList.do")
+	public String categorySelect(CategoryVO vo, Model model) throws Exception {
+		List<CategoryVO> list = service.categorySelect(vo);
+		logger.info(list.toString());
+		model.addAttribute("list",list);
+		return "/board/categoryList";
+	}
+	
+	// 게시글 단건조회 폼 
+	@RequestMapping(value = "/boardDetailForm.do")
+	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+		return "board/boardDetail";
+	}
+	
 	// 게시글 단건 조회
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
@@ -81,6 +106,7 @@ public class BoardController {
 		vo.getbNo(bNo);
 		return service.boardSelectOne(vo);
 	}
+	
 	
 	// 게시글 등록 폼 
 	@RequestMapping(value = "/boardInsertForm.do")

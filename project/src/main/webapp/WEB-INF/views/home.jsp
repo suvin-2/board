@@ -14,19 +14,13 @@
 <body class="is-preload">
 	<!-- Wrapper -->
 	<div id="wrapper">
-	
+		<!-- side var -->
+		<jsp:include page="board/boardSide.jsp" flush="false"/>
 		<!-- Main -->
 			<div id="main">
 				<div class="inner">	
 					<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo"><strong>Suvin's Cooking Class</strong> by suvin</a>
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-						</ul>
-					</header>
+					<jsp:include page="board/boardHead.jsp" flush="false"/>
 					<!-- Banner -->
 						<section id="banner">
 							<div class="content">
@@ -50,7 +44,6 @@
 							<header class="major">
 								<h2>전체글</h2>
 							</header>
-							<div class="features">
 								<!-- 카페 내 전체 글 -->
 								<table border="1">
 									<thead>
@@ -66,44 +59,67 @@
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 									  <tr>
 									    <td id="title">${item.title}</td>
-									    <td id="c_name">${item.c_name}</td>
+									    <td id="cName">${item.cName}</td>
 									    <td id="bDate">${bDate}</td>
 									  </tr>
 									</c:forEach>
 									</tbody>
 								</table>
-							</div>
 						</section>
 	
 					<!-- Section -->
 						<section>
 							<header class="major">
-								<h2>Ipsum sed dolor</h2>
+								<h2>인기 카테고리</h2>
 							</header>
 							<div class="posts">
 								<article>
-									<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-									<h3>Interdum aenean</h3>
-									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
+									<h3>한식</h3>
+									<table border="1">
+											<thead>
+											  <tr>
+											    <th>제목</th>
+											    <th>작성일</th>
+											  </tr>
+											</thead>
+											<tbody>
+											<c:forEach var="item" items="${list}">
+											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+											  <tr>
+											    <td id="title">${item.title}</td>
+											    <td id="bDate">${bDate}</td>
+											  </tr>
+											</c:forEach>
+											</tbody>
+										</table>
+										<ul class="actions">
+											<li><a href="#" class="button">More</a></li>
+										</ul>
 								</article>
 								<article>
-									<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-									<h3>Nulla amet dolore</h3>
-									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</article>
-								<article>
-									<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-									<h3>Tempus ullamcorper</h3>
-									<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
+									<h3>중식</h3>
+									<table border="1">
+											<thead>
+											  <tr>
+											    <th>제목</th>
+											    <th>작성일</th>
+											  </tr>
+											</thead>
+											<tbody>
+											<c:forEach var="item" items="${list}">
+											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+											  <tr>
+											    <td id="title">${item.title}</td>
+											    <td id="bDate">${bDate}</td>
+											  </tr>
+											</c:forEach>
+											</tbody>
+										</table>
+										<ul class="actions">
+											<li><a href="#" class="button">More</a></li>
+										</ul>
 								</article>
 								<article>
 									<h3>베이킹</h3>
@@ -134,8 +150,7 @@
 	
 				</div>
 			</div>
-			<!-- side var -->
-				<jsp:include page="board/boardSide.jsp" flush="false"/>
+			
 				
 	</div>
 

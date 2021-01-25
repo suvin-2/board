@@ -3,6 +3,7 @@ package com.suvin.project.service;
 import java.util.List;
 
 import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.CategoryVO;
 
 public interface BoardService {
 
@@ -20,4 +21,8 @@ public interface BoardService {
 		
 	// 게시글 단건 조회
 	public BoardVO boardSelectOne(BoardVO vo);
+	
+	// 카테고리 전체 조회
+	public List<CategoryVO> categorySelect(CategoryVO vo) throws Exception;
+	
 }

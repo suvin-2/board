@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.CategoryVO;
 
 @Repository
 public class BoardDAO {
@@ -39,5 +40,10 @@ public class BoardDAO {
 	// 게시글 단건 조회
 	public BoardVO boardSelectOne(BoardVO vo) {
 		return mybatis.selectOne("BoardDAO.boardSelectOne",vo);
+	}
+	
+	// 카테고리 조회
+	public List<CategoryVO> categorySelect(CategoryVO vo) throws Exception {
+		return mybatis.selectList("CategoryDAO.categorySelect",vo);
 	}
 }

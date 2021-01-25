@@ -10,8 +10,8 @@ public class BoardVO {
 	private int cnt;
 	private Date bDate;
 	private String writer;
-	private String c_name;
-	private String s_name;
+	private String cName;
+	private String sName;
 	
 	
 	public Integer getbNo() {
@@ -50,27 +50,26 @@ public class BoardVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public String getC_name() {
-		return c_name;
+	public String getcName() {
+		return cName;
 	}
-	public void setC_name(String c_name) {
-		this.c_name = c_name;
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
-	public String getS_name() {
-		return s_name;
+	public String getsName() {
+		return sName;
 	}
-	public void setS_name(String s_name) {
-		this.s_name = s_name;
+	public void setsName(String sName) {
+		this.sName = sName;
 	}
 	// 게시글 단건조회
 	public Integer getbNo(int bNo) {
 		return bNo;
 	}
-	
 	@Override
 	public String toString() {
 		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
-				+ ", writer=" + writer + ", c_name=" + c_name + ", s_name=" + s_name + "]";
+				+ ", writer=" + writer + ", cName=" + cName + ", sName=" + sName + "]";
 	}
 	
 }

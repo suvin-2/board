@@ -2,31 +2,31 @@ package com.suvin.project.vo;
 
 public class CategoryVO {
 	
-	private int sno;
-	private String c_name;
-	private String s_name;
+	private int sNo;
+	private String cName;
+	private String sName;
 	
-	public int getSno() {
-		return sno;
+	public int getsNo() {
+		return sNo;
 	}
-	public void setSno(int sno) {
-		this.sno = sno;
+	public void setsNo(int sNo) {
+		this.sNo = sNo;
 	}
-	public String getC_name() {
-		return c_name;
+	public String getcName() {
+		return cName;
 	}
-	public void setC_name(String c_name) {
-		this.c_name = c_name;
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
-	public String getS_name() {
-		return s_name;
+	public String getsName() {
+		return sName;
 	}
-	public void setS_name(String s_name) {
-		this.s_name = s_name;
+	public void setsName(String sName) {
+		this.sName = sName;
 	}
-	
 	@Override
 	public String toString() {
-		return "CategoryVO [sno=" + sno + ", c_name=" + c_name + ", s_name=" + s_name + "]";
+		return "CategoryVO [sNo=" + sNo + ", cName=" + cName + ", sName=" + sName + "]";
 	}
+	
 }

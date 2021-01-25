@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.suvin.project.dao.BoardDAO;
 import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.CategoryVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -39,6 +40,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO boardSelectOne(BoardVO vo) {
 		return dao.boardSelectOne(vo);
+	}
+
+	@Override
+	public List<CategoryVO> categorySelect(CategoryVO vo) throws Exception {
+		return dao.categorySelect(vo);
 	}
 	
 }

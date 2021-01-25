@@ -25,15 +25,23 @@
 								<h2>Menu</h2>
 							</header>
 							<ul>
-								<li><a href="html/index.html">Homepage</a></li>
+								<li><a href="/">Homepage</a></li>
 								<li><a href="/boardList.do">자유게시판</a></li>
 								<li>
-									<span class="opener">Submenu</span>
+									<span class="opener">베이킹</span>
 									<ul>
-										<li><a href="#">Lorem Dolor</a></li>
-										<li><a href="#">Ipsum Adipiscing</a></li>
-										<li><a href="#">Tempus Magna</a></li>
-										<li><a href="#">Feugiat Veroeros</a></li>
+										<li><a href="/categoryList.do">케이크</a></li>
+										<li><a href="#">빵</a></li>
+										<li><a href="#">쿠키</a></li>
+									</ul>
+								</li>
+								<li>
+									<span class="opener">한식/일식/중식/양식</span>
+									<ul>
+										<li><a href="#">한식</a></li>
+										<li><a href="#">일식</a></li>
+										<li><a href="#">중식</a></li>
+										<li><a href="#">양식</a></li>
 									</ul>
 								</li>
 							</ul>
