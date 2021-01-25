@@ -33,11 +33,12 @@ public class BoardController {
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
+	 * @throws Exception 
 	 */
 	// url mapping
 	// 기본, 루트 페이지 -> home메서드 호출
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(BoardVO vo, Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -47,6 +48,11 @@ public class BoardController {
 		
 		// 모델(서블릿의 request 객체를 대체한 것)
 		model.addAttribute("serverTime", formattedDate );
+		
+		List<BoardVO> list = service.boardSelect(vo);
+		logger.info(list.toString());
+		model.addAttribute("list",list);
+		
 		
 		// home.jsp로 포워딩
         // servlet-context.xml

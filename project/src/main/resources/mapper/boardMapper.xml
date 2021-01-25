@@ -10,7 +10,9 @@
 			   CONTENT,
 			   CNT,
 			   BDATE,
-			   WRITER 
+			   WRITER,
+			   C_NAME,
+			   S_NAME
 		FROM BOARD
 		ORDER BY BNO DESC
 	</select>
@@ -22,7 +24,9 @@
 			   CONTENT,
 			   CNT,
 			   BDATE,
-			   WRITER 
+			   WRITER,
+			   C_NAME,
+			   S_NAME
 		FROM BOARD
 		WHERE BNO = #{bNo}
 		ORDER BY BNO DESC
@@ -39,14 +43,18 @@
 			CONTENT,
 			CNT,
 			BDATE,
-			WRITER
+			WRITER,
+			C_NAME,
+			S_NAME
 		) VALUES (
 			#{bNo},
 			#{title},
 			#{content},
 			0,
 			SYSDATE,
-			#{writer}
+			#{writer},
+			#{c_name},
+			#{s_name}
 		)
 	</insert>
 	
@@ -56,7 +64,9 @@
 			BOARD
 		SET
 			TITLE = #{title},
-			CONTENT = #{content}
+			CONTENT = #{content},
+			C_NAME = #{c_name},
+			S_NAME = #{s_name}
 		WHERE
 			BNO = #{bNo}
 	</update>
