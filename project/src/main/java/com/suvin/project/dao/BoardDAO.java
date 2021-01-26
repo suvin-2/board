@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.CategoryVO;
@@ -37,13 +38,13 @@ public class BoardDAO {
 		return mybatis.delete("BoardDAO.boardDelete",bNo);
 	}
 	
-	// 게시글 단건 조회
+	// 게시글 단건 조회(ajax)
 	public BoardVO boardSelectOne(BoardVO vo) {
 		return mybatis.selectOne("BoardDAO.boardSelectOne",vo);
 	}
 	
-	// 카테고리 조회
-	public List<CategoryVO> categorySelect(CategoryVO vo) throws Exception {
-		return mybatis.selectList("CategoryDAO.categorySelect",vo);
+	// 게시글 단건 조회
+	public List<BoardVO> boardSelectDetail(BoardVO vo) throws Exception {
+		return  mybatis.selectList("BoardDAO.boardSelectOne",vo);
 	}
 }

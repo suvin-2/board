@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.suvin.project.dao.BoardDAO;
 import com.suvin.project.vo.BoardVO;
@@ -43,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<CategoryVO> categorySelect(CategoryVO vo) throws Exception {
-		return dao.categorySelect(vo);
+	public List<BoardVO> boardSelectDetail(BoardVO vo) throws Exception {
+		return dao.boardSelectDetail(vo);
 	}
 	
 }

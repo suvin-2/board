@@ -6,6 +6,55 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+
+	// boardInfo() 함수를 즉시 실행
+	$(function(){
+		
+		//categoryInfo();
+		subCategoryInfo();
+	});
+	
+	// 수정할 게시글 내용 가지고 오는 ajax
+	function categoryInfo(){
+		$.ajax({
+			url : 'categoryList.do', 
+			type : 'GET',
+			dataType : 'json',
+			error : function(xhr, status, msg) {
+				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
+			},
+			success : function(data) {
+				console.log(data);
+			}
+		});
+	}
+	
+	function subCategoryInfo(){
+		$.ajax({
+			url : 'subCategoryList.do', 
+			type : 'GET',
+			dataType : 'json',
+			error : function(xhr, status, msg) {
+				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
+			},
+			success : function(data) {
+				
+				
+				console.log(data);
+				
+				$('input:text[name="title"]').val(data.title);
+				$('textarea[name="content"]:visible').val(data.content);
+				$('input:text[name="writer"]').val(data.writer);
+				$("#writer").attr("disabled",true);
+			}
+		});
+	}
+
+</script> 
 </head>
 <body>
 	<!-- Wrapper -->
@@ -31,7 +80,7 @@
 									<span class="opener">베이킹</span>
 									<ul>
 										<li><a href="/categoryList.do">케이크</a></li>
-										<li><a href="#">빵</a></li>
+										<li><a href="/subCategoryList.do">빵</a></li>
 										<li><a href="#">쿠키</a></li>
 									</ul>
 								</li>

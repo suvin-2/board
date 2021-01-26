@@ -1,8 +1,7 @@
 package com.suvin.project.vo;
 
-public class CategoryVO {
+public class SubCategoryVO {
 	
-
 	private int sNo;
 	private String cName;
 	private String sName;
@@ -29,4 +28,5 @@ public class CategoryVO {
 	public String toString() {
 		return "CategoryVO [sNo=" + sNo + ", cName=" + cName + ", sName=" + sName + "]";
 	}
+	
 }

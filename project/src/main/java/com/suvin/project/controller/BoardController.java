@@ -1,7 +1,5 @@
 package com.suvin.project.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.suvin.project.service.BoardService;
 import com.suvin.project.vo.BoardVO;
-import com.suvin.project.vo.CategoryVO;
 
 /**
  * Handles requests for the application home page.
@@ -72,41 +69,29 @@ public class BoardController {
 		return "/board/boardList";
 	}
 	
-	/*
-	// 게시글 단건 조회
-	@RequestMapping(value = "/boardSelectOne.do", method= RequestMethod.GET)
-	public String boardSelectOne2(@ModelAttribute("vo") BoardVO vo, Model model) throws Exception {
-		List<BoardVO> list = service.boardSelectOne2(vo.getbNo());	
-		model.addAttribute("list",list);
-		return "/board/boardDetail";
-	}
-	*/
-	// 카테고리 전체 조회
-	@RequestMapping(value = "/categoryList.do")
-	public String categorySelect(CategoryVO vo, Model model) throws Exception {
-		List<CategoryVO> list = service.categorySelect(vo);
-		logger.info(list.toString());
-		model.addAttribute("list",list);
-		return "/board/categoryList";
-	}
-	
 	// 게시글 단건조회 폼 
 	@RequestMapping(value = "/boardDetailForm.do")
 	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
 		return "board/boardDetail";
 	}
-	
+
 	// 게시글 단건 조회
+	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
+	public String boardSelectDetail(BoardVO vo, Model model) throws Exception {
+		//vo.getbNo(bNo);
+		List<BoardVO> list = service.boardSelectDetail(vo);	
+		model.addAttribute("list",list);
+		return "/board/boardDetail";
+	}
+	
+	// 게시글 단건 조회(ajax)
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {
 		
-		System.out.println("========== ajax 통해서 controller 단건 조회 in ========== bNo : " + bNo);
-		
 		vo.getbNo(bNo);
 		return service.boardSelectOne(vo);
 	}
-	
 	
 	// 게시글 등록 폼 
 	@RequestMapping(value = "/boardInsertForm.do")
@@ -140,4 +125,5 @@ public class BoardController {
 		service.boardDelete(bNo);
 		return "redirect:/boardList.do";
 	}
+	
 }

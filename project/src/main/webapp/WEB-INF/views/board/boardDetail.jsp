@@ -10,44 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-
-	var bNo = "<%= request.getParameter("bNo") %>";
-	 
-	console.log("bNo : "+bNo);
-
-	
-	// boardInfo() 함수를 즉시 실행
-	$(function(){
-		
-		boardInfo();
-		
-	});
-	
-	// 수정할 게시글 내용 가지고 오는 ajax
-	function boardInfo(){
-		$.ajax({
-			url : 'boardListOne/'+ bNo, 
-			type : 'GET',
-			dataType : 'json',
-			error : function(xhr, status, msg) {
-				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
-			},
-			success : function(data) {
-				console.log(data);
-				
-				$('#title').val(data.title);
-				$('#writer').val(data.writer);
-				$('#bDate').val(data.bDate);
-				$('#cnt').val(data.cnt);
-				$('#content').val(data.content);
-				
-			}
-		});
-	}
-
-	console.log("Ltitle : " + $('#Ltitle').val() );
-</script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
@@ -69,26 +32,33 @@
 						<header class="major">
 							<h2>자유게시판</h2>
 						</header>
+						<c:forEach var="item" items="${list}">
+						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 						<table border="1">
 							  <tr>
-							    <th id="Ltitle">제목</th>
-							    <th colspan="3"><p id="title"></p></th>
+							    <th>제목</th>
+							    <td colspan="3"><p id="title">${item.title}</p></td>
 							  </tr>
 							  <tr>
 							    <th>작성자</th>
-							    <td><p id="writer"></p></td>
+							    <td><p id="writer">${item.writer}</p></td>
 							  </tr>
 							  <tr>
 							    <th>작성일</th>
-							    <td><p id="bDate"></p></td>
+							    <td><p id="bDate">${bDate}</p></td>
 							    <th>조회수</th>
-							    <td><p id="cnt"></p></td>
+							    <td><p id="cnt">${item.cnt}</p></td>
 							  </tr>
 							  <tr>
 							    <th>내용</th>
-							    <td><p id="content"></p></td>
+							    <td colspan="3"><p id="content">${item.content}</p></td>
 							  </tr>
 						</table>
+						<div align="center">
+							<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button primary">수정</a>
+			   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button">삭제</a>
+						</div>
+						</c:forEach>
 					</div>
 				</section>	
 			</div>
