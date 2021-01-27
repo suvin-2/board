@@ -25,8 +25,10 @@
 				<!-- Section -->
 				<section id="banner">
 					<div class="content">
-						<header class="major">
-							<h2>자유게시판</h2>
+					
+					<% String sName = request.getParameter("sName"); %>
+					<header class="major">
+							<h2 id="sName"><%= sName %></h2>
 						</header>
 						<!-- 카페 내 전체 글 -->
 						<table border="1">
@@ -42,13 +44,14 @@
 							<c:forEach var="item" items="${list}">
 							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-							  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}'">
-							    <td id="title">${item.title}</td>
-							    <td id="writer">${item.writer}</td>
-							    <td id="bDate">${bDate}</td>
-							    <td id="cnt">${item.cnt}</td>
-							  </tr>
-							</c:forEach>
+							
+								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+								    <td id="title">${item.title}</td>
+								    <td id="writer">${item.writer}</td>
+								    <td id="bDate">${bDate}</td>
+								    <td id="cnt">${item.cnt}</td>
+								  </tr>
+						  </c:forEach>
 							</tbody>
 						</table>
 						<a href="boardInsertForm.do" class="button">글쓰기</a>

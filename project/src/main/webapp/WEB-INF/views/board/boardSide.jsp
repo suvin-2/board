@@ -10,18 +10,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-
+	
+	var cName = $('#cName');
+	
 	// boardInfo() 함수를 즉시 실행
 	$(function(){
 		
-		//categoryInfo();
-		subCategoryInfo();
+		categoryInfo();
 	});
 	
 	// 수정할 게시글 내용 가지고 오는 ajax
 	function categoryInfo(){
 		$.ajax({
-			url : 'categoryList.do', 
+			url : '/categoryList.do', 
 			type : 'GET',
 			dataType : 'json',
 			error : function(xhr, status, msg) {
@@ -29,31 +30,22 @@
 			},
 			success : function(data) {
 				console.log(data);
+				console.log(data[1]);
+				var list = JSON.stringify(data);
+				console.log(list);
+				
+				var cList = {};
+				data.forEach(function(item){
+					var cName = cList[item.cName] = cList[item.cName] || {};
+					cList[item.sName] = true;
+				});
+				
+				console.log(JSON.stringify(cList,null,4));
+				console.log(cList);
 			}
 		});
 	}
 	
-	function subCategoryInfo(){
-		$.ajax({
-			url : 'subCategoryList.do', 
-			type : 'GET',
-			dataType : 'json',
-			error : function(xhr, status, msg) {
-				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
-			},
-			success : function(data) {
-				
-				
-				console.log(data);
-				
-				$('input:text[name="title"]').val(data.title);
-				$('textarea[name="content"]:visible').val(data.content);
-				$('input:text[name="writer"]').val(data.writer);
-				$("#writer").attr("disabled",true);
-			}
-		});
-	}
-
 </script> 
 </head>
 <body>
@@ -74,25 +66,18 @@
 								<h2>Menu</h2>
 							</header>
 							<ul>
-								<li><a href="/">Homepage</a></li>
-								<li><a href="/boardList.do">자유게시판</a></li>
+							<c:forEach var="cNameList" items="${cNameList}">
 								<li>
-									<span class="opener">베이킹</span>
-									<ul>
-										<li><a href="/categoryList.do">케이크</a></li>
-										<li><a href="/subCategoryList.do">빵</a></li>
-										<li><a href="#">쿠키</a></li>
-									</ul>
+									<span class="opener" id="cName">${cNameList.cName}</span>
+									<c:forEach var="sNameList" items="${sNameList}">
+										<c:if test="${cNameList.cName eq sNameList.cName}">
+										<ul>
+											<li><a href="${path}/boardList.do?sName=${sNameList.sName}" id="sName">${sNameList.sName}</a></li>
+										</ul>
+										</c:if>
+									</c:forEach>
 								</li>
-								<li>
-									<span class="opener">한식/일식/중식/양식</span>
-									<ul>
-										<li><a href="#">한식</a></li>
-										<li><a href="#">일식</a></li>
-										<li><a href="#">중식</a></li>
-										<li><a href="#">양식</a></li>
-									</ul>
-								</li>
+							</c:forEach>
 							</ul>
 						</nav>
 	

@@ -3,15 +3,16 @@ package com.suvin.project.vo;
 public class CategoryVO {
 	
 
-	private int sNo;
+	private int cNo;
 	private String cName;
 	private String sName;
 	
-	public int getsNo() {
-		return sNo;
+	
+	public int getcNo() {
+		return cNo;
 	}
-	public void setsNo(int sNo) {
-		this.sNo = sNo;
+	public void setcNo(int cNo) {
+		this.cNo = cNo;
 	}
 	public String getcName() {
 		return cName;
@@ -27,6 +28,6 @@ public class CategoryVO {
 	}
 	@Override
 	public String toString() {
-		return "CategoryVO [sNo=" + sNo + ", cName=" + cName + ", sName=" + sName + "]";
+		return "CategoryVO [cNo=" + cNo + ", cName=" + cName + ", sName=" + sName + "]";
 	}
 }

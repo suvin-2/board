@@ -26,27 +26,15 @@ public class CategoryController {
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
 	// 카테고리(대분류) 전체 조회
+	@ResponseBody
 	@RequestMapping(value = "/categoryList.do")
 	public List<CategoryVO> categorySelect(CategoryVO vo, Model model) throws Exception {
 		
 		List<CategoryVO> list = service.categorySelect(vo);
 		logger.info(list.toString());
-		//model.addAttribute("list",cList);
-		System.out.println("category list : " + list);
+		//System.out.println("category list : " + list);
 		
 		return list;
 	}
 	
-
-	// 카테고리(소분류) 전체 조회(ajax 사용)
-	@ResponseBody
-	@RequestMapping(value = "/subCategoryList.do")
-	public List<CategoryVO> subCategorySelect(CategoryVO vo, Model model) throws Exception {
-		
-		List<CategoryVO> list = service.subCategorySelect(vo);
-		logger.info(list.toString());
-		//model.addAttribute("list",sList);
-		System.out.println("sub_category list : " + list);
-		return list;
-	}
 }

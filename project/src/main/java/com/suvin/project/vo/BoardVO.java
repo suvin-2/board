@@ -10,9 +10,9 @@ public class BoardVO {
 	private int cnt;
 	private Date bDate;
 	private String writer;
+	private int cNo;
 	private String cName;
 	private String sName;
-	
 	
 	public Integer getbNo() {
 		return bNo;
@@ -50,6 +50,12 @@ public class BoardVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+	public int getcNo() {
+		return cNo;
+	}
+	public void setcNo(int cNo) {
+		this.cNo = cNo;
+	}
 	public String getcName() {
 		return cName;
 	}
@@ -69,7 +75,6 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
-				+ ", writer=" + writer + ", cName=" + cName + ", sName=" + sName + "]";
+				+ ", writer=" + writer + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName + "]";
 	}
-	
 }

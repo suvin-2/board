@@ -6,17 +6,17 @@
 	<!-- category 조회 -->
 	<select id="categorySelect" resultType="categoryVO">
 		SELECT 
-			   CNAME
+			   CNO,
+			   CNAME,
+			   SNAME
 		FROM CATEGORY
 	</select>
 	
-	<!-- sub_category 조회 -->
-	<select id="subCategorySelect" resultType="categoryVO">
-		SELECT 
-			   SNO,
-			   CNAME,
-			   SNAME
-		FROM SUB_CATEGORY
+	<!-- category cName 조회 -->
+	<select id="cNameSelect" resultType="categoryVO">
+		SELECT DISTINCT
+			   CNAME
+		FROM CATEGORY
 	</select>
 	
 </mapper>

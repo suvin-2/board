@@ -20,9 +20,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryVO> subCategorySelect(CategoryVO vo) throws Exception {
-		return dao.subCategorySelect(vo);
+	public List<CategoryVO> cNameSelect(CategoryVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.cNameSelect(vo);
 	}
-
-	
 }
