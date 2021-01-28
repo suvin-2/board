@@ -86,10 +86,12 @@
 											<c:forEach var="item" items="${bList}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+											<c:if test="${item.sName eq '한식'}">
 											  <tr>
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
-											  </tr>
+											  </tr> 
+											</c:if>
 											</c:forEach>
 											</tbody>
 										</table>
@@ -110,10 +112,12 @@
 											<c:forEach var="item" items="${bList}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+											<c:if test="${item.sName eq '중식'}">
 											  <tr>
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											  </tr>
+											</c:if>
 											</c:forEach>
 											</tbody>
 										</table>
@@ -122,7 +126,7 @@
 										</ul>
 								</article>
 								<article>
-									<h3>베이킹</h3>
+									<h3 id="title3">빵</h3>
 									<table border="1">
 											<thead>
 											  <tr>
@@ -134,10 +138,12 @@
 											<c:forEach var="item" items="${bList}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+											<c:if test="${item.sName eq '빵'}">
 											  <tr>
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											  </tr>
+											</c:if>
 											</c:forEach>
 											</tbody>
 										</table>

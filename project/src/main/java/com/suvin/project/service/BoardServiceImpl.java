@@ -24,6 +24,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.boardCategorySelect(vo);
+	}
+	
+	@Override
 	public int boardInsert(BoardVO vo) {
 		return dao.boardInsert(vo);
 	}
@@ -47,5 +53,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardSelectDetail(BoardVO vo) throws Exception {
 		return dao.boardSelectDetail(vo);
 	}
+
 	
 }

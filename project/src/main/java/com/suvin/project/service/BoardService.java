@@ -12,6 +12,9 @@ public interface BoardService {
 	// 게시글 전체 조회
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception;
 	
+	// 게시글 카테고리별 조회
+	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception;
+	
 	// 게시글 등록
 	public int boardInsert(BoardVO vo);
 		

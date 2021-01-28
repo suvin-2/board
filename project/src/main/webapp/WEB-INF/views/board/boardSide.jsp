@@ -11,13 +11,20 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	
-	var cName = $('#cName');
-	
 	// boardInfo() 함수를 즉시 실행
 	$(function(){
 		
 		categoryInfo();
+		console.log(list);
 	});
+	
+	var list = [];
+	// cName만 담긴 리스트
+	var cNameList = new Array();			// JSON.stringify(data);
+	// sName만 담긴 리스트
+	var sNameList = [];
+	// cName 중복 제거한 값만 담긴 리스트
+	var finalData = [];
 	
 	// 수정할 게시글 내용 가지고 오는 ajax
 	function categoryInfo(){
@@ -29,19 +36,28 @@
 				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
 			},
 			success : function(data) {
-				console.log(data);
-				console.log(data[1]);
-				var list = JSON.stringify(data);
+				for(i in data) {
+					list[i] = data[i];
+					cNameList[i] = data[i].cName;
+				}
 				console.log(list);
+				console.log("cName List : "+cNameList);
 				
-				var cList = {};
-				data.forEach(function(item){
-					var cName = cList[item.cName] = cList[item.cName] || {};
-					cList[item.sName] = true;
+				// cName 중복제거
+				$.each(cNameList,function(i,value){
+					if(finalData.indexOf(value) == -1) {
+						finalData.push(value);
+					}
 				});
 				
-				console.log(JSON.stringify(cList,null,4));
-				console.log(cList);
+				for(var i=0;i<finalData.length;i++) {
+					$("#sideLi").append("<span class='opener' id='cName'>"+finalData[i]+"</span>");
+					for(var j=0;j<cNameList.length;j++) {
+						if(finalData[i] == list[j].cName) {
+							$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"' id='sName'>"+list[j].sName+"</a>");
+						}
+					}
+				}
 			}
 		});
 	}
@@ -66,18 +82,12 @@
 								<h2>Menu</h2>
 							</header>
 							<ul>
-							<c:forEach var="cNameList" items="${cNameList}">
-								<li>
-									<span class="opener" id="cName">${cNameList.cName}</span>
-									<c:forEach var="sNameList" items="${sNameList}">
-										<c:if test="${cNameList.cName eq sNameList.cName}">
-										<ul>
-											<li><a href="${path}/boardList.do?sName=${sNameList.sName}" id="sName">${sNameList.sName}</a></li>
-										</ul>
-										</c:if>
-									</c:forEach>
+								<li id="sideLi">
+									<ul>
+										<li id="sideLi2">
+										</li>
+									</ul>
 								</li>
-							</c:forEach>
 							</ul>
 						</nav>
 	

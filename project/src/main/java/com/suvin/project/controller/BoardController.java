@@ -76,22 +76,21 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("home");
 		mv.addObject("bList",service.boardSelect(vo));
-		mv.addObject("sNameList",cService.categorySelect(cVo));
-		mv.addObject("cNameList",cService.cNameSelect(cVo));
 		
 		System.out.println("mv list : " + mv);
 		return mv;
 	}
 	
-	// 게시판 전체 글 목록
+	// 게시판 카테고리 별 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public String boardSelect(BoardVO vo, Model model) throws Exception {
-		List<BoardVO> list = service.boardSelect(vo);
+		List<BoardVO> list = service.boardCategorySelect(vo);
 		logger.info(list.toString());
 		model.addAttribute("list",list);
 		return "/board/boardList";
 	}
 	
+
 	// 게시글 단건조회 폼 
 	@RequestMapping(value = "/boardDetailForm.do")
 	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{

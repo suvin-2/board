@@ -51,7 +51,7 @@
 								    <td id="bDate">${bDate}</td>
 								    <td id="cnt">${item.cnt}</td>
 								  </tr>
-						  </c:forEach>
+						    </c:forEach>
 							</tbody>
 						</table>
 						<a href="boardInsertForm.do" class="button">글쓰기</a>

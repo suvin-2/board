@@ -22,6 +22,11 @@ public class BoardDAO {
 		return mybatis.selectList("BoardDAO.boardSelect",vo);
 	}
 	
+	// 게시글 카테고리 별 조회
+	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
+		return mybatis.selectList("BoardDAO.boardCategorySelect",vo);
+	}
+	
 	// 게시글 등록
 	public int boardInsert(BoardVO vo) {
 		return mybatis.insert("BoardDAO.boardInsert",vo);
