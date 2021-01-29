@@ -19,12 +19,12 @@ $(function(){
 	$("#submit").click(function(){
 		if($("#cName").val().length==0) { 
 			alert("카테고리(대분류)를 선택하세요."); 
-			$("#title").focus(); 
+			$("#cName").focus(); 
 			return false; 
 		}
 		if($("#sName").val().length==0) { 
 			alert("카테고리(소분류)를 선택하세요."); 
-			$("#title").focus(); 
+			$("#sName").focus(); 
 			return false; 
 		}
 		if($("#title").val().length==0) { 
@@ -70,9 +70,19 @@ $(function(){
 								<tbody>
 									<tr>
 									   <th>카테고리(대분류)</th>
-									   <td><form:select path="cName" id="cName" size="20"/></td>
+									   <td>
+									   	<form:select path="cName" id="cName" size="20"/>
+									   		<c:forEach var="item" items="${list}">
+									   		<option value="category">${item.cName}</option>
+									   		</c:forEach>
+									   </td>
 									   <th>카테고리(소분류)</th>
-									   <td><form:select path="sName" id="sName" size="20"/></td>
+									   <td>
+									   	<form:select path="sName" id="sName" size="20"/>
+									   		<c:forEach var="item" items="${list}">
+									   		<option value="subCategory">${item.sName}</option>
+									   		</c:forEach>
+									   </td>
 									</tr>
 									<tr>
 									   <th>제목</th>

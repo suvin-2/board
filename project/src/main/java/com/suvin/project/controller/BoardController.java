@@ -118,7 +118,9 @@ public class BoardController {
 	
 	// 게시글 등록 폼 
 	@RequestMapping(value = "/boardInsertForm.do")
-	public String boardInsertForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+	public String boardInsertForm(@ModelAttribute("boardVO") BoardVO vo, CategoryVO cVo, Model model) throws Exception{
+		List<CategoryVO> list = cService.categorySelect(cVo);
+		model.addAttribute("list",list);
 		return "board/boardInsert";
 	}
 	
