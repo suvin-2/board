@@ -69,20 +69,25 @@ $(function(){
 							<table border="1">
 								<tbody>
 									<tr>
-									   <th>카테고리(대분류)</th>
+									   <th>카테고리</th>
 									   <td>
-									   	<form:select path="cName" id="cName" size="20"/>
-									   		<c:forEach var="item" items="${list}">
-									   		<option value="category">${item.cName}</option>
-									   		</c:forEach>
+									   <c:forEach var="item" items="${list}">
+									   		<!-- value는 foreach에서 가지고온 배열, var는 ${}에서 사용할 변수명(?) -->
+									   		<c:set var="list" value="${item}"/>
+									   		<!-- cList, sList는 사용하지 x (테스트용으로 작성함) -->
+									   		<c:set var="cName" value="${item.cName}"/>
+									   		<c:set var="sName" value="${item.sName}"/>
+									   </c:forEach>
+										   	<select id="category" name="category">
+										   		<option value="">카테고리 선택</option>
+										   		<!-- for문 들어가야함 -->
+										   		<optgroup label="${cName}" id="cName">
+										   			<option value="sName">${sName}</option>
+										   		</optgroup>
+										   	</select>
+									   	
 									   </td>
-									   <th>카테고리(소분류)</th>
-									   <td>
-									   	<form:select path="sName" id="sName" size="20"/>
-									   		<c:forEach var="item" items="${list}">
-									   		<option value="subCategory">${item.sName}</option>
-									   		</c:forEach>
-									   </td>
+									   
 									</tr>
 									<tr>
 									   <th>제목</th>
