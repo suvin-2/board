@@ -1,7 +1,5 @@
 package com.suvin.project.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,9 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.suvin.project.service.BoardService;
+import com.suvin.project.service.CategoryService;
 import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.CategoryVO;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 /**
  * Handles requests for the application home page.
@@ -28,6 +31,8 @@ public class BoardController {
 	
 	@Resource(name = "boardService")
 	private BoardService service;
+	@Resource(name = "categoryService")
+	private CategoryService cService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
@@ -37,10 +42,12 @@ public class BoardController {
 	 */
 	// url mapping
 	// 기본, 루트 페이지 -> home메서드 호출
+	/*
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(BoardVO vo, Locale locale, Model model) throws Exception {
-		logger.info("Welcome home! The client locale is {}.", locale);
+		logger.info("Welcome home! The client locale is {}.", locale);*/
 		
+		/*
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
@@ -48,11 +55,10 @@ public class BoardController {
 		
 		// 모델(서블릿의 request 객체를 대체한 것)
 		model.addAttribute("serverTime", formattedDate );
-		
-		List<BoardVO> list = service.boardSelect(vo);
+		*/
+		/*List<BoardVO> list = service.boardSelect(vo);
 		logger.info(list.toString());
 		model.addAttribute("list",list);
-		
 		
 		// home.jsp로 포워딩
         // servlet-context.xml
@@ -61,22 +67,50 @@ public class BoardController {
         // 디렉토리(접두어)와 jsp(접미어)확장자를 제외하고 이름만 작성하도록 세팅
 		return "home";
 	}
+	*/
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView home(BoardVO vo, CategoryVO cVo, Locale locale, Model model) throws Exception {
+		
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("home");
+		mv.addObject("bList",service.boardSelect(vo));
+		
+		System.out.println("mv list : " + mv);
+		return mv;
+	}
 	
-	// 게시판 전체 글 목록
+	// 게시판 카테고리 별 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public String boardSelect(BoardVO vo, Model model) throws Exception {
-		List<BoardVO> list = service.boardSelect(vo);
+		List<BoardVO> list = service.boardCategorySelect(vo);
 		logger.info(list.toString());
 		model.addAttribute("list",list);
 		return "/board/boardList";
 	}
 	
+
+	// 게시글 단건조회 폼 
+	@RequestMapping(value = "/boardDetailForm.do")
+	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+		System.out.println("board detail form in ");
+		return "board/boardDetail";
+	}
+
 	// 게시글 단건 조회
+	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
+	public String boardSelectDetail(BoardVO vo, Model model) throws Exception {
+		//vo.getbNo(bNo);
+		List<BoardVO> list = service.boardSelectDetail(vo);	
+		model.addAttribute("list",list);
+		return "/board/boardDetail";
+	}
+	
+	// 게시글 단건 조회(ajax)
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {
-		
-		System.out.println("========== ajax 통해서 controller 단건 조회 in ========== bNo : " + bNo);
 		
 		vo.getbNo(bNo);
 		return service.boardSelectOne(vo);
@@ -84,7 +118,9 @@ public class BoardController {
 	
 	// 게시글 등록 폼 
 	@RequestMapping(value = "/boardInsertForm.do")
-	public String boardInsertForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+	public String boardInsertForm(@ModelAttribute("boardVO") BoardVO vo, CategoryVO cVo, Model model) throws Exception{
+		List<CategoryVO> list = cService.categorySelect(cVo);
+		model.addAttribute("list",list);
 		return "board/boardInsert";
 	}
 	
@@ -114,4 +150,5 @@ public class BoardController {
 		service.boardDelete(bNo);
 		return "redirect:/boardList.do";
 	}
+	
 }

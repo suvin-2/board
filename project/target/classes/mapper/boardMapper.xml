@@ -5,30 +5,49 @@
 
 	<!-- 게시판 글 모두 조회 -->
 	<select id="boardSelect" resultType="boardVO">
-		SELECT BNO,
-			   TITLE,
-			   CONTENT,
-			   CNT,
-			   BDATE,
-			   WRITER,
-			   C_NAME,
-			   S_NAME
-		FROM BOARD
+		SELECT B.BNO,
+		       B.TITLE,
+		       B.CONTENT,
+		       B.CNT,
+		       B.BDATE,
+		       B.WRITER,
+		       B.CNO,
+		       C.CNAME,
+		       C.SNAME
+		FROM BOARD B, CATEGORY C
+		WHERE B.CNO = C.CNO
+		ORDER BY BNO DESC
+	</select>
+	
+	<!-- 게시판 카테고리 별 게시글 조회 -->
+	<select id="boardCategorySelect" resultType="boardVO">
+		SELECT B.BNO,
+		       B.TITLE,
+		       B.CONTENT,
+		       B.CNT,
+		       B.BDATE,
+		       B.WRITER,
+		       B.CNO,
+		       C.CNAME,
+		       C.SNAME
+		FROM BOARD B, CATEGORY C
+		WHERE B.CNO = C.CNO AND C.CNAME = #{cName} AND C.SNAME = #{sName}
 		ORDER BY BNO DESC
 	</select>
 	
 	<!-- 게시글 단건 조회 -->
 	<select id="boardSelectOne" resultType="boardVO">
-		SELECT BNO,
-			   TITLE,
-			   CONTENT,
-			   CNT,
-			   BDATE,
-			   WRITER,
-			   C_NAME,
-			   S_NAME
-		FROM BOARD
-		WHERE BNO = #{bNo}
+		SELECT B.BNO,
+		       B.TITLE,
+		       B.CONTENT,
+		       B.CNT,
+		       B.BDATE,
+		       B.WRITER,
+		       B.CNO,
+		       C.CNAME,
+		       C.SNAME
+		FROM BOARD B, CATEGORY C
+		WHERE B.CNO = C.CNO AND B.BNO = #{bNo}
 		ORDER BY BNO DESC
 	</select>
 	
@@ -44,8 +63,7 @@
 			CNT,
 			BDATE,
 			WRITER,
-			C_NAME,
-			S_NAME
+			CNO
 		) VALUES (
 			#{bNo},
 			#{title},
@@ -53,8 +71,7 @@
 			0,
 			SYSDATE,
 			#{writer},
-			#{c_name},
-			#{s_name}
+			#{cNo}
 		)
 	</insert>
 	
@@ -65,8 +82,7 @@
 		SET
 			TITLE = #{title},
 			CONTENT = #{content},
-			C_NAME = #{c_name},
-			S_NAME = #{s_name}
+			CNO = #{cNo}
 		WHERE
 			BNO = #{bNo}
 	</update>

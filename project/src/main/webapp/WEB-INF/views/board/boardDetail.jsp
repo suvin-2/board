@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>suvin's cooking class</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
@@ -25,36 +30,37 @@
 				<!-- Section -->
 				<section id="banner">
 					<div class="content">
-					
 					<% String sName = request.getParameter("sName"); %>
-					<header class="major">
-							<h2 id="sName"><%= sName %></h2>
+						<header class="major">
+							<h2><%= sName %></h2>
 						</header>
-						<!-- 카페 내 전체 글 -->
+						<c:forEach var="item" items="${list}">
+						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 						<table border="1">
-							<thead>
 							  <tr>
 							    <th>제목</th>
-							    <th>작성자</th>
-							    <th>작성일</th>
-							    <th>조회수</th>
+							    <td colspan="3"><p id="title">${item.title}</p></td>
 							  </tr>
-							</thead>
-							<tbody>
-							<c:forEach var="item" items="${list}">
-							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-							
-								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
-								    <td id="title">${item.title}</td>
-								    <td id="writer">${item.writer}</td>
-								    <td id="bDate">${bDate}</td>
-								    <td id="cnt">${item.cnt}</td>
-								  </tr>
-						    </c:forEach>
-							</tbody>
+							  <tr>
+							    <th>작성자</th>
+							    <td><p id="writer">${item.writer}</p></td>
+							  </tr>
+							  <tr>
+							    <th>작성일</th>
+							    <td><p id="bDate">${bDate}</p></td>
+							    <th>조회수</th>
+							    <td><p id="cnt">${item.cnt}</p></td>
+							  </tr>
+							  <tr>
+							    <th>내용</th>
+							    <td colspan="3"><p id="content">${item.content}</p></td>
+							  </tr>
 						</table>
-						<a href="boardInsertForm.do" class="button">글쓰기</a>
+						<div align="center">
+							<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button primary">수정</a>
+			   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button">삭제</a>
+						</div>
+						</c:forEach>
 					</div>
 				</section>	
 			</div>
