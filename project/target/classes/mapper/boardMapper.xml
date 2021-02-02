@@ -63,6 +63,8 @@
 			CNT,
 			BDATE,
 			WRITER,
+			CNAME,
+			SNAME,
 			CNO
 		) VALUES (
 			#{bNo},
@@ -71,6 +73,8 @@
 			0,
 			SYSDATE,
 			#{writer},
+			#{cName},
+			#{sName},
 			#{cNo}
 		)
 	</insert>

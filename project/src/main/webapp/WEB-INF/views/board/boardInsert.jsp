@@ -19,16 +19,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#submit").click(function(){
-		if($("#cName").val().length==0) { 
-			alert("카테고리(대분류)를 선택하세요."); 
-			$("#cName").focus(); 
-			return false; 
-		}
-		if($("#sName").val().length==0) { 
-			alert("카테고리(소분류)를 선택하세요."); 
-			$("#sName").focus(); 
-			return false; 
-		}
+		
 		if($("#title").val().length==0) { 
 			alert("제목을 입력하세요."); 
 			$("#title").focus(); 
@@ -45,6 +36,14 @@ $(function(){
 			return false; 
 		}
 	});
+	
+	// 선택된 카테고리 확인 (sName)
+	$("select[name=category]").change(function(){
+		  console.log($(this).val()); //value값 가져오기
+		  console.log($("select[name=category] option:selected").text()); //text값 가져오기
+	});
+	
+	
 });
 
 </script>
@@ -73,7 +72,7 @@ $(function(){
 									<tr>
 									   <th>카테고리</th>
 									   <td>
-										   	<select id="category" name="category">
+										   	<select id="category" name="category" required="required">
 										   		<option value="">카테고리 선택</option>
 										   		<!-- cName 중복제거 -->
 										   		<c:set var="cList" value=""/>
@@ -81,12 +80,12 @@ $(function(){
 										   			<c:if test="${item.cName ne cList}">
 									   					<c:set var="cList" value="${item.cName}"/>
 												   		<optgroup label="${cList}" id="cName"></optgroup>
-												   		console.log(${cList})
 										   			</c:if>
 										   			<c:if test="${item.cName eq cList}">
-											   			<c:set var="sList" value="${item.sName}"/>
-											   			<option value="sName">${sList}</option>
-											   			console.log(${sList})
+											   			<c:set var="sName" value="${item.sName}"/>
+											   			<c:set var="cName" value="${item.cName}"/>
+											   			<c:set var="cNo" value="${item.cNo}"/>
+											   			<option value="sName">${sName}</option>
 											   		</c:if>
 										   		</c:forEach>
 										   	</select>
@@ -110,6 +109,7 @@ $(function(){
 								<input type="submit" id="submit" value="등록"/>
 				   			</div>
 						</form:form>
+						<button name="cCheck">카테고리 확인</button>
 					</div>
 				</section>	
 			</div>
