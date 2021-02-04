@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
@@ -38,10 +39,17 @@ $(function(){
 	});
 	
 	// 선택된 카테고리 확인 (sName)
-	$("select[name=category]").change(function(){
-		  console.log($(this).val()); //value값 가져오기
-		  console.log($("select[name=category] option:selected").text()); //text값 가져오기
+	$("#category").change(function(){
+		
+		var cNoType = $(this).val();
+		console.log($(this).val()); //value값 가져오기
+		// string -> number 변환
+		cNoType = Number(cNoType);
+		
+		console.log($("#category option:selected").text()); //text값 가져오기
+		console.log($("#category option:selected").val()); //text값 가져오기
 	});
+	
 	
 	
 });
@@ -65,35 +73,37 @@ $(function(){
 						<header class="major">
 							<h2>글 등록</h2>
 						</header>
-						<c:url var="insert" value="/boardInsert.do" />
+						<c:url var="insert" value="/boardInsert.do?sName=" />
 						<form:form commandName="boardVO" action="${insert}" name="boardVO" method="post">
 							<table border="1">
 								<tbody>
 									<tr>
 									   <th>카테고리</th>
 									   <td>
-										   	<select id="category" name="category" required="required">
+									   		<form:select path="cNo" id="category" name="category" required="required">
 										   		<option value="">카테고리 선택</option>
 										   		<!-- cName 중복제거 -->
-										   		<c:set var="cList" value=""/>
+									    		<c:set var="cList" value=""/>
 										   		<c:forEach var="item" items="${list}" varStatus="status">
 										   			<c:if test="${item.cName ne cList}">
 									   					<c:set var="cList" value="${item.cName}"/>
 												   		<optgroup label="${cList}" id="cName"></optgroup>
 										   			</c:if>
 										   			<c:if test="${item.cName eq cList}">
-											   			<c:set var="sName" value="${item.sName}"/>
-											   			<c:set var="cName" value="${item.cName}"/>
-											   			<c:set var="cNo" value="${item.cNo}"/>
-											   			<option value="sName">${sName}</option>
+										   				<c:set var="cNo" value="${item.cNo}"/>
+										   				<fmt:parseNumber var="cNo" value="${item.cNo}" type="number" />
+											   			<form:option value="${cNo}" label="${item.sName}" />
+											   			<c:url var="insert2" value="${insert}">
+											   				<c:param name="sName" value="${item.sName}"/>
+											   			</c:url>
 											   		</c:if>
 										   		</c:forEach>
-										   	</select>
+										   	</form:select>
 									   </td>
 									</tr>
 									<tr>
 									   <th>제목</th>
-									   <td colspan="3"><form:input path="title" id="title" size="20" maxlength="100" /></td>
+									   <td colspan="3"><form:input path="title" id="title" size="20" maxlength="1000" /></td>
 									</tr>
 									<tr>
 									   <th>작성자</th>
@@ -109,7 +119,6 @@ $(function(){
 								<input type="submit" id="submit" value="등록"/>
 				   			</div>
 						</form:form>
-						<button name="cCheck">카테고리 확인</button>
 					</div>
 				</section>	
 			</div>

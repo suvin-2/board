@@ -128,6 +128,7 @@ public class BoardController {
 	@RequestMapping(value = "/boardInsert.do")
 	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) {
 		service.boardInsert(vo);
+		System.out.println("insert 된 값 : " + vo);
 		return "redirect:/boardList.do";
 	}
 
