@@ -54,10 +54,10 @@
 									  </tr>
 									</thead>
 									<tbody>
-									<c:forEach var="item" items="${bList}">
+									<c:forEach var="item" items="${list}">
 									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-									  <tr>
+									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 									    <td id="title">${item.title}</td>
 									    <td id="cName">${item.cName}</td>
 									    <td id="bDate">${bDate}</td>
@@ -83,11 +83,11 @@
 											  </tr>
 											</thead>
 											<tbody>
-											<c:forEach var="item" items="${bList}">
+											<c:forEach var="item" items="${list}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '한식'}">
-											  <tr>
+											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											  </tr> 
@@ -109,11 +109,11 @@
 											  </tr>
 											</thead>
 											<tbody>
-											<c:forEach var="item" items="${bList}">
+											<c:forEach var="item" items="${list}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '중식'}">
-											  <tr>
+											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											  </tr>
@@ -135,11 +135,11 @@
 											  </tr>
 											</thead>
 											<tbody>
-											<c:forEach var="item" items="${bList}">
+											<c:forEach var="item" items="${list}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '빵'}">
-											  <tr>
+											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											  </tr>

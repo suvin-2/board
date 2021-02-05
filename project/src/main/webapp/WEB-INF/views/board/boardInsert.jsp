@@ -20,7 +20,11 @@
 <script type="text/javascript">
 $(function(){
 	$("#submit").click(function(){
-		
+		if($("#category option:selected").text()=='카테고리 선택') { 
+			alert("카테고리를 선택하세요."); 
+			$("#category").focus(); 
+			return false; 
+		}
 		if($("#title").val().length==0) { 
 			alert("제목을 입력하세요."); 
 			$("#title").focus(); 
@@ -73,7 +77,7 @@ $(function(){
 						<header class="major">
 							<h2>글 등록</h2>
 						</header>
-						<c:url var="insert" value="/boardInsert.do?sName=" />
+						<c:url var="insert" value="/boardInsert.do" />
 						<form:form commandName="boardVO" action="${insert}" name="boardVO" method="post">
 							<table border="1">
 								<tbody>
@@ -93,9 +97,6 @@ $(function(){
 										   				<c:set var="cNo" value="${item.cNo}"/>
 										   				<fmt:parseNumber var="cNo" value="${item.cNo}" type="number" />
 											   			<form:option value="${cNo}" label="${item.sName}" />
-											   			<c:url var="insert2" value="${insert}">
-											   				<c:param name="sName" value="${item.sName}"/>
-											   			</c:url>
 											   		</c:if>
 										   		</c:forEach>
 										   	</form:select>
@@ -116,7 +117,8 @@ $(function(){
 								</tbody>
 							</table>
 							<div align="center">
-								<input type="submit" id="submit" value="등록"/>
+								<input type="submit" id="submit" class="button primary" value="등록"/>
+								<input type="button" id="back" onclick="history.back()" value="돌아가기"/>
 				   			</div>
 						</form:form>
 					</div>

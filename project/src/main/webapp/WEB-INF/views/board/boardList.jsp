@@ -26,7 +26,9 @@
 				<section id="banner">
 					<div class="content">
 					
-					<% String sName = request.getParameter("sName"); %>
+					<% String sName = request.getParameter("sName"); 
+						System.out.println("boardList.jsp 넘어온 sName : " + sName);
+					%>
 					<header class="major">
 							<h2 id="sName"><%= sName %></h2>
 						</header>
