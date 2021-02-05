@@ -75,7 +75,7 @@ public class BoardController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("home");
-		mv.addObject("bList",service.boardSelect(vo));
+		mv.addObject("list",service.boardSelect(vo));
 		
 		System.out.println("mv list : " + mv);
 		return mv;
@@ -90,18 +90,20 @@ public class BoardController {
 		return "/board/boardList";
 	}
 	
-
+	/*
 	// 게시글 단건조회 폼 
 	@RequestMapping(value = "/boardDetailForm.do")
 	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
 		System.out.println("board detail form in ");
 		return "board/boardDetail";
 	}
-
+	*/
+	
 	// 게시글 단건 조회
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
 	public String boardSelectDetail(BoardVO vo, Model model) throws Exception {
 		//vo.getbNo(bNo);
+		System.out.println("boardController board select detail form in " + vo);
 		List<BoardVO> list = service.boardSelectDetail(vo);	
 		model.addAttribute("list",list);
 		return "/board/boardDetail";
@@ -126,22 +128,28 @@ public class BoardController {
 	
 	// 게시글 등록
 	@RequestMapping(value = "/boardInsert.do")
-	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) {
+	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception {
 		service.boardInsert(vo);
-		return "redirect:/boardList.do";
+		System.out.println("boardController insert 된 값 : " + vo);
+		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo();
 	}
-
+	
 	// 게시글 수정 폼 
+	
 	@RequestMapping(value = "/boardUpdateForm.do")
-	public String boardUpdateForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
+	public String boardUpdateForm(@ModelAttribute("boardVO") BoardVO vo, CategoryVO cVo, Model model) throws Exception{
+		
+		List<CategoryVO> list = cService.categorySelect(cVo);
+		model.addAttribute("list",list);
 		return "board/boardUpdate";
 	}
+	
 	
 	// 게시글 수정
 	@RequestMapping(value = "/boardUpdate.do")
 	public String boardUpdate(@ModelAttribute("boardVO") BoardVO vo, Model model) {
 		service.boardUpdate(vo);
-		return "redirect:/boardList.do";
+		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo();
 	}
 	
 	// 게시글 삭제

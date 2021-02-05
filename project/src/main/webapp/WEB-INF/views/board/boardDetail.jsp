@@ -30,12 +30,11 @@
 				<!-- Section -->
 				<section id="banner">
 					<div class="content">
-					<% String sName = request.getParameter("sName"); %>
-						<header class="major">
-							<h2><%= sName %></h2>
-						</header>
 						<c:forEach var="item" items="${list}">
 						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+						<header class="major">
+							<h2>${item.sName}</h2>
+						</header>
 						<table border="1">
 							  <tr>
 							    <th>제목</th>
@@ -57,8 +56,9 @@
 							  </tr>
 						</table>
 						<div align="center">
-							<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button primary">수정</a>
-			   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button">삭제</a>
+							<a href="${path}/boardList.do?cName=${item.cName}&sName=${item.sName}" class="button">목록</a>
+							<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button">수정</a>
+			   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button primary">삭제</a>
 						</div>
 						</c:forEach>
 					</div>

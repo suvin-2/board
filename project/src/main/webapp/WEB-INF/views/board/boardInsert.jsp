@@ -1,7 +1,10 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +20,9 @@
 <script type="text/javascript">
 $(function(){
 	$("#submit").click(function(){
-		if($("#cName").val().length==0) { 
-			alert("카테고리(대분류)를 선택하세요."); 
-			$("#cName").focus(); 
-			return false; 
-		}
-		if($("#sName").val().length==0) { 
-			alert("카테고리(소분류)를 선택하세요."); 
-			$("#sName").focus(); 
+		if($("#category option:selected").text()=='카테고리 선택') { 
+			alert("카테고리를 선택하세요."); 
+			$("#category").focus(); 
 			return false; 
 		}
 		if($("#title").val().length==0) { 
@@ -43,6 +41,21 @@ $(function(){
 			return false; 
 		}
 	});
+	
+	// 선택된 카테고리 확인 (sName)
+	$("#category").change(function(){
+		
+		var cNoType = $(this).val();
+		console.log($(this).val()); //value값 가져오기
+		// string -> number 변환
+		cNoType = Number(cNoType);
+		
+		console.log($("#category option:selected").text()); //text값 가져오기
+		console.log($("#category option:selected").val()); //text값 가져오기
+	});
+	
+	
+	
 });
 
 </script>
@@ -71,27 +84,27 @@ $(function(){
 									<tr>
 									   <th>카테고리</th>
 									   <td>
-									   <c:forEach var="item" items="${list}">
-									   		<!-- value는 foreach에서 가지고온 배열, var는 ${}에서 사용할 변수명(?) -->
-									   		<c:set var="list" value="${item}"/>
-									   		<!-- cList, sList는 사용하지 x (테스트용으로 작성함) -->
-									   		<c:set var="cName" value="${item.cName}"/>
-									   		<c:set var="sName" value="${item.sName}"/>
-									   </c:forEach>
-										   	<select id="category" name="category">
+									   		<form:select path="cNo" id="category" name="category" required="required">
 										   		<option value="">카테고리 선택</option>
-										   		<!-- for문 들어가야함 -->
-										   		<optgroup label="${cName}" id="cName">
-										   			<option value="sName">${sName}</option>
-										   		</optgroup>
-										   	</select>
-									   	
+										   		<!-- cName 중복제거 -->
+									    		<c:set var="cList" value=""/>
+										   		<c:forEach var="item" items="${list}" varStatus="status">
+										   			<c:if test="${item.cName ne cList}">
+									   					<c:set var="cList" value="${item.cName}"/>
+												   		<optgroup label="${cList}" id="cName"></optgroup>
+										   			</c:if>
+										   			<c:if test="${item.cName eq cList}">
+										   				<c:set var="cNo" value="${item.cNo}"/>
+										   				<fmt:parseNumber var="cNo" value="${item.cNo}" type="number" />
+											   			<form:option value="${cNo}" label="${item.sName}" />
+											   		</c:if>
+										   		</c:forEach>
+										   	</form:select>
 									   </td>
-									   
 									</tr>
 									<tr>
 									   <th>제목</th>
-									   <td colspan="3"><form:input path="title" id="title" size="20" maxlength="100" /></td>
+									   <td colspan="3"><form:input path="title" id="title" size="20" maxlength="1000" /></td>
 									</tr>
 									<tr>
 									   <th>작성자</th>
@@ -104,7 +117,8 @@ $(function(){
 								</tbody>
 							</table>
 							<div align="center">
-								<input type="submit" id="submit" value="등록"/>
+								<input type="submit" id="submit" class="button primary" value="등록"/>
+								<input type="button" id="back" onclick="history.back()" value="돌아가기"/>
 				   			</div>
 						</form:form>
 					</div>
