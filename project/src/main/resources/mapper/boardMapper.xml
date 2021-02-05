@@ -4,7 +4,7 @@
 <mapper namespace="BoardDAO">
 
 	<!-- 게시판 글 모두 조회  -->
-	<select id="boardSelectAll" resultType="boardVO">
+	<select id="boardSelect" resultType="boardVO">
 		SELECT B.BNO,
 		       B.TITLE,
 		       B.CONTENT,
@@ -17,24 +17,6 @@
 		FROM BOARD B, CATEGORY C
 		WHERE B.CNO = C.CNO
 		ORDER BY BNO DESC
-	</select>
-	
-	<!-- 게시판 글 모두 조회 (최근 글 10개만) -->
-	<select id="boardSelect" resultType="boardVO">
-		SELECT *
-		FROM (SELECT B.BNO, 
-		           B.TITLE,
-		           B.CONTENT,
-		           B.CNT,
-		           B.BDATE,
-		           B.WRITER,
-		           B.CNO,
-		           C.CNAME,
-		           C.SNAME
-		      FROM BOARD B, CATEGORY C
-		      WHERE B.CNO = C.CNO
-		      ORDER BY B.BDATE DESC)
-		WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	
 	<!-- 게시판 카테고리 별 게시글 조회 -->
@@ -52,6 +34,16 @@
 		WHERE B.CNO = C.CNO AND C.CNAME = #{cName} AND C.SNAME = #{sName}
 		ORDER BY BNO DESC
 	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="boardUpdateCnt">
+		UPDATE
+			BOARD
+		SET
+			CNT = CNT+1
+		WHERE
+			BNO = #{bNo}
+	</update>
 	
 	<!-- 게시글 단건 조회 -->
 	<select id="boardSelectOne" resultType="boardVO">

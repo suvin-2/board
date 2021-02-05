@@ -77,7 +77,6 @@ public class BoardController {
 		mv.setViewName("home");
 		mv.addObject("list",service.boardSelect(vo));
 		
-		System.out.println("mv list : " + mv);
 		return mv;
 	}
 	
@@ -103,13 +102,14 @@ public class BoardController {
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
 	public String boardSelectDetail(BoardVO vo, Model model) throws Exception {
 		//vo.getbNo(bNo);
+		service.boardUpdateCnt(vo);
 		System.out.println("boardController board select detail form in " + vo);
 		List<BoardVO> list = service.boardSelectDetail(vo);	
 		model.addAttribute("list",list);
 		return "/board/boardDetail";
 	}
 	
-	// 게시글 단건 조회(ajax)
+	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {

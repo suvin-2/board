@@ -24,10 +24,13 @@ public interface BoardService {
 	// 게시글 삭제
 	public int boardDelete(int bNo);
 		
-	// 게시글 단건 조회(ajax)
+	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용
 	public BoardVO boardSelectOne(BoardVO vo);
 
 	// 게시글 단건 조회
 	public List<BoardVO> boardSelectDetail(BoardVO vo) throws Exception;
+	
+	// 게시글 조회수 증가
+	public int boardUpdateCnt(BoardVO vo);
 
 }

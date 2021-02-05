@@ -54,5 +54,9 @@ public class BoardServiceImpl implements BoardService {
 		return dao.boardSelectDetail(vo);
 	}
 
-	
+	@Override
+	public int boardUpdateCnt(BoardVO vo) {
+		return dao.boardUpdateCnt(vo);
+	}
+
 }
