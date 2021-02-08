@@ -60,6 +60,9 @@ $(function(){
 
 </script>
 </head>
+<%  String sName = request.getParameter("sName"); 
+	System.out.println("boardInsert.jsp 넘어온 sName : " + sName);
+%>
 <body class="is-preload">
 	<!-- Wrapper -->
 	<div id="wrapper">

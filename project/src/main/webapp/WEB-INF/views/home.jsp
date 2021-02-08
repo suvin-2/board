@@ -145,7 +145,7 @@
 											  </tr>
 											</thead>
 											<tbody>
-											<c:forEach var="item" items="${list}" end="4">
+											<c:forEach var="item" items="${list}">
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '빵'}">

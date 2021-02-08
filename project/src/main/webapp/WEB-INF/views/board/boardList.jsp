@@ -56,7 +56,7 @@
 						    </c:forEach>
 							</tbody>
 						</table>
-						<a href="boardInsertForm.do" class="button">글쓰기</a>
+						<a href="boardInsertForm.do?sName=<%=sName%>" class="button">글쓰기</a>
 					</div>
 				</section>	
 			</div>
