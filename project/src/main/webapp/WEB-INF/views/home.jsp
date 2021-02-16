@@ -59,11 +59,7 @@
 									  </tr>
 									</thead>
 									<tbody>
-<<<<<<< HEAD
-									<c:forEach var="item" items="${list}" end="9">
-=======
 									<c:forEach var="item" items="${list}" begin="0" end="9">
->>>>>>> branch 'main' of https://github.com/suvin-2/board.git
 									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
