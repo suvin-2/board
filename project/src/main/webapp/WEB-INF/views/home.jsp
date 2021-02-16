@@ -54,7 +54,7 @@
 									  </tr>
 									</thead>
 									<tbody>
-									<c:forEach var="item" items="${list}">
+									<c:forEach var="item" items="${list}" end="9">
 									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">

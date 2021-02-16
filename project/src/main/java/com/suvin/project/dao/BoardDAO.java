@@ -19,7 +19,7 @@ public class BoardDAO {
 	
 	// 게시글 전체 조회
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
-		return mybatis.selectList("BoardDAO.boardSelect",vo);
+		return mybatis.selectList("BoardDAO.boardSelectAll",vo);
 	}
 	
 	// 게시글 카테고리 별 조회
