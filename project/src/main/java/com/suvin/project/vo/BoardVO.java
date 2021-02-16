@@ -68,7 +68,7 @@ public class BoardVO {
 	public void setsName(String sName) {
 		this.sName = sName;
 	}
-	// 게시글 단건조회
+	// 게시글 단건조회 (boardUpdate.jsp)
 	public Integer getbNo(int bNo) {
 		return bNo;
 	}

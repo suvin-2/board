@@ -7,6 +7,10 @@
 <html>
 <head>
 <title>suvin's cooking class</title>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
@@ -48,16 +52,22 @@
 								<table border="1">
 									<thead>
 									  <tr>
+									  	<th>순번</th>
 									    <th>제목</th>
 									    <th>카테고리</th>
 									    <th>작성일</th>
 									  </tr>
 									</thead>
 									<tbody>
+<<<<<<< HEAD
 									<c:forEach var="item" items="${list}" end="9">
+=======
+									<c:forEach var="item" items="${list}" begin="0" end="9">
+>>>>>>> branch 'main' of https://github.com/suvin-2/board.git
 									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+									    <td id="bNo">${item.bNo}</td>
 									    <td id="title">${item.title}</td>
 									    <td id="cName">${item.cName}</td>
 									    <td id="bDate">${bDate}</td>
@@ -90,13 +100,15 @@
 											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
+											    <td><input type="hidden" id="cName1" value="${item.cName}"/></td>
+											    <td><input type="hidden" id="sName1" value="${item.sName}"/></td>
 											  </tr> 
 											</c:if>
 											</c:forEach>
 											</tbody>
 										</table>
 										<ul class="actions">
-											<li><a href="#" class="button">More</a></li>
+											<li><button class="button" onclick="category1()">More</button></li>
 										</ul>
 								</article>
 								<article>
@@ -116,17 +128,19 @@
 											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
+											    <td><input type="hidden" id="cName2" value="${item.cName}"/></td>
+											    <td><input type="hidden" id="sName2" value="${item.sName}"/></td>
 											  </tr>
 											</c:if>
 											</c:forEach>
 											</tbody>
 										</table>
 										<ul class="actions">
-											<li><a href="#" class="button">More</a></li>
+											<li><button class="button" onclick="category2()">More</button></li>
 										</ul>
 								</article>
 								<article>
-									<h3 id="title3">빵</h3>
+									<h3 id="title3"><a name="Title3" id="Title3">빵</a></h3>
 									<table border="1">
 											<thead>
 											  <tr>
@@ -139,16 +153,19 @@
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '빵'}">
+											<c:set var="listCopy" value="${list}"/>
 											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
+											    <td><input type="hidden" id="cName3" value="${item.cName}"/></td>
+											    <td><input type="hidden" id="sName3" value="${item.sName}"/></td>
 											  </tr>
 											</c:if>
 											</c:forEach>
 											</tbody>
 										</table>
 										<ul class="actions">
-											<li><a href="#" class="button">More</a></li>
+											<li><button class="button" onclick="category3()">More</button></li>
 										</ul>
 								</article>
 							</div>
@@ -156,8 +173,31 @@
 				</div>
 			</div>
 	</div>
-
 <!-- Scripts -->
+<script>
+
+	// 인기 카테고리 more 버튼 클릭 시 페이지 이동
+	var cName1 = $("#cName1").val();
+	var sName1 = $("#sName1").val();
+	
+	var cName2 = $("#cName2").val();
+	var sName2 = $("#sName2").val();
+	
+	var cName3 = $("#cName3").val();
+	var sName3 = $("#sName3").val();
+	
+	function category1(){
+		location.href = "${path}/boardList.do?cName="+cName1+"&sName="+sName1;
+	}
+	
+	function category2(){
+		location.href = "${path}/boardList.do?cName="+cName2+"&sName="+sName2;
+	}
+	
+	function category3(){
+		location.href = "${path}/boardList.do?cName="+cName3+"&sName="+sName3;
+	}
+</script>
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>
 <script src="js/breakpoints.min.js"></script>

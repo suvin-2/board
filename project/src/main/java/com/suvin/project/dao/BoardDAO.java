@@ -43,7 +43,7 @@ public class BoardDAO {
 		return mybatis.delete("BoardDAO.boardDelete",bNo);
 	}
 	
-	// 게시글 단건 조회(ajax)
+	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용
 	public BoardVO boardSelectOne(BoardVO vo) {
 		return mybatis.selectOne("BoardDAO.boardSelectOne",vo);
 	}
@@ -51,5 +51,10 @@ public class BoardDAO {
 	// 게시글 단건 조회
 	public List<BoardVO> boardSelectDetail(BoardVO vo) throws Exception {
 		return  mybatis.selectList("BoardDAO.boardSelectOne",vo);
+	}
+	
+	// 게시글 수정
+	public int boardUpdateCnt(BoardVO vo) {
+		return mybatis.update("BoardDAO.boardUpdateCnt",vo);
 	}
 }
