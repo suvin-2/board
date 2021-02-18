@@ -2,9 +2,11 @@ package com.suvin.project.controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,8 @@ import com.suvin.project.service.BoardService;
 import com.suvin.project.service.CategoryService;
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.CategoryVO;
+import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.PageMaker;
 
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
@@ -80,13 +84,32 @@ public class BoardController {
 		return mv;
 	}
 	
+	/*
 	// 게시판 카테고리 별 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public String boardSelect(BoardVO vo, Model model) throws Exception {
 		List<BoardVO> list = service.boardCategorySelect(vo);
 		logger.info(list.toString());
 		model.addAttribute("list",list);
+		
 		return "/board/boardList";
+	}
+	*/
+	
+	// 게시판 카테고리 별 글 목록
+	@RequestMapping(value = "/boardList.do")
+	public ModelAndView boardSelect(Criteria cri, Model model) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/board/boardList");
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listCount(cri));
+		mv.addObject("list",service.boardCategorySelect(cri));
+		mv.addObject("pageMaker", pageMaker);
+		
+		return mv;
 	}
 	
 	/*
@@ -98,15 +121,24 @@ public class BoardController {
 	}
 	*/
 	
-	// 게시글 단건 조회
+	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
-	public String boardSelectDetail(BoardVO vo, Model model) throws Exception {
+	public ModelAndView boardSelectDetail(BoardVO vo, Criteria cri, Model model) throws Exception {
 		//vo.getbNo(bNo);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/board/boardDetail");
+		// 조회수 up
 		service.boardUpdateCnt(vo);
-		System.out.println("boardController board select detail form in " + vo);
+		
 		List<BoardVO> list = service.boardSelectDetail(vo);	
-		model.addAttribute("list",list);
-		return "/board/boardDetail";
+		mv.addObject("list",list);
+		
+		PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+        mv.addObject("page",cri.getPage());
+        mv.addObject("pageMaker", pageMaker);
+		
+		return mv;
 	}
 	
 	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용

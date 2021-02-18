@@ -56,7 +56,7 @@
 							  </tr>
 						</table>
 						<div align="center">
-							<a href="${path}/boardList.do?cName=${item.cName}&sName=${item.sName}" class="button">목록</a>
+							<a href="${path}/boardList.do?cName=${item.cName}&sName=${item.sName}&cNo=${item.cNo}" class="button">목록</a>
 							<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button">수정</a>
 			   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button primary">삭제</a>
 						</div>

@@ -54,7 +54,7 @@
 					$("#sideLi").append("<span class='opener' id='cName'>"+finalData[i]+"</span>");
 					for(var j=0;j<cNameList.length;j++) {
 						if(finalData[i] == list[j].cName) {
-							$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"' id='sName'>"+list[j].sName+"</a>");
+							$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a>");
 						}
 					}
 				}
