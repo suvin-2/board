@@ -10,6 +10,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<style type="text/css">
+	.pagingBnt li {list-style: none; float: left; padding: 10px;}
+	.pagingBnt {align:middle;}
+</style>
 </head>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -26,7 +30,8 @@
 				<section id="banner">
 					<div class="content">
 					
-					<% String sName = request.getParameter("sName"); 
+					<%  
+						String sName = request.getParameter("sName"); 
 						System.out.println("boardList.jsp 넘어온 sName : " + sName);
 					%>
 					<header class="major">
@@ -44,10 +49,12 @@
 							</thead>
 							<tbody>
 							<c:forEach var="item" items="${list}">
+							<c:set value="${item.cName}" var="cNameCopy"/>
+							<c:set value="${item.sName}" var="sNameCopy"/>
 							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 							
-								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}'">
 								    <td id="title">${item.title}</td>
 								    <td id="writer">${item.writer}</td>
 								    <td id="bDate">${bDate}</td>
@@ -57,6 +64,25 @@
 							</tbody>
 						</table>
 						<a href="boardInsertForm.do?sName=<%=sName%>" class="button">글쓰기</a>
+						<div class="pagingBnt">
+							  <ul class="btn-group pagination">
+							    <c:if test="${pageMaker.prev }"> 
+							    <li> 
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&page=${pageMaker.startPage-1}"/>'><i class="fa fa-chevron-left"></i></a>
+							    </li>
+							    </c:if>
+							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+							    <li>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
+							    </li>
+							    </c:forEach>
+							    <c:if test="${pageMaker.next && pageMaker.endPage >0}">
+							    <li>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&page=${pageMaker.endPage+1}"/>'><i class="fa fa-chevron-right"></i></a>
+							    </li>
+							    </c:if>
+							</ul>
+						</div>
 					</div>
 				</section>	
 			</div>

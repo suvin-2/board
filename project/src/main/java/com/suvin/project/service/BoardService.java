@@ -2,10 +2,9 @@ package com.suvin.project.service;
 
 import java.util.List;
 
-import org.springframework.ui.Model;
 
 import com.suvin.project.vo.BoardVO;
-import com.suvin.project.vo.CategoryVO;
+import com.suvin.project.vo.Criteria;
 
 public interface BoardService {
 
@@ -13,7 +12,13 @@ public interface BoardService {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception;
 	
 	// 게시글 카테고리별 조회
-	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception;
+	//public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception;
+	
+	// 게시글 카테고리 별 조회 페이징 테스트
+	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception;
+	
+	// 총 글 개수(페이징 처리에 사용)
+	public int listCount(Criteria cri) throws Exception;
 	
 	// 게시글 등록
 	public int boardInsert(BoardVO vo);

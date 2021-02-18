@@ -2,13 +2,13 @@ package com.suvin.project.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
 import com.suvin.project.vo.BoardVO;
-import com.suvin.project.vo.CategoryVO;
+import com.suvin.project.vo.Criteria;
 
 @Repository
 public class BoardDAO {
@@ -21,10 +21,20 @@ public class BoardDAO {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return mybatis.selectList("BoardDAO.boardSelect",vo);
 	}
-	
+	/*
 	// 게시글 카테고리 별 조회
 	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
 		return mybatis.selectList("BoardDAO.boardCategorySelect",vo);
+	}
+	*/
+	// 게시글 카테고리 별 조회 (페이징 처리)
+	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.boardCategorySelect",cri);
+	}
+	
+	// 총 글 개수(페이징 처리에 사용)
+	public int listCount(Criteria cri) {
+		return mybatis.selectOne("BoardDAO.listCount",cri);
 	}
 	
 	// 게시글 등록
@@ -53,7 +63,7 @@ public class BoardDAO {
 		return  mybatis.selectList("BoardDAO.boardSelectOne",vo);
 	}
 	
-	// 게시글 수정
+	// 조회수 update
 	public int boardUpdateCnt(BoardVO vo) {
 		return mybatis.update("BoardDAO.boardUpdateCnt",vo);
 	}

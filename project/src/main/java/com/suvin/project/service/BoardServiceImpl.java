@@ -2,14 +2,14 @@ package com.suvin.project.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import com.suvin.project.dao.BoardDAO;
 import com.suvin.project.vo.BoardVO;
-import com.suvin.project.vo.CategoryVO;
+import com.suvin.project.vo.Criteria;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -22,11 +22,21 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return dao.boardSelect(vo);
 	}
-
+/*
 	@Override
 	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.boardCategorySelect(vo);
+	}
+*/
+	@Override
+	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
+		return dao.boardCategorySelect(cri);
+	}
+	
+	@Override
+	public int listCount(Criteria cri) throws Exception {
+		return dao.listCount(cri); 
 	}
 	
 	@Override

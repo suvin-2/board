@@ -72,9 +72,11 @@ public class BoardVO {
 	public Integer getbNo(int bNo) {
 		return bNo;
 	}
+	
 	@Override
 	public String toString() {
 		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
 				+ ", writer=" + writer + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName + "]";
 	}
+	
 }
