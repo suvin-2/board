@@ -51,9 +51,9 @@
 							<c:forEach var="item" items="${list}">
 							<c:set value="${item.cName}" var="cNameCopy"/>
 							<c:set value="${item.sName}" var="sNameCopy"/>
+							<c:set value="${item.cNo}" var="cNoCopy"/>
 							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-							
 								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}'">
 								    <td id="title">${item.title}</td>
 								    <td id="writer">${item.writer}</td>
@@ -68,17 +68,17 @@
 							  <ul class="btn-group pagination">
 							    <c:if test="${pageMaker.prev }"> 
 							    <li> 
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&page=${pageMaker.startPage-1}"/>'><i class="fa fa-chevron-left"></i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'><i class="fa fa-chevron-left"></i></a>
 							    </li>
 							    </c:if>
 							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
 							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
 							    </li>
 							    </c:forEach>
 							    <c:if test="${pageMaker.next && pageMaker.endPage >0}">
 							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&page=${pageMaker.endPage+1}"/>'><i class="fa fa-chevron-right"></i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>'><i class="fa fa-chevron-right"></i></a>
 							    </li>
 							    </c:if>
 							</ul>
