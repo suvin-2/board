@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 </head>
-<body class="is-preload">
+<body class="is-preload" onload="document.userLiginForm.userId.focus();">
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Main -->
@@ -26,7 +26,7 @@
 					<!-- Section -->
 						<section>
 							<header class="major">
-								<h2>로그인</h2>
+								<br><h2>로그인</h2>
 							</header>
 								<form name="userLiginForm" action="/login" method="POST">
 							        <table>
@@ -39,13 +39,10 @@
 							                    <td>User Password:</td>
 							                    <td><input type="password" name="userPwd"></td>
 							                </tr>
-							                <tr>
-							                    <td colspan="2"><input name="submit" type="submit" value="Login"></td>
-							                </tr>
 							            </tbody>
 							        </table>
+							        <input name="submit" type="submit" value="Login" style="align:middle;" />
 							        <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-									<button type="submit" class="btn btn-primary">Sign in</button>
 							    </form>
 						</section>
 				</div>

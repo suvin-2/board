@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserController {
 
-	@RequestMapping(value="/user/userlogin")
+	@RequestMapping(value="/userLogin")
 	public String userLogin() throws Exception {
 		return "/user/userLogin";
 	}

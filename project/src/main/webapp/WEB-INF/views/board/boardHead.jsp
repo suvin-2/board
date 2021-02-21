@@ -21,6 +21,8 @@
 			<header id="header">
 				<a href="/" class="logo"><strong>Suvin's Cooking Class</strong> by suvin</a>
 				<ul class="icons">
+					<li><a href="/userLogin"><span class="label">LOGIN</span></a></li>
+					<li><a href="https://github.com/suvin-2"><span class="label">JOIN</span></a></li>
 					<li><a href="https://github.com/suvin-2" class="icon brands fa-github"><span class="label">Github</span></a></li>
 				</ul>
 			</header>

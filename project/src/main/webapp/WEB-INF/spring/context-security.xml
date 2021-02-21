@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 기본 namespace를 security로 설정했다. -->
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -7,36 +8,19 @@
                                  http://www.springframework.org/schema/security
                                  http://www.springframework.org/schema/security/spring-security.xsd">
         <http auto-config="true" use-expressions="false">
+        	<!-- 모든 URL을 접속(/**)하기 위해선 ROLE_USER 권한이 필요하다는 뜻이다. 
+        	index 페이지 및 모든 페이지에 들어갈 수 있는 사람은 로그인을 한, 즉 권한을 가진(ROLE_USER) 사람만 들어 올 수 있다는 뜻이다. 
+        	나중에 되면 이곳에서 페이지의 경로(/admin/**, /user/**, ...)에 원하는 대로 권한 설정을 할 수 있다. 
+        	이것과 관련된 내용은 커스텀을 하면서 더 자세히 알게 될 것이다. -->
             <intercept-url pattern="/**" access="ROLE_USER" />
-            <form-login
-		        username-parameter="userId"
-		        password-parameter="userPwd"
-		        login-processing-url="/login"
-		        login-page="/user/userLogin"
-		        default-target-url="/"
-		    />
         </http>
         <authentication-manager>
             <authentication-provider>
                 <user-service>
+                	<!-- 사용자 정보를 설정하는 태그이다. 사용자 이름(ID), 권한, 비밀번호를 지정할 수 있다. -->
                     <user name="user" password="userPw" authorities="ROLE_USER"/>
                     <user name="guest" password="guest" authorities="ROLE_GUEST"/>
                 </user-service>
             </authentication-provider>
         </authentication-manager>
 </beans:beans>
-
-
-<!--
-- 02행: 기본 namespace를 security로 설정했다.
-
-- 10행: auto-config 속성은 자동 설정을 뜻하고 use-expressions 속성은 intercept-url에 SpEL문법의 사용유무를 선택한다.
-
-- 11행: 모든 URL을 접속(/**)하기 위해선 ROLE_USER 권한이 필요하다는 뜻이다. index 페이지 및 모든 페이지에 들어갈 수 있는 사람은 로그인을 한, 즉 권한을 가진(ROLE_USER) 사람만 들어 올 수 있다는 뜻이다. 나중에 되면 이곳에서 페이지의 경로(/admin/**, /user/**, ...)에 원하는 대로 권한 설정을 할 수 있다. 이것과 관련된 내용은 커스텀을 하면서 더 자세히 알게 될 것이다.
-
-- 14행: 인증과 관련된 정보를 설정하는 태그이다.
-
-- 15행: 인증에 대한 정보를 제공하는 제공자를 지정하는 태그이다.
-
-- 16~20행: 사용자 정보를 설정하는 태그이다. 사용자 이름(ID), 권한, 비밀번호를 지정할 수 있다.
--->
