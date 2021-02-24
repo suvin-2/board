@@ -14,8 +14,26 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript">
+$(function(){
+	$("#submit").click(function(){
+		
+		if($("#userId").val().length==0) { 
+			alert("ID를 입력하세요."); 
+			$("#userId").focus(); 
+			return false; 
+		}
+		if($("#userPw").val().length==0) { 
+			alert("비밀번호를 입력하세요."); 
+			$("#userPw").focus(); 
+			return false; 
+		}
+	});
+});
+
+</script>
 </head>
-<body class="is-preload" onload="document.userLiginForm.userId.focus();">
+<body class="is-preload" onload="document.userLoginForm.userId.focus();">
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Main -->
@@ -28,22 +46,35 @@
 							<header class="major">
 								<br><h2>로그인</h2>
 							</header>
-								<form name="userLiginForm" action="/login" method="POST">
-							        <table>
-							            <tbody>
-							                <tr>
-							                    <td>User Id:</td>
-							                    <td><input type="text" name="userId" value=""></td>
-							                </tr>
-							                <tr>
-							                    <td>User Password:</td>
-							                    <td><input type="password" name="userPwd"></td>
-							                </tr>
-							            </tbody>
-							        </table>
-							        <input name="submit" type="submit" value="Login" style="align:middle;" />
-							        <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+							<div style="padding: 0 200px 0 200px; height: auto; min-height: 100px; overflow: auto;">
+							     <form name="userLoginForm" action="/login" method="post">
+							         <div class="form-group">
+							             <label for="exampleDropdownFormEmail1">ID</label>
+							             <input type="text" class="form-control" name="userId" id="userId" placeholder="example" />
+							         </div>
+							         <br>
+							         <div class="form-group">
+							             <label for="exampleDropdownFormPassword1">Password</label>
+							             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" />
+							         </div>
+							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+							         <br>
+							         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+									    <font color="red">
+									        <p>Your login attempt was not successful due to <br/>
+									            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
+									    </font>
+									</c:if>
+																         
+							         <button type="submit" class="btn btn-primary">Login</button>
 							    </form>
+							    <div class="dropdown-divider"></div>
+							    <a class="dropdown-item" href="#">New around here? Sign up</a>
+							    <br>
+							    <a class="dropdown-item" href="#">Forgot password?</a>
+							</div>
+							
 						</section>
 				</div>
 			</div>
