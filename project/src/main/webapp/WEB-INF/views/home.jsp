@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -93,6 +94,7 @@
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '한식'}">
+											<c:set value="${item.cNo}" var="cNo1"/>
 											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
@@ -121,6 +123,7 @@
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '중식'}">
+											<c:set value="${item.cNo}" var="cNo2"/>
 											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
@@ -149,6 +152,7 @@
 											<!-- 날짜 포맷 변환 (taglib 추가해야함) --> 
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '빵'}">
+											<c:set value="${item.cNo}" var="cNo3"/>
 											<c:set var="listCopy" value="${list}"/>
 											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
 											    <td id="title">${item.title}</td>
@@ -183,15 +187,16 @@
 	var sName3 = $("#sName3").val();
 	
 	function category1(){
-		location.href = "${path}/boardList.do?cName="+cName1+"&sName="+sName1;
+		location.href = "${path}/boardList.do?cName="+cName1+"&sName="+sName1+"&cNo="+${cNo1};
 	}
 	
 	function category2(){
-		location.href = "${path}/boardList.do?cName="+cName2+"&sName="+sName2;
+		location.href = "${path}/boardList.do?cName="+cName2+"&sName="+sName2+"&cNo="+${cNo2};
 	}
 	
 	function category3(){
-		location.href = "${path}/boardList.do?cName="+cName3+"&sName="+sName3;
+		console.log("cno3 : " + ${cNo3})
+		location.href = "${path}/boardList.do?cName="+cName3+"&sName="+sName3+"&cNo="+${cNo3};
 	}
 </script>
 <script src="js/jquery.min.js"></script>
