@@ -66,8 +66,8 @@ $(function(){
 									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
 									    </font>
 									</c:if>
-																         
-							         <button type="submit" class="btn btn-primary">Login</button>
+									<input type="submit" id="submit" class="button primary" value="Login"/>
+							        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
 							    </form>
 							    <div class="dropdown-divider"></div>
 							    <a class="dropdown-item" href="#">New around here? Sign up</a>
