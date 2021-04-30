@@ -16,6 +16,10 @@ public class UserController {
 		return "/user/userLogin";
 	}
 	
+	@RequestMapping(value="/userJoin")
+	public String userJoin() throws Exception {
+		return "/user/userJoin";
+	}
 	
 	@RequestMapping(value="/userLoginFales")
 	public String userLoginFales(String error) throws Exception {

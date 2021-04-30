@@ -35,7 +35,7 @@
 					<ul class="icons">
 						<sec:authorize access="isAnonymous()">
 							<li><a href='<c:url value="/userLogin"/>'><span class="label">LOGIN</span></a></li>
-							<li><a href="#"><span class="label">JOIN</span></a></li>
+							<li><a href="/userJoin.do"><span class="label">JOIN</span></a></li>
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li><p><sec:authentication property="principal.username"/>님, 반갑습니다.</p></li>
