@@ -32,6 +32,10 @@ $(function(){
 });
 
 </script>
+<style>
+.userBirth { display: flex; }
+.userBirth_c { flex: 1; }
+</style>
 </head>
 <body class="is-preload" onload="document.userLoginForm.userId.focus();">
 	<!-- Wrapper -->
@@ -44,41 +48,61 @@ $(function(){
 					<!-- Section -->
 						<section>
 							<header class="major">
-								<br><h2>로그인</h2>
+								<br><h2>회원가입</h2>
 							</header>
 							<div style="padding: 0 200px 0 200px; height: auto; min-height: 100px; overflow: auto;">
-							     <form name="userLoginForm" action="/login" method="post">
+							     <form name="userJoinForm" action="/login" method="post">
 							         <div class="form-group">
-							             <label for="exampleDropdownFormEmail1">ID</label>
-							             <input type="text" class="form-control" name="userId" id="userId" placeholder="example" />
+							             <label>아이디</label>
+							             <input type="text" class="form-control" name="userId" id="userId" placeholder="id" />
 							         </div>
 							         <br>
 							         <div class="form-group">
-							             <label for="exampleDropdownFormPassword1">Password</label>
+							             <label>비밀번호</label>
 							             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" />
 							         </div>
-							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+							         <div class="form-group">
+							             <label>비밀번호 확인</label>
+							             <input type="password" class="form-control" name="userPwCheck" id="userPwCheck" placeholder="Password" />
+							         </div>
+							         <div class="form-group">
+							             <label>이름</label>
+							             <input type="text" class="form-control" name="userName" id="userName" placeholder="name" />
+							         </div>
+							         <div class="form-group">
+							             <label>생년월일</label>
+							             <div class="userBirth_p">
+								             <div class="userBirth_c">
+								             	<input type="text" class="form-control" name="userYear" id="userYear" placeholder="year(ex 1995)" />
+								             </div>
+								             <div class="userBirth_c">
+									            <input type="text" class="form-control" name="userMonth" id="userMonth" placeholder="month" />
+									         </div>
+									         <div class="userBirth_c">
+									            <input type="text" class="form-control" name="userDay" id="userDay" placeholder="day" />
+								             </div>
+							             </div>
+							         </div>
+							         <div class="form-group">
+							             <label>이메일</label>
+							             <input type="text" class="form-control" name="userEmail" id="userEmail" placeholder="email" />
+							         </div>
+							         <div class="form-group">
+							             <label>전화번호</label>
+							             <input type="text" class="form-control" name="userPhone" id="userPhone" placeholder="phone-number" />
+							         </div>
 							         <br>
-							         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-									    <font color="red">
-									        <p>Your login attempt was not successful due to <br/>
-									            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
-									    </font>
-									</c:if>
-									<input type="submit" id="submit" class="button primary" value="Login"/>
-							        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
+							         <div class="form-group">
+							         	<input type="submit" id="submit" class="button primary" value="Login"/>
+							         </div>
 							    </form>
 							    <div class="dropdown-divider"></div>
-							    <a class="dropdown-item" href="#">New around here? Sign up</a>
-							    <br>
-							    <a class="dropdown-item" href="#">Forgot password?</a>
 							</div>
-							
 						</section>
 				</div>
 			</div>
 	</div>
+
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>
