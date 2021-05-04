@@ -2,11 +2,9 @@ package com.suvin.project.controller;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,6 @@ import com.suvin.project.vo.CategoryVO;
 import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.PageMaker;
 
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 /**
  * Handles requests for the application home page.

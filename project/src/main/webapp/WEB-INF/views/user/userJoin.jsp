@@ -23,9 +23,24 @@ $(function(){
 			$("#userId").focus(); 
 			return false; 
 		}
-		if($("#userPw").val().length==0) { 
+		if($("#userPw1").val().length==0) { 
 			alert("비밀번호를 입력하세요."); 
-			$("#userPw").focus(); 
+			$("#userPw1").focus(); 
+			return false; 
+		}
+		if($("#userPw2").val().length==0) { 
+			alert("비밀번호를 재확인하세요."); 
+			$("#userPw2").focus(); 
+			return false; 
+		}
+		if($("#email").val().length==0) { 
+			alert("이메일을 입력하세요."); 
+			$("#email").focus(); 
+			return false; 
+		}
+		if($("#tel").val().length==0) { 
+			alert("휴대전화를 입력하세요."); 
+			$("#tel").focus(); 
 			return false; 
 		}
 	});
@@ -33,11 +48,79 @@ $(function(){
 
 </script>
 <style>
-.userBirth { display: flex; }
-.userBirth_c { flex: 1; }
+#content {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 460px;
+}
+
+input {
+    margin : 0 0 15px;
+}
+
+#bir_wrap {
+    display: table;
+    width: 100%;
+}
+
+#bir_yy {
+    display: table-cell;
+    width: 147px;
+    
+}
+
+#bir_mm {
+    display: table-cell;
+    width: 147px;
+    vertical-align: middle;
+}
+
+#bir_dd {
+    display: table-cell;
+    width: 147px;
+}
+
+#bir_mm, #bir_dd {
+    padding-left: 10px;
+}
+
+
+
+select {
+    width: 100%;
+    height: 29px;
+    font-size: 15px;
+    background: #fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;
+    background-size: 20px 8px;
+    -webkit-appearance: none;
+    display: inline-block;
+    text-align: start;
+    border: none;
+    cursor: default;
+    font-family: Dotum,'돋움',Helvetica,sans-serif;
+    margin : 0 0 15px;
+}
+
+/* 에러메세지 */
+.error_next_box {
+    margin-top: 9px;
+    font-size: 12px;
+    color: red;    
+    display: none;
+}
+
+#alertTxt {
+    position: absolute;
+    top: 19px;
+    right: 38px;
+    font-size: 12px;
+    color: red;
+    display: none;
+}
 </style>
 </head>
-<body class="is-preload" onload="document.userLoginForm.userId.focus();">
+<body class="is-preload" onload="document.userJoinForm.userId.focus();">
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Main -->
@@ -50,54 +133,109 @@ $(function(){
 							<header class="major">
 								<br><h2>회원가입</h2>
 							</header>
-							<div style="padding: 0 200px 0 200px; height: auto; min-height: 100px; overflow: auto;">
-							     <form name="userJoinForm" action="/login" method="post">
-							         <div class="form-group">
-							             <label>아이디</label>
-							             <input type="text" class="form-control" name="userId" id="userId" placeholder="id" />
-							         </div>
-							         <br>
-							         <div class="form-group">
-							             <label>비밀번호</label>
-							             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" />
-							         </div>
-							         <div class="form-group">
-							             <label>비밀번호 확인</label>
-							             <input type="password" class="form-control" name="userPwCheck" id="userPwCheck" placeholder="Password" />
-							         </div>
-							         <div class="form-group">
-							             <label>이름</label>
-							             <input type="text" class="form-control" name="userName" id="userName" placeholder="name" />
-							         </div>
-							         <div class="form-group">
-							             <label>생년월일</label>
-							             <div class="userBirth_p">
-								             <div class="userBirth_c">
-								             	<input type="text" class="form-control" name="userYear" id="userYear" placeholder="year(ex 1995)" />
-								             </div>
-								             <div class="userBirth_c">
-									            <input type="text" class="form-control" name="userMonth" id="userMonth" placeholder="month" />
-									         </div>
-									         <div class="userBirth_c">
-									            <input type="text" class="form-control" name="userDay" id="userDay" placeholder="day" />
-								             </div>
-							             </div>
-							         </div>
-							         <div class="form-group">
-							             <label>이메일</label>
-							             <input type="text" class="form-control" name="userEmail" id="userEmail" placeholder="email" />
-							         </div>
-							         <div class="form-group">
-							             <label>전화번호</label>
-							             <input type="text" class="form-control" name="userPhone" id="userPhone" placeholder="phone-number" />
-							         </div>
-							         <br>
-							         <div class="form-group">
-							         	<input type="submit" id="submit" class="button primary" value="Login"/>
-							         </div>
-							    </form>
-							    <div class="dropdown-divider"></div>
-							</div>
+							<!-- content-->
+				            <div id="content">
+								<form name="userJoinForm" action="/userInsert.do" method="post">
+									<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					                <!-- ID -->
+					                <div>
+				                        <h4>아이디</h4>
+				                        <input type="text" id="userId" name="userId" class="int" maxlength="20">
+					                    <span class="error_next_box"></span>
+					                </div>
+					                <!-- PW1 -->
+					                <div>
+					                    <h4>비밀번호</h4>
+					                    <div>
+					                    	<input type="password" id="userPw1" name="userPw" class="int" maxlength="20">
+					                        <span id="alertTxt">사용불가</span>
+					                    </div>
+					                    <span class="error_next_box"></span>
+					                </div>
+					                <!-- PW2 -->
+					                <div>
+					                    <h4>비밀번호 재확인</h4>
+					                    <input type="password" id="userPw2" class="int" maxlength="20">
+					                    <span class="error_next_box"></span>
+					                </div>
+					                
+					                <!-- NAME -->
+					                <div>
+					                    <h4>이름</h4>
+					                    <input type="text" id="userName" name="userName" class="int" maxlength="20">
+					                    <span class="error_next_box"></span>
+					                </div>
+					
+					                <!-- BIRTH -->
+					                <div>
+					                    <h4>생년월일</h4>
+					
+					                    <div id="bir_wrap">
+					                        <!-- BIRTH_YY -->
+					                        <div id="bir_yy">
+					                        	<input type="text" id="yyyy" name="yyyy" class="int" maxlength="4" placeholder="년(4자)">
+					                        </div>
+					
+					                        <!-- BIRTH_MM -->
+					                        <div id="bir_mm">
+				                                <select id="mm" name="mm" class="sel">
+				                                    <option>월</option>
+				                                    <option value="01">1</option>
+				                                    <option value="02">2</option>
+				                                    <option value="03">3</option>
+				                                    <option value="04">4</option>
+				                                    <option value="05">5</option>
+				                                    <option value="06">6</option>
+				                                    <option value="07">7</option>
+				                                    <option value="08">8</option>
+				                                    <option value="09">9</option>                                    
+				                                    <option value="10">10</option>
+				                                    <option value="11">11</option>
+				                                    <option value="12">12</option>
+				                                </select>
+					                        </div>
+					
+					                        <!-- BIRTH_DD -->
+					                        <div id="bir_dd">
+				                                <input type="text" id="dd" name="dd" class="int" maxlength="2" placeholder="일">
+					                        </div>					
+					                    </div>
+					                    <span class="error_next_box"></span>    
+					                </div>
+					
+					                <!-- GENDER -->
+					                <div>
+					                    <h4>성별</h4>
+				                        <select id="gender" name="gender" class="sel">
+				                            <option>성별</option>
+				                            <option value="F">여자</option>
+				                            <option value="M">남자</option>
+				                        </select>  
+					                    <span class="error_next_box">필수 정보입니다.</span>
+					                </div>
+					
+					                <!-- EMAIL -->
+					                <div>
+					                    <h4>이메일</h4>
+				                        <input type="text" id="email" name="email" class="int" maxlength="100" placeholder="선택입력">
+					                    <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>    
+					                </div>
+					
+					                <!-- MOBILE -->
+					                <div>
+					                    <h4>전화번호</h4>
+				                        <input type="text" id="tel" name="tel" class="int" maxlength="16" placeholder="전화번호 입력">
+					                    <span class="error_next_box"></span>    
+					                </div>
+					                
+					                <!-- JOIN BTN-->
+					                <center>
+					                	<input type="submit" id="submit" class="button" value="가입하기"/>
+					                </center>
+					        	</form>
+				            </div> 
+				            <!-- content-->
+							
 						</section>
 				</div>
 			</div>

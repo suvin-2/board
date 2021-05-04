@@ -12,5 +12,6 @@
           <typeAlias alias="boardVO" type="com.suvin.project.vo.BoardVO"/>
           <typeAlias alias="categoryVO" type="com.suvin.project.vo.CategoryVO"/>
           <typeAlias alias="criteria" type="com.suvin.project.vo.Criteria"/>
+          <typeAlias alias="userVO" type="com.suvin.project.vo.UserVO"/>
     </typeAliases>
 </configuration>
