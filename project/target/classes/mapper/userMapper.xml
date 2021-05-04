@@ -20,7 +20,7 @@
 	<!-- 회원 가입 -->
 	<insert id="userInsert" parameterType="userVO">
 		INSERT INTO B_USER(ID,PASSWORD,NAME,BIRTHDAY,GENDER,EMAIL,TEL,AUTH,ENABLED)
-		VALUES(#{userId},#{userPw},#{userName},TO_DATE('#{yyyy}-#{mm}-#{dd}','YYYY-MM-DD'),#{gender},#{email},#{tel},'ROLE_USER',1)
+		VALUES(#{userId},#{userPw},#{userName},TO_DATE(#{birthday},'YYYY-MM-DD'),#{gender},#{email},#{tel},'ROLE_USER',1)
 	</insert>
 	
 </mapper>

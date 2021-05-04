@@ -1,7 +1,5 @@
 package com.suvin.project.vo;
 
-import java.util.Date;
-
 public class UserVO {
 	
 	private String userId;
@@ -10,7 +8,7 @@ public class UserVO {
 	private String yyyy;
 	private String mm;
 	private String dd;
-	private Date birthday;
+	private String birthday;
 	private String gender;
 	private String email;
 	private String tel;
@@ -52,10 +50,10 @@ public class UserVO {
 	public void setDd(String dd) {
 		this.dd = dd;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public String getGender() {

@@ -16,7 +16,20 @@
 <link rel="stylesheet" href="css/main.css" />
 <script type="text/javascript">
 $(function(){
-	$("#submit").click(function(){
+	
+	$("#fCheck").click(function(){
+		
+		var birthday;
+		var yyyy = document.getElementById("yyyy").value;
+		var mm = document.getElementById("mm").value;
+		var dd = document.getElementById("dd").value;
+		
+		console.log('yyyy:'+yyyy+' mm:'+mm+' dd:'+dd);
+		birthday = yyyy+mm+dd;
+		document.getElementById("birthday").value = birthday;
+		
+		console.log('birthday 대입 후 : ' + document.getElementById("birthday").value);
+		
 		
 		if($("#userId").val().length==0) { 
 			alert("ID를 입력하세요."); 
@@ -33,6 +46,12 @@ $(function(){
 			$("#userPw2").focus(); 
 			return false; 
 		}
+		if($("#userPw1").val() != $("#userPw2").val()) {
+			alert("비밀번호가 일치하지 않습니다.");
+			$("#userPw2").focus(); 
+			return false; 
+		}
+		
 		if($("#email").val().length==0) { 
 			alert("이메일을 입력하세요."); 
 			$("#email").focus(); 
@@ -43,6 +62,52 @@ $(function(){
 			$("#tel").focus(); 
 			return false; 
 		}
+		
+	});
+	
+	$("#submit").click(function(){
+		
+		var birthday;
+		var yyyy = document.getElementById("yyyy").value;
+		var mm = document.getElementById("mm").value;
+		var dd = document.getElementById("dd").value;
+		
+		console.log('yyyy:'+yyyy+' mm:'+mm+' dd:'+dd);
+		birthday = yyyy+mm+dd;
+		document.getElementById("birthday").value = birthday;
+		
+		console.log('birthday 대입 후 : ' + document.getElementById("birthday").value);
+		
+		if($("#userId").val().length==0) { 
+			alert("ID를 입력하세요."); 
+			$("#userId").focus(); 
+			return false; 
+		}
+		if($("#userPw1").val().length==0) { 
+			alert("비밀번호를 입력하세요."); 
+			$("#userPw1").focus(); 
+			return false; 
+		}
+		if($("#userPw2").val().length==0) { 
+			alert("비밀번호를 재확인하세요."); 
+			$("#userPw2").focus(); 
+			return false; 
+		} else if($("#userPw1").val() =! $("#userPw2").val()) {
+			alert("비밀번호가 일치하지 않습니다.");
+		}
+		
+		
+		if($("#email").val().length==0) { 
+			alert("이메일을 입력하세요."); 
+			$("#email").focus(); 
+			return false; 
+		}
+		if($("#tel").val().length==0) { 
+			alert("휴대전화를 입력하세요."); 
+			$("#tel").focus(); 
+			return false; 
+		}
+		
 	});
 });
 
@@ -137,6 +202,7 @@ select {
 				            <div id="content">
 								<form name="userJoinForm" action="/userInsert.do" method="post">
 									<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<input type="hidden" id="birthday" name="birthday">
 					                <!-- ID -->
 					                <div>
 				                        <h4>아이디</h4>
@@ -231,6 +297,7 @@ select {
 					                <!-- JOIN BTN-->
 					                <center>
 					                	<input type="submit" id="submit" class="button" value="가입하기"/>
+					                	<input type="button" id="fCheck" class="button primary" value="함수확인">
 					                </center>
 					        	</form>
 				            </div> 
