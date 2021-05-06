@@ -19,8 +19,14 @@ public class UserDAO {
 		return mybatis.selectList("UserDAO.userSelect",vo);
 	}
 	
+	// 회원 가입 시 아이디 중복 체크(ajax)
+	public UserVO userIdCheck(UserVO vo) {
+		return mybatis.selectOne("UserDAO.userIdCheck",vo);
+	}
+	
 	// 회원 가입
 	public int userInsert(UserVO vo) {
 		return mybatis.insert("UserDAO.userInsert",vo);
 	}
+
 }

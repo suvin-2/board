@@ -14,6 +14,7 @@ public class UserVO {
 	private String tel;
 	private String auth;
 	private int enabled;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -86,6 +87,11 @@ public class UserVO {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
+	// 아이디 단건 조회 (회원가입 시 중복체크)
+	public String getUserId(String userId) {
+		return userId;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", yyyy=" + yyyy + ", mm="

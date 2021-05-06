@@ -19,12 +19,20 @@ public class UserServiceImpl implements UserService {
 	//@Autowired
 	//private BCryptPasswordEncoder pwEncoder;
 	
+	// 회원 전체 조회
 	@Override
 	@Transactional
 	public List<UserVO> userSelect(UserVO vo) throws Exception {
 		return dao.userSelect(vo);
 	}
 
+	// 회원 가입 시 아이디 중복 체크(ajax)
+	@Override
+	public UserVO userIdCheck(UserVO vo) {
+		return dao.userIdCheck(vo);
+	}
+
+	// 회원 가입
 	@Override
 	public int userInsert(UserVO vo) {
 		/*

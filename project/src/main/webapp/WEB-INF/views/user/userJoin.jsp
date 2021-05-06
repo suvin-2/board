@@ -58,11 +58,17 @@ $(function(){
 			$("#userId").focus(); 
 			return false; 
 		}
+		
 		if(!idPattern.test(userId.value)) {
 			alert("아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."); 
 			$("#userId").focus(); 
 			return false;
 	    }
+		
+		if($("#userId").val().length != 0) {
+			console.log('입력한 id : ' + userId.value);
+			idCheck();
+		}
 		
 		// pw 유효성 체크
 	    var pwPattern = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/;
@@ -207,6 +213,27 @@ $(function(){
 	 
 	    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));           
 	});
+	
+	// 아이디 중복 체크
+	function idCheck(){
+		$.ajax({
+			url : 'userIdCheck/'+ userId.value, 
+			type : 'GET',
+			dataType : 'json',
+			error : function(xhr, status, msg) {
+				console.log("상태값 : "+status+", Http 에러메시지 : "+msg+", xhr : "+xhr);
+			},
+			success : function(data) {
+				console.log(data);
+				console.log(data.userId);
+				if(userId.value == data) {
+					alert("이미 등록된 아이디입니다. 새로운 아이디를 입력하세요.");
+					$("#userId").focus(); 
+					return false; 
+				}
+			}
+		});
+	}
 });
 
 </script>

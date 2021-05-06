@@ -17,6 +17,13 @@
 		FROM B_USER
 	</select>
 	
+	<!-- 기존 회원 아이디 조회 -->
+	<select id="userIdCheck" resultType="userVO">
+		SELECT ID
+		FROM B_USER
+		WHERE ID = #{userId}
+	</select>
+	
 	<!-- 회원 가입 -->
 	<insert id="userInsert" parameterType="userVO">
 		INSERT INTO B_USER(ID,PASSWORD,NAME,BIRTHDAY,GENDER,EMAIL,TEL,AUTH,ENABLED)
