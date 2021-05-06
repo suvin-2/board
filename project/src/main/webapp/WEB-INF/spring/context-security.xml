@@ -7,6 +7,10 @@
                                  http://www.springframework.org/schema/beans/spring-beans.xsd
                                  http://www.springframework.org/schema/security
                                  http://www.springframework.org/schema/security/spring-security.xsd">
+                                 
+        <beans:bean id="bcryptPasswordEncoder"
+        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+        
         <http auto-config="true" use-expressions="true">
         	<!-- 모든 URL을 접속(/**)하기 위해선 ROLE_USER 권한이 필요하다는 뜻이다. 
         	index 페이지 및 모든 페이지에 들어갈 수 있는 사람은 로그인을 한, 즉 권한을 가진(ROLE_USER) 사람만 들어 올 수 있다는 뜻이다. 

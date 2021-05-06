@@ -17,97 +17,195 @@
 <script type="text/javascript">
 $(function(){
 	
-	$("#fCheck").click(function(){
+	$("#submit").click(function(){
+		
+		var userId = document.querySelector('#userId');
+
+		var userPw1 = document.querySelector('#userPw1');
+		var pwMsg = document.querySelector('#alertTxt');
+
+		var userPw2 = document.querySelector('#userPw2');
+		var pwMsgArea = document.querySelector('.int_pass');
+
+		var userName = document.querySelector('#userName');
+
+		var gender = document.querySelector('#gender');
+
+		var email = document.querySelector('#email');
+
+		var tel = document.querySelector('#tel');
+
+		var error = document.querySelectorAll('.error_next_box');
 		
 		var birthday;
 		var yyyy = document.getElementById("yyyy").value;
 		var mm = document.getElementById("mm").value;
 		var dd = document.getElementById("dd").value;
 		
-		console.log('yyyy:'+yyyy+' mm:'+mm+' dd:'+dd);
+		console.log('yyyy:'+yyyy+', mm:'+mm+', dd:'+dd);
+		
 		birthday = yyyy+mm+dd;
 		document.getElementById("birthday").value = birthday;
 		
 		console.log('birthday 대입 후 : ' + document.getElementById("birthday").value);
+		console.log('tel : '+tel.value);
 		
+		// id 유효성 체크
+		var idPattern = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
 		
-		if($("#userId").val().length==0) { 
-			alert("ID를 입력하세요."); 
+		if($("#userId").val().length == 0) { 
+			alert("ID를 입력하세요.");
 			$("#userId").focus(); 
 			return false; 
 		}
-		if($("#userPw1").val().length==0) { 
-			alert("비밀번호를 입력하세요."); 
-			$("#userPw1").focus(); 
-			return false; 
-		}
-		if($("#userPw2").val().length==0) { 
-			alert("비밀번호를 재확인하세요."); 
-			$("#userPw2").focus(); 
-			return false; 
-		}
-		if($("#userPw1").val() != $("#userPw2").val()) {
-			alert("비밀번호가 일치하지 않습니다.");
-			$("#userPw2").focus(); 
-			return false; 
+		if(!idPattern.test(userId.value)) {
+			alert("아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."); 
+			$("#userId").focus(); 
+			return false;
+	    }
+		
+		// pw 유효성 체크
+	    var pwPattern = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/;
+	    var pwPattern = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+	    
+	    if(userPw1.value == "") {
+	    	alert("비밀번호를 입력하세요.");
+	    	$("#userPw1").focus(); 
+			return false;
+	    }
+	    
+	    if(!pwPattern.test(userPw1.value)) {
+	    	alert("비밀번호는 8~20자 영문 소문자(대문자), 숫자, 특수문자를 사용하세요.");
+	    	$("#userPw1").focus(); 
+			return false;
+	    }
+	
+	    if(userPw2.value != userPw1.value) {
+	    	alert("비밀번호가 일치하지 않습니다.");
+	    	$("#userPw2").focus(); 
+			return false;
+	    }
+	    
+	    if(userPw2.value == "") {
+	    	alert("비밀번호 재확인을하세요.");
+	    	$("#userPw2").focus(); 
+			return false;
+	    }
+
+	    // 이름 유효성 체크
+	    var namePattern = /^[가-힣a-zA-Z]+$/;
+	    
+	    if(userName.value == "") {
+	    	alert("이름을 입력하세요.");
+	    	$("#userName").focus(); 
+			return false;
+	    }
+	    
+	    if(!namePattern.test(userName.value) || userName.value.indexOf(" ") > -1) {
+	    	alert("이름은 한글 또는 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)");
+	    	$("#userName").focus(); 
+			return false;
+	    }
+
+	    // 성별 유효성 체크
+	    if(gender.value == "성별") {
+        	alert("성별을 선택하세요.");
+	    	$("#gender").focus(); 
+			return false;
+        }
+		// 생년월일 유효성 체크
+
+	    if(yyyy == "") {
+	        alert("태어난 년도 4자리를 입력하세요.");
+	    	$("#yyyy").focus(); 
+			return false;
+	    }
+
+        if(mm == "월") {
+        	alert("태어난 월을 선택하세요.");
+	    	$("#mm").focus(); 
+			return false;
+        }
+        
+        if(dd == "") {
+            alert("태어난 일(날짜) 2자리를 정확하게 입력하세요.");
+	    	$("#dd").focus(); 
+			return false;
+        }
+
+        var yearPattern = /^[0-9_]{4}$/;
+   		var datePattern = /^[0-9_]{2}$/;
+    	
+	    if(!datePattern.test(dd)) {
+	        alert("태어난 일(날짜) 2자리로 입력해주세요.(ex)07)");
+	    	$("#dd").focus(); 
+			return false;
+	    }
+		
+		if(Number(dd)<1 || Number(dd)>31) {
+		    alert("태어난 일(날짜) 2자리를 다시 확인해주세요.");
+			$("#dd").focus(); 
+			return false;
 		}
 		
-		if($("#email").val().length==0) { 
-			alert("이메일을 입력하세요."); 
-			$("#email").focus(); 
-			return false; 
-		}
-		if($("#tel").val().length==0) { 
-			alert("휴대전화를 입력하세요."); 
-			$("#tel").focus(); 
-			return false; 
-		}
+	    if(Number(yyyy) < 1920) {
+	        alert("태어난 년도를 다시 확인해주세요.");
+	    	$("#yyyy").focus(); 
+			return false;
+	    }
+	    
+	    if(Number(yyyy) > 2022) {
+	        alert("태어난 년도를 다시 확인해주세요.");
+	    	$("#yyyy").focus(); 
+			return false;
+	    }
+
+	    // 이메일 유휴성 체크
+	    var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+	    if(email.value === ""){ 
+	    	alert("이메일을 입력하세요.");
+	    	$("#email").focus(); 
+			return false;
+	    }
+	    
+	    if(!emailPattern.test(email.value)) {
+	    	alert("이메일을 다시 확인해주세요.");
+	    	$("#email").focus(); 
+			return false;
+	    }
+
+		// 전화번호 유호성 체크
+	    var isPhoneNum = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+
+	    if(tel.value === "") {
+	    	alert("휴대폰 번호를 입력하세요.");
+	    	$("#tel").focus(); 
+			return false;
+	    }
+	    
+	    if(!isPhoneNum.test(tel.value)) {
+	        alert("형식에 맞지 않는 번호입니다.");
+	    	$("#tel").focus(); 
+			return false;
+	    }
 		
 	});
 	
-	$("#submit").click(function(){
-		
-		var birthday;
-		var yyyy = document.getElementById("yyyy").value;
-		var mm = document.getElementById("mm").value;
-		var dd = document.getElementById("dd").value;
-		
-		console.log('yyyy:'+yyyy+' mm:'+mm+' dd:'+dd);
-		birthday = yyyy+mm+dd;
-		document.getElementById("birthday").value = birthday;
-		
-		console.log('birthday 대입 후 : ' + document.getElementById("birthday").value);
-		
-		if($("#userId").val().length==0) { 
-			alert("ID를 입력하세요."); 
-			$("#userId").focus(); 
-			return false; 
-		}
-		if($("#userPw1").val().length==0) { 
-			alert("비밀번호를 입력하세요."); 
-			$("#userPw1").focus(); 
-			return false; 
-		}
-		if($("#userPw2").val().length==0) { 
-			alert("비밀번호를 재확인하세요."); 
-			$("#userPw2").focus(); 
-			return false; 
-		} else if($("#userPw1").val() =! $("#userPw2").val()) {
-			alert("비밀번호가 일치하지 않습니다.");
-		}
-		
-		
-		if($("#email").val().length==0) { 
-			alert("이메일을 입력하세요."); 
-			$("#email").focus(); 
-			return false; 
-		}
-		if($("#tel").val().length==0) { 
-			alert("휴대전화를 입력하세요."); 
-			$("#tel").focus(); 
-			return false; 
-		}
-		
+	// 휴대폰 번호 input 태그에 자동으로 하이픈(-) 넣기
+	$('#tel').keydown(function(event) {
+	    var key = event.charCode || event.keyCode || 0;
+	    $text = $(this); 
+	    if (key !== 8 && key !== 9) {
+	        if ($text.val().length === 3) {
+	            $text.val($text.val() + '-');
+	        }
+	        if ($text.val().length === 8) {
+	            $text.val($text.val() + '-');
+	        }
+	    }
+	 
+	    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));           
 	});
 });
 
@@ -167,14 +265,6 @@ select {
     margin : 0 0 15px;
 }
 
-/* 에러메세지 */
-.error_next_box {
-    margin-top: 9px;
-    font-size: 12px;
-    color: red;    
-    display: none;
-}
-
 #alertTxt {
     position: absolute;
     top: 19px;
@@ -207,7 +297,7 @@ select {
 					                <div>
 				                        <h4>아이디</h4>
 				                        <input type="text" id="userId" name="userId" class="int" maxlength="20">
-					                    <span class="error_next_box"></span>
+					                    <span class="error_next_box" id="idMsg"></span>
 					                </div>
 					                <!-- PW1 -->
 					                <div>
@@ -216,20 +306,20 @@ select {
 					                    	<input type="password" id="userPw1" name="userPw" class="int" maxlength="20">
 					                        <span id="alertTxt">사용불가</span>
 					                    </div>
-					                    <span class="error_next_box"></span>
+					                    
 					                </div>
 					                <!-- PW2 -->
 					                <div>
 					                    <h4>비밀번호 재확인</h4>
 					                    <input type="password" id="userPw2" class="int" maxlength="20">
-					                    <span class="error_next_box"></span>
+					                    
 					                </div>
 					                
 					                <!-- NAME -->
 					                <div>
 					                    <h4>이름</h4>
 					                    <input type="text" id="userName" name="userName" class="int" maxlength="20">
-					                    <span class="error_next_box"></span>
+					                    
 					                </div>
 					
 					                <!-- BIRTH -->
@@ -266,7 +356,7 @@ select {
 				                                <input type="text" id="dd" name="dd" class="int" maxlength="2" placeholder="일">
 					                        </div>					
 					                    </div>
-					                    <span class="error_next_box"></span>    
+					                        
 					                </div>
 					
 					                <!-- GENDER -->
@@ -277,27 +367,26 @@ select {
 				                            <option value="F">여자</option>
 				                            <option value="M">남자</option>
 				                        </select>  
-					                    <span class="error_next_box">필수 정보입니다.</span>
+					                    
 					                </div>
 					
 					                <!-- EMAIL -->
 					                <div>
 					                    <h4>이메일</h4>
 				                        <input type="text" id="email" name="email" class="int" maxlength="100" placeholder="선택입력">
-					                    <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>    
+					                        
 					                </div>
 					
 					                <!-- MOBILE -->
 					                <div>
-					                    <h4>전화번호</h4>
+					                    <h4>휴대폰 번호</h4>
 				                        <input type="text" id="tel" name="tel" class="int" maxlength="16" placeholder="전화번호 입력">
-					                    <span class="error_next_box"></span>    
+					                        
 					                </div>
 					                
 					                <!-- JOIN BTN-->
 					                <center>
 					                	<input type="submit" id="submit" class="button" value="가입하기"/>
-					                	<input type="button" id="fCheck" class="button primary" value="함수확인">
 					                </center>
 					        	</form>
 				            </div> 
