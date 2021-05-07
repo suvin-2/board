@@ -28,5 +28,10 @@ public class UserDAO {
 	public int userInsert(UserVO vo) {
 		return mybatis.insert("UserDAO.userInsert",vo);
 	}
+	
+	// 회원 로그인
+	public UserVO userLogin(String userId) throws Exception {
+		return mybatis.selectOne("UserDAO.userLoginSelect",userId);
+	}
 
 }

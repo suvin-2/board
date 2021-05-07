@@ -142,7 +142,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {
-		
+		logger.info(vo.toString());
 		vo.getbNo(bNo);
 		return service.boardSelectOne(vo);
 	}

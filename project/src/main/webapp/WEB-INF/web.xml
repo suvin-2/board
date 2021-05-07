@@ -8,8 +8,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<!-- 스프링의 환경설정 파일인 root-context.xml을 가장 먼저 참조한다. -->
 		<param-value>
-			/WEB-INF/spring/root-context.xml
-			/WEB-INF/spring/context-security.xml
+			/WEB-INF/spring/*.xml
+			/WEB-INF/spring/appServlet/servlet-context.xml
 		</param-value>
 	</context-param>
 	

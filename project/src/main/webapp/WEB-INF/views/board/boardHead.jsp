@@ -34,7 +34,7 @@
 				<a href="/" class="logo"><strong>Suvin's Cooking Class</strong> by suvin</a>
 					<ul class="icons">
 						<sec:authorize access="isAnonymous()">
-							<li><a href='<c:url value="/userLogin"/>'><span class="label">LOGIN</span></a></li>
+							<li><a href='<c:url value="/userLoginForm"/>'><span class="label">LOGIN</span></a></li>
 							<li><a href="/userJoin.do"><span class="label">JOIN</span></a></li>
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">

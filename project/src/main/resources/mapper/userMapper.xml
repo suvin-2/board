@@ -17,6 +17,21 @@
 		FROM B_USER
 	</select>
 	
+	<!-- 회원 로그인 -->
+	<select id="userLoginSelect" resultType="userVO">
+		SELECT ID,
+		       PASSWORD,
+		       NAME,
+		       BIRTHDAY,
+		       GENDER,
+		       EMAIL,
+		       TEL,
+		       AUTH,
+		       ENABLED
+		FROM B_USER
+		WHERE ID=#{userId} AND ENABLED=1;
+	</select>
+	
 	<!-- 기존 회원 아이디 조회 -->
 	<select id="userIdCheck" resultType="userVO">
 		SELECT ID

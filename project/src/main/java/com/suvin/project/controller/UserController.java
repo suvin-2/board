@@ -3,17 +3,14 @@ package com.suvin.project.controller;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +32,15 @@ public class UserController {
 	private UserService service;
 
 	// 로그인 화면
-	@RequestMapping(value="/userLogin")
-	public String userLogin() throws Exception {
+	@RequestMapping(value="/userLoginForm")
+	public String userLoginForm() throws Exception {
 		return "/user/userLogin";
+	}
+	
+	// 회원 로그인
+	@RequestMapping(value="/userLogin")
+	public UserVO userLogin(String userId) throws Exception {
+		return null;
 	}
 	
 	// 회원가입 화면
@@ -47,17 +50,17 @@ public class UserController {
 	}
 	
 	// 로그인 실패 시 화면
-	@RequestMapping(value="/userLoginFales")
-	public String userLoginFales(String error) throws Exception {
-		logger.info("error : " + error);
-		return "/user/userLoginFales";
-	}
+//	@RequestMapping(value="/userLogin?error")
+//	public String userLoginFales(String error) throws Exception {
+//		logger.info("error : " + error);
+//		return "/user/userLoginFales";
+//	}
 	
 	// 회원가입 시 아이디 중복 체크(ajax)
 	@ResponseBody
 	@RequestMapping(value="/userIdCheck/{userId}", method= RequestMethod.GET)
 	public UserVO userIdCheck(@PathVariable("userId") String userId, UserVO vo, Model model) throws Exception {
-		System.out.println("UserController in. userId : "+userId);
+		logger.info(vo.toString());
 		vo.getUserId(userId);
 		
 		return service.userIdCheck(vo);

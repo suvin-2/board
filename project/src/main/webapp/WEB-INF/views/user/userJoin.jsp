@@ -17,63 +17,43 @@
 <script type="text/javascript">
 $(function(){
 	
+	var userId = document.querySelector('#userId');
+	var userIdCheck_word = document.querySelector('#userIdCheck_word');
+	var userPw1 = document.querySelector('#userPw1');
+	var pwMsg = document.querySelector('#alertTxt');
+	var userPw2 = document.querySelector('#userPw2');
+	var pwMsgArea = document.querySelector('.int_pass');
+	var userName = document.querySelector('#userName');
+	var gender = document.querySelector('#gender');
+	var email = document.querySelector('#email');
+	var tel = document.querySelector('#tel');
+	
+	var birthday;
+	var yyyy = document.getElementById("yyyy").value;
+	var mm = document.getElementById("mm").value;
+	var dd = document.getElementById("dd").value;
+	
+	var idPattern = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
+    var pwPattern = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    var namePattern = /^[가-힣a-zA-Z]+$/;
+    var yearPattern = /^[0-9_]{4}$/;
+	var datePattern = /^[0-9_]{2}$/;
+	var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	var isPhoneNum = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+
 	$("#submit").click(function(){
 		
-		var userId = document.querySelector('#userId');
-
-		var userPw1 = document.querySelector('#userPw1');
-		var pwMsg = document.querySelector('#alertTxt');
-
-		var userPw2 = document.querySelector('#userPw2');
-		var pwMsgArea = document.querySelector('.int_pass');
-
-		var userName = document.querySelector('#userName');
-
-		var gender = document.querySelector('#gender');
-
-		var email = document.querySelector('#email');
-
-		var tel = document.querySelector('#tel');
-
-		var error = document.querySelectorAll('.error_next_box');
-		
-		var birthday;
-		var yyyy = document.getElementById("yyyy").value;
-		var mm = document.getElementById("mm").value;
-		var dd = document.getElementById("dd").value;
-		
-		console.log('yyyy:'+yyyy+', mm:'+mm+', dd:'+dd);
-		
+		console.log('userIdCheck_word : ' + userIdCheck_word.value);
 		birthday = yyyy+mm+dd;
 		document.getElementById("birthday").value = birthday;
 		
-		console.log('birthday 대입 후 : ' + document.getElementById("birthday").value);
-		console.log('tel : '+tel.value);
-		
-		// id 유효성 체크
-		var idPattern = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
-		
-		if($("#userId").val().length == 0) { 
-			alert("ID를 입력하세요.");
-			$("#userId").focus(); 
-			return false; 
-		}
-		
-		if(!idPattern.test(userId.value)) {
-			alert("아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."); 
-			$("#userId").focus(); 
+		if(userIdCheck_word.value == "N") {
+			alert("아이디 중복확인을 해주세요.");
+	    	$("#userId").focus(); 
 			return false;
-	    }
-		
-		if($("#userId").val().length != 0) {
-			console.log('입력한 id : ' + userId.value);
-			idCheck();
 		}
 		
 		// pw 유효성 체크
-	    var pwPattern = /^[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/;
-	    var pwPattern = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-	    
 	    if(userPw1.value == "") {
 	    	alert("비밀번호를 입력하세요.");
 	    	$("#userPw1").focus(); 
@@ -99,8 +79,6 @@ $(function(){
 	    }
 
 	    // 이름 유효성 체크
-	    var namePattern = /^[가-힣a-zA-Z]+$/;
-	    
 	    if(userName.value == "") {
 	    	alert("이름을 입력하세요.");
 	    	$("#userName").focus(); 
@@ -119,8 +97,8 @@ $(function(){
 	    	$("#gender").focus(); 
 			return false;
         }
+	    
 		// 생년월일 유효성 체크
-
 	    if(yyyy == "") {
 	        alert("태어난 년도 4자리를 입력하세요.");
 	    	$("#yyyy").focus(); 
@@ -139,9 +117,6 @@ $(function(){
 			return false;
         }
 
-        var yearPattern = /^[0-9_]{4}$/;
-   		var datePattern = /^[0-9_]{2}$/;
-    	
 	    if(!datePattern.test(dd)) {
 	        alert("태어난 일(날짜) 2자리로 입력해주세요.(ex)07)");
 	    	$("#dd").focus(); 
@@ -167,8 +142,6 @@ $(function(){
 	    }
 
 	    // 이메일 유휴성 체크
-	    var emailPattern = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
 	    if(email.value === ""){ 
 	    	alert("이메일을 입력하세요.");
 	    	$("#email").focus(); 
@@ -182,8 +155,6 @@ $(function(){
 	    }
 
 		// 전화번호 유호성 체크
-	    var isPhoneNum = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-
 	    if(tel.value === "") {
 	    	alert("휴대폰 번호를 입력하세요.");
 	    	$("#tel").focus(); 
@@ -215,25 +186,43 @@ $(function(){
 	});
 	
 	// 아이디 중복 체크
-	function idCheck(){
-		$.ajax({
-			url : 'userIdCheck/'+ userId.value, 
-			type : 'GET',
-			dataType : 'json',
-			error : function(xhr, status, msg) {
-				console.log("상태값 : "+status+", Http 에러메시지 : "+msg+", xhr : "+xhr);
-			},
-			success : function(data) {
-				console.log(data);
-				console.log(data.userId);
-				if(userId.value == data) {
-					alert("이미 등록된 아이디입니다. 새로운 아이디를 입력하세요.");
-					$("#userId").focus(); 
-					return false; 
+	$("#userIdCheck").click(function() {
+		
+		if($("#userId").val().length == 0) { 
+			alert("ID를 입력하세요.");
+			$("#userId").focus(); 
+			return false; 
+		} else if(!idPattern.test(userId.value)) {
+			alert("아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."); 
+			$("#userId").focus(); 
+			return false;
+	    } else if($("#userId").val().length != 0) {
+	    	
+			console.log('입력한 id : ' + userId.value);
+			
+			$.ajax({
+				url : 'userIdCheck/'+ userId.value, 
+				type : 'GET',
+				dataType : 'json',
+				error : function(xhr, status, msg) {
+					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+				},
+				success : function(data) {
+					console.log(data);
+					console.log(data.userId);
+					
+					if(userId.value == data) {
+						alert("이미 등록된 아이디입니다. 새로운 아이디를 입력하세요.");
+						$("#userId").focus(); 
+						return false; 
+					} else if(userId.value != data) {
+						userIdCheck_word.value = "Y";
+						console.log('중복확인 후 userIdCheck_word : ' + userIdCheck_word.value);
+					}
 				}
-			}
-		});
-	}
+			});
+		}
+	});
 });
 
 </script>
@@ -249,6 +238,22 @@ input {
     margin : 0 0 15px;
 }
 
+#id_wrap {
+    display: table;
+    width: 100%;
+}
+
+#id_input {
+    display: table-cell;
+    width: 380px;
+}
+
+#id_btn {
+    display: table-cell;
+    width: 150px;
+    padding-left: 50px;
+}
+
 #bir_wrap {
     display: table;
     width: 100%;
@@ -257,7 +262,6 @@ input {
 #bir_yy {
     display: table-cell;
     width: 147px;
-    
 }
 
 #bir_mm {
@@ -274,8 +278,6 @@ input {
 #bir_mm, #bir_dd {
     padding-left: 10px;
 }
-
-
 
 select {
     width: 100%;
@@ -320,45 +322,44 @@ select {
 								<form name="userJoinForm" action="/userInsert.do" method="post">
 									<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<input type="hidden" id="birthday" name="birthday">
+									<input type="hidden" id="userIdCheck_word" name="userIdCheck_word" value="N">
 					                <!-- ID -->
 					                <div>
 				                        <h4>아이디</h4>
-				                        <input type="text" id="userId" name="userId" class="int" maxlength="20">
-					                    <span class="error_next_box" id="idMsg"></span>
+				                        <div id="id_wrap">
+					                        <div id="id_input">
+					                        	<input type="text" id="userId" name="userId" class="int" maxlength="20">
+					                        </div>
+					                        <div id="id_btn">
+					                        	<input type="button" id="userIdCheck" class="button" value="중복확인"/>
+					                        </div>
+				                        </div>
 					                </div>
 					                <!-- PW1 -->
 					                <div>
 					                    <h4>비밀번호</h4>
 					                    <div>
 					                    	<input type="password" id="userPw1" name="userPw" class="int" maxlength="20">
-					                        <span id="alertTxt">사용불가</span>
 					                    </div>
-					                    
 					                </div>
 					                <!-- PW2 -->
 					                <div>
 					                    <h4>비밀번호 재확인</h4>
 					                    <input type="password" id="userPw2" class="int" maxlength="20">
-					                    
 					                </div>
-					                
 					                <!-- NAME -->
 					                <div>
 					                    <h4>이름</h4>
 					                    <input type="text" id="userName" name="userName" class="int" maxlength="20">
-					                    
 					                </div>
-					
 					                <!-- BIRTH -->
 					                <div>
 					                    <h4>생년월일</h4>
-					
 					                    <div id="bir_wrap">
 					                        <!-- BIRTH_YY -->
 					                        <div id="bir_yy">
 					                        	<input type="text" id="yyyy" name="yyyy" class="int" maxlength="4" placeholder="년(4자)">
 					                        </div>
-					
 					                        <!-- BIRTH_MM -->
 					                        <div id="bir_mm">
 				                                <select id="mm" name="mm" class="sel">
@@ -377,15 +378,12 @@ select {
 				                                    <option value="12">12</option>
 				                                </select>
 					                        </div>
-					
 					                        <!-- BIRTH_DD -->
 					                        <div id="bir_dd">
 				                                <input type="text" id="dd" name="dd" class="int" maxlength="2" placeholder="일">
 					                        </div>					
 					                    </div>
-					                        
 					                </div>
-					
 					                <!-- GENDER -->
 					                <div>
 					                    <h4>성별</h4>
@@ -394,23 +392,17 @@ select {
 				                            <option value="F">여자</option>
 				                            <option value="M">남자</option>
 				                        </select>  
-					                    
 					                </div>
-					
 					                <!-- EMAIL -->
 					                <div>
 					                    <h4>이메일</h4>
 				                        <input type="text" id="email" name="email" class="int" maxlength="100" placeholder="선택입력">
-					                        
 					                </div>
-					
 					                <!-- MOBILE -->
 					                <div>
 					                    <h4>휴대폰 번호</h4>
 				                        <input type="text" id="tel" name="tel" class="int" maxlength="16" placeholder="전화번호 입력">
-					                        
 					                </div>
-					                
 					                <!-- JOIN BTN-->
 					                <center>
 					                	<input type="submit" id="submit" class="button" value="가입하기"/>
@@ -418,7 +410,6 @@ select {
 					        	</form>
 				            </div> 
 				            <!-- content-->
-							
 						</section>
 				</div>
 			</div>

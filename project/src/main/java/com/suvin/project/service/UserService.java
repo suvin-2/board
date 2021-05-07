@@ -15,5 +15,7 @@ public interface UserService {
 	// 회원 가입
 	public int userInsert(UserVO vo);
 
-	
+	// 회원 로그인
+	public UserVO userLogin(String userId) throws Exception;
+		
 }

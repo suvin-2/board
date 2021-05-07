@@ -49,12 +49,12 @@ $(function(){
 							<div style="padding: 0 200px 0 200px; height: auto; min-height: 100px; overflow: auto;">
 							     <form name="userLoginForm" action="/login" method="post">
 							         <div class="form-group">
-							             <label for="exampleDropdownFormEmail1">ID</label>
-							             <input type="text" class="form-control" name="userId" id="userId" placeholder="example" />
+							             <label >ID</label>
+							             <input type="text" class="form-control" name="userId" id="userId" placeholder="id" />
 							         </div>
 							         <br>
 							         <div class="form-group">
-							             <label for="exampleDropdownFormPassword1">Password</label>
+							             <label>Password</label>
 							             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" />
 							         </div>
 							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
