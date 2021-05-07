@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.suvin.project.security.CustomUserDetails;
 import com.suvin.project.vo.UserVO;
 
 @Repository
@@ -32,6 +33,11 @@ public class UserDAO {
 	// 회원 로그인
 	public UserVO userLogin(String userId) throws Exception {
 		return mybatis.selectOne("UserDAO.userLoginSelect",userId);
+	}
+	
+	// 회원 로그인 (사용X)
+	public CustomUserDetails getUserById(String userId) {
+		return mybatis.selectOne("UserDAO.getUserById",userId);
 	}
 
 }

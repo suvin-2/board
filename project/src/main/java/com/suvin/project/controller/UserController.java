@@ -50,11 +50,19 @@ public class UserController {
 	}
 	
 	// 로그인 실패 시 화면
-//	@RequestMapping(value="/userLogin?error")
-//	public String userLoginFales(String error) throws Exception {
-//		logger.info("error : " + error);
-//		return "/user/userLoginFales";
-//	}
+	@RequestMapping(value="/userLogin?error")
+	public String userLoginFales(String error,HttpServletResponse response) throws Exception {
+		logger.info("error : " + error);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		 
+		PrintWriter out = response.getWriter();
+		
+		out.println("<script>alert('로그인 실패');</script>");
+		out.flush();
+		
+		return "/user/userLogin";
+	}
 	
 	// 회원가입 시 아이디 중복 체크(ajax)
 	@ResponseBody

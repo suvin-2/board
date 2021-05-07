@@ -18,6 +18,21 @@
 	</select>
 	
 	<!-- 회원 로그인 -->
+	<select id="getUserById" parameterType="String" resultType="com.suvin.project.security.CustomUserDetails">
+		SELECT ID,
+			   PASSWORD,
+			   NAME,
+			   BIRTHDAY,
+			   GENDER,
+			   EMAIL,
+			   TEL,
+			   AUTH,
+			   ENABLED
+		FROM B_USER
+		WHERE ID = #{userId}
+	</select>
+	
+	<!-- 회원 로그인 -->
 	<select id="userLoginSelect" resultType="userVO">
 		SELECT ID,
 		       PASSWORD,

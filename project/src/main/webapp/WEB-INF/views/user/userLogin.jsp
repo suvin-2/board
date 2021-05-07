@@ -66,6 +66,12 @@ $(function(){
 									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
 									    </font>
 									</c:if>
+									<c:if test="${param.error != null}">
+										<font color="red">
+									        <p> 아이디와 비밀번호를 다시 확인해 주세요. <br/>
+									            ${param.error}</p>
+									    </font>
+									</c:if>
 									<input type="submit" id="submit" class="button primary" value="Login"/>
 							        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
 							    </form>
