@@ -29,7 +29,7 @@
 		       AUTH,
 		       ENABLED
 		FROM B_USER
-		WHERE ID=#{userId} AND ENABLED=1;
+		WHERE ID=#{userId};
 	</select>
 	
 	<!-- 기존 회원 아이디 조회 -->
