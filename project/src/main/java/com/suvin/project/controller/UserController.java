@@ -50,7 +50,7 @@ public class UserController {
 	}
 	
 	// 로그인 실패 시 화면
-	@RequestMapping(value="/userLogin?error")
+	@RequestMapping(value="/login")
 	public String userLoginFales(String error,HttpServletResponse response) throws Exception {
 		logger.info("error : " + error);
 		

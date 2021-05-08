@@ -5,9 +5,6 @@ public class UserVO {
 	private String userId;
 	private String userPw;
 	private String userName;
-	private String yyyy;
-	private String mm;
-	private String dd;
 	private String birthday;
 	private String gender;
 	private String email;
@@ -32,24 +29,6 @@ public class UserVO {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public String getYyyy() {
-		return yyyy;
-	}
-	public void setYyyy(String yyyy) {
-		this.yyyy = yyyy;
-	}
-	public String getMm() {
-		return mm;
-	}
-	public void setMm(String mm) {
-		this.mm = mm;
-	}
-	public String getDd() {
-		return dd;
-	}
-	public void setDd(String dd) {
-		this.dd = dd;
 	}
 	public String getBirthday() {
 		return birthday;
@@ -91,11 +70,10 @@ public class UserVO {
 	public String getUserId(String userId) {
 		return userId;
 	}
-	
 	@Override
 	public String toString() {
-		return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", yyyy=" + yyyy + ", mm="
-				+ mm + ", dd=" + dd + ", birthday=" + birthday + ", gender=" + gender + ", email=" + email + ", tel="
-				+ tel + ", auth=" + auth + ", enabled=" + enabled + "]";
+		return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", birthday=" + birthday
+				+ ", gender=" + gender + ", email=" + email + ", tel=" + tel + ", auth=" + auth + ", enabled=" + enabled
+				+ "]";
 	}
 }

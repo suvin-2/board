@@ -5,9 +5,9 @@
 	
 	<!-- 전체 회원 조회 -->
 	<select id="userSelect" resultType="userVO">
-		SELECT ID,
-			   PASSWORD,
-			   NAME,
+		SELECT USERID,
+			   USERPW,
+			   USERNAME,
 			   BIRTHDAY,
 			   GENDER,
 			   EMAIL,
@@ -17,11 +17,11 @@
 		FROM B_USER
 	</select>
 	
-	<!-- 회원 로그인 -->
-	<select id="getUserById" parameterType="String" resultType="com.suvin.project.security.CustomUserDetails">
-		SELECT ID,
-			   PASSWORD,
-			   NAME,
+	<!-- 회원 로그인 사용 X -->
+	<select id="getUserById" resultType="com.suvin.project.security.CustomUserDetails">
+		SELECT USERID,
+			   USERPW,
+			   USERNAME,
 			   BIRTHDAY,
 			   GENDER,
 			   EMAIL,
@@ -29,14 +29,14 @@
 			   AUTH,
 			   ENABLED
 		FROM B_USER
-		WHERE ID = #{userId}
+		WHERE USERID = #{userId}
 	</select>
 	
 	<!-- 회원 로그인 -->
-	<select id="userLoginSelect" resultType="userVO">
-		SELECT ID,
-		       PASSWORD,
-		       NAME,
+	<select id="userLogin" resultType="userVO">
+		SELECT USERID,
+		       USERPW,
+		       USERNAME,
 		       BIRTHDAY,
 		       GENDER,
 		       EMAIL,
@@ -44,19 +44,26 @@
 		       AUTH,
 		       ENABLED
 		FROM B_USER
-		WHERE ID=#{userId};
+		WHERE USERID=#{userId}
+	</select>
+	
+	<!-- 회원 로그인 -->
+	<select id="selectUserAuth" resultType="com.suvin.project.security.CustomUserDetails">
+		SELECT AUTH
+		FROM B_USER
+		WHERE USERID=#{userId}
 	</select>
 	
 	<!-- 기존 회원 아이디 조회 -->
 	<select id="userIdCheck" resultType="userVO">
-		SELECT ID
+		SELECT USERID
 		FROM B_USER
-		WHERE ID = #{userId}
+		WHERE USERID = #{userId}
 	</select>
 	
 	<!-- 회원 가입 -->
 	<insert id="userInsert" parameterType="userVO">
-		INSERT INTO B_USER(ID,PASSWORD,NAME,BIRTHDAY,GENDER,EMAIL,TEL,AUTH,ENABLED)
+		INSERT INTO B_USER(USERID,USERPW,USERNAME,BIRTHDAY,GENDER,EMAIL,TEL,AUTH,ENABLED)
 		VALUES(#{userId},#{userPw},#{userName},TO_DATE(#{birthday},'YYYY-MM-DD'),#{gender},#{email},#{tel},'ROLE_USER',1)
 	</insert>
 	

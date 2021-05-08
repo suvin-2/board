@@ -32,7 +32,12 @@ public class UserDAO {
 	
 	// 회원 로그인
 	public UserVO userLogin(String userId) throws Exception {
-		return mybatis.selectOne("UserDAO.userLoginSelect",userId);
+		return mybatis.selectOne("UserDAO.userLogin",userId);
+	}
+	
+	// 회원 권한 조회
+	public List<String> selectUserAuth(String userId) throws Exception {
+		return mybatis.selectOne("UserDAO.selectUserAuth",userId);
 	}
 	
 	// 회원 로그인 (사용X)

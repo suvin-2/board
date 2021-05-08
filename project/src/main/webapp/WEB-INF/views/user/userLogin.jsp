@@ -69,7 +69,7 @@ $(function(){
 									<c:if test="${param.error != null}">
 										<font color="red">
 									        <p> 아이디와 비밀번호를 다시 확인해 주세요. <br/>
-									            ${param.error}</p>
+									            ${requestScope.loginFailMsg}</p>
 									    </font>
 									</c:if>
 									<input type="submit" id="submit" class="button primary" value="Login"/>
