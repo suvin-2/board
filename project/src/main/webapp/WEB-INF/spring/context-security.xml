@@ -38,9 +38,16 @@
 		        invalidate-session="true"
 				delete-cookies="true"
 		    />
+		    
 			<!-- 403 페이지가 뜨지 않고 지정한 페이지로 이동 -->
 			<access-denied-handler error-page="/userLoginFales"/>
         </http>
+        <beans:bean id="userLoginFailHandler" class="com.suvin.project.security.UserLoginFailHandler">
+		    <beans:property name="loginidname" value="userId"/>
+		    <beans:property name="loginpwdname" value="userPw"/>
+		    <beans:property name="errormsgname" value="ERRORMSG"/>
+		    <beans:property name="defaultFailureUrl" value="/loginError"/>
+		</beans:bean>
         <authentication-manager>
             <authentication-provider user-service-ref="userLoginService">
                 <!-- <user-service>

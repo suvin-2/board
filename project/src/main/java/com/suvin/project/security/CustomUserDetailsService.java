@@ -25,11 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 		try {
 			
 			UserVO vo = dao.userLogin(userId);
+			System.out.println("-- user details user vo : " + vo + " --");
 			
 			if(vo == null) {
-				
-				 return null;
-			
+				throw new UsernameNotFoundException(userId);
 			} else {		// 사용자 정보 있을 경우 로직 전개 (userDetails에 데이터 넣기)
 				System.out.println("----- Found user : "+vo);
 				users.setUsername(vo.getUserId());

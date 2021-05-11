@@ -3,6 +3,7 @@ package com.suvin.project.controller;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ import com.suvin.project.vo.UserVO;
 @Controller
 public class UserController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -50,10 +51,9 @@ public class UserController {
 	}
 	
 	// 로그인 실패 시 화면
-	@RequestMapping(value="/login")
-	public String userLoginFales(String error,HttpServletResponse response) throws Exception {
-		logger.info("error : " + error);
-		
+	@RequestMapping(value="/loginError")
+	public String userLoginFales(HttpServletResponse response) throws Exception {
+		logger.info("로그인 실패로 loginError controller in");
 		response.setContentType("text/html; charset=UTF-8");
 		 
 		PrintWriter out = response.getWriter();

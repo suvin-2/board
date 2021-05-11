@@ -60,7 +60,7 @@ $(function(){
 							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							         <br>
 							         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-									    <font color="red">
+									    <font color="red" name="ERRORMSG">
 									        <p>Your login attempt was not successful due to <br/>
 									            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
 									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>

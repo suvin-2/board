@@ -34,22 +34,22 @@ public class CustomUserDetails implements UserDetails {
 		this.auth = auth;
 	}
 	
-	@Override
 	// 권한
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		return authorities;
 	}
 
 
+	// id
 	@Override
-	// ID
 	public String getUsername() {
 		return username;
 	}
 
+	// pw
 	@Override
-	// PW
 	public String getPassword() {
 		return password;
 	}
