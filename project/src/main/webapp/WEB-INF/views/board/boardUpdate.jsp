@@ -83,8 +83,7 @@
 		<div id="main">
 			<div class="inner">	
 				<!-- Header -->
-				<jsp:include page="boardHead.jsp" flush="false"/>
-
+				<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 				<!-- Section -->
 				<section id="banner">
 					<div class="content">

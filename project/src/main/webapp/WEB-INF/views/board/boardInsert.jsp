@@ -72,8 +72,7 @@ $(function(){
 		<div id="main">
 			<div class="inner">	
 				<!-- Header -->
-				<jsp:include page="boardHead.jsp" flush="false"/>
-
+				<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 				<!-- Section -->
 				<section id="banner">
 					<div class="content">
@@ -111,7 +110,7 @@ $(function(){
 									</tr>
 									<tr>
 									   <th>작성자</th>
-									   <td colspan="3"><form:input path="writer" id="writer" size="20"/></td>
+									   <td colspan="3"><form:input path="writer" id="writer" size="20" value="<%= userId %>" readonly="readonly"/></td>
 									</tr>
 									<tr>
 									   <th>내용</th>

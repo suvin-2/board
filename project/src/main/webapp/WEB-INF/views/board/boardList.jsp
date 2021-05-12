@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,8 +12,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 <style type="text/css">
-	.pagingBnt li {list-style: none; float: left; padding: 10px;}
-	.pagingBnt {align:middle;}
+	.pagingBnt li {list-style: none; float: middle; padding: 10px;}
+	.pagingBnt {align : center;}
+	.btn-group pagination {float : middle;}
 </style>
 </head>
 <body class="is-preload">
@@ -24,12 +26,11 @@
 		<div id="main">
 			<div class="inner">	
 				<!-- Header -->
-				<jsp:include page="boardHead.jsp" flush="false"/>
-
+				<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
+				<%-- <jsp:include page="boardHead.jsp" flush="false"/> --%>
 				<!-- Section -->
 				<section id="banner">
 					<div class="content">
-					
 					<%  
 						String sName = request.getParameter("sName"); 
 						System.out.println("boardList.jsp 넘어온 sName : " + sName);
@@ -54,7 +55,7 @@
 							<c:set value="${item.cNo}" var="cNoCopy"/>
 							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}'">
+								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}&writer=${item.writer}'">
 								    <td id="title">${item.title}</td>
 								    <td id="writer">${item.writer}</td>
 								    <td id="bDate">${bDate}</td>
@@ -63,7 +64,15 @@
 						    </c:forEach>
 							</tbody>
 						</table>
-						<a href="boardInsertForm.do?sName=<%=sName%>" class="button">글쓰기</a>
+						<%-- <jsp:param name="userId" value=""> --%>
+						<%
+							System.out.println("head에서 가지고오는 user id : "+userId);
+							if(userId != "anonymousUser") {
+						%>
+							<div align="right">
+								<a href="boardInsertForm.do?sName=<%=sName%>" class="button">글쓰기</a>
+							</div>
+						<% } %>
 						<div class="pagingBnt">
 							  <ul class="btn-group pagination">
 							    <c:if test="${pageMaker.prev }"> 

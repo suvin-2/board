@@ -35,10 +35,8 @@ public class CustomUserDetails implements UserDetails {
 	// 권한
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
 		return authorities;
 	}
-
 
 	// id
 	@Override

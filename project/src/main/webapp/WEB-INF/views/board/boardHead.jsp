@@ -13,15 +13,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript">
+	var userId = $("#securityLogin");
+	
+	console.log('user id (다른 페이지들로 넘겨줘야함) '+userId);
+</script>
 </head>
 <%
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     Object principal = auth.getPrincipal();
  
-    String name = "";
+    String userId = "";
     if(principal != null) {
-        name = auth.getName();
+    	userId = auth.getName();
     }
+    
 %>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -45,7 +51,7 @@
 					</ul>	
 			</header>
 <form id="logout-form" action='<c:url value='/logout'/>' method="POST">
-   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+   <input id="securityLogin" name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 </form>
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>

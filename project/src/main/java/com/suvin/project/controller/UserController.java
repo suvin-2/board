@@ -38,10 +38,10 @@ public class UserController {
 	}
 	
 	// 회원 로그인
-	@RequestMapping(value="/userLogin")
-	public UserVO userLogin(String userId) throws Exception {
-		return null;
-	}
+//	@RequestMapping(value="/userLogin")
+//	public UserVO userLogin(String userId) throws Exception {
+//		return null;
+//	}
 	
 	// 회원가입 화면
 	@RequestMapping(value="/userJoin")
@@ -53,10 +53,9 @@ public class UserController {
 	@RequestMapping(value="/loginError")
 	public String userLoginFales(HttpServletResponse response) throws Exception {
 		logger.info("로그인 실패로 loginError controller in");
-		response.setContentType("text/html; charset=UTF-8");
-		 
-		PrintWriter out = response.getWriter();
 		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		out.println("<script>alert('로그인 실패');</script>");
 		out.flush();
 		

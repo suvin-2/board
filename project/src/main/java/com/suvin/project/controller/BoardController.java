@@ -81,18 +81,6 @@ public class BoardController {
 		return mv;
 	}
 	
-	/*
-	// 게시판 카테고리 별 글 목록
-	@RequestMapping(value = "/boardList.do")
-	public String boardSelect(BoardVO vo, Model model) throws Exception {
-		List<BoardVO> list = service.boardCategorySelect(vo);
-		logger.info(list.toString());
-		model.addAttribute("list",list);
-		
-		return "/board/boardList";
-	}
-	*/
-	
 	// 게시판 카테고리 별 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public ModelAndView boardSelect(Criteria cri, Model model) throws Exception {
@@ -108,15 +96,6 @@ public class BoardController {
 		
 		return mv;
 	}
-	
-	/*
-	// 게시글 단건조회 폼 
-	@RequestMapping(value = "/boardDetailForm.do")
-	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
-		System.out.println("board detail form in ");
-		return "board/boardDetail";
-	}
-	*/
 	
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
@@ -164,7 +143,6 @@ public class BoardController {
 	}
 	
 	// 게시글 수정 폼 
-	
 	@RequestMapping(value = "/boardUpdateForm.do")
 	public String boardUpdateForm(@ModelAttribute("boardVO") BoardVO vo, CategoryVO cVo, Model model) throws Exception{
 		
@@ -172,7 +150,6 @@ public class BoardController {
 		model.addAttribute("list",list);
 		return "board/boardUpdate";
 	}
-	
 	
 	// 게시글 수정
 	@RequestMapping(value = "/boardUpdate.do")

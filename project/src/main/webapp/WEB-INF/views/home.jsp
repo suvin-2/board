@@ -25,7 +25,7 @@
 			<div id="main">
 				<div class="inner">	
 					<!-- Header -->
-					<jsp:include page="board/boardHead.jsp" flush="false"/>
+					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 					<!-- Banner -->
 						<section id="banner">
 							<div class="content">
@@ -63,7 +63,7 @@
 									<c:forEach var="item" items="${list}" begin="0" end="9">
 									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
 									    <td id="bNo">${item.bNo}</td>
 									    <td id="title">${item.title}</td>
 									    <td id="cName">${item.cName}</td>
@@ -95,7 +95,7 @@
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '한식'}">
 											<c:set value="${item.cNo}" var="cNo1"/>
-											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											    <td><input type="hidden" id="cName1" value="${item.cName}"/></td>
@@ -124,7 +124,7 @@
 											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 											<c:if test="${item.sName eq '중식'}">
 											<c:set value="${item.cNo}" var="cNo2"/>
-											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											    <td><input type="hidden" id="cName2" value="${item.cName}"/></td>
@@ -154,7 +154,7 @@
 											<c:if test="${item.sName eq '빵'}">
 											<c:set value="${item.cNo}" var="cNo3"/>
 											<c:set var="listCopy" value="${list}"/>
-											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}'">
+											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
 											    <td id="title">${item.title}</td>
 											    <td id="bDate">${bDate}</td>
 											    <td><input type="hidden" id="cName3" value="${item.cName}"/></td>

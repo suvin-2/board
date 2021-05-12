@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,29 +19,35 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 
+import com.suvin.project.controller.UserController;
+
 // 로그인 실패 대응 로직
 @Service
 public class UserLoginFailHandler implements AuthenticationFailureHandler {
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserLoginFailHandler.class);
 	private String loginidname;
     private String loginpwdname;
     private String errormsgname;
     private String defaultFailureUrl;
     
-//    public UserLoginFailHandler() {
-//		this.defaultFailureUrl = "/login";
-//	}
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-				
-		loginidname = request.getParameter(loginidname);
-		loginpwdname = request.getParameter(loginpwdname);
 		
-		System.out.println("----- 로그인 실패 로직 in -----");
-		System.out.println("----- loginidname : "+loginidname+", loginpwdname : "+loginpwdname);
-		System.out.println("----- error msg : "+exception.getMessage());
+		
+		String userId = request.getParameter(loginidname);
+		String userPw = request.getParameter(loginpwdname);
+		String errorMsg = exception.getMessage();
+		
+		request.setAttribute(loginidname, userId);
+		request.setAttribute(loginpwdname, userPw);
+		
+		logger.debug("----- 로그인 실패 핸들러 in -----");
+		logger.debug("----- login id : "+userId+", login pw : "+userPw);
+		logger.debug("----- error msg : "+errorMsg);
+		logger.debug("----- defaultFailureUrl : "+defaultFailureUrl);
 		
 		if (exception instanceof AuthenticationServiceException) {
 			request.setAttribute("loginFailMsg", "존재하지 않는 회원입니다.");
@@ -59,11 +67,9 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 		} else if(exception instanceof CredentialsExpiredException) {
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
 		}
-		System.out.println("로그인 실패 로직 response : "+response);
 		// 로그인 페이지로 다시 포워딩
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("/userLoginForm");
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("/loginError");
 //		dispatcher.forward(request, response);
-		System.out.println("----- defaultFailureUrl : "+defaultFailureUrl);
 		request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
 	}
 
