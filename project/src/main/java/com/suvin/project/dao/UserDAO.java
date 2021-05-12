@@ -21,8 +21,8 @@ public class UserDAO {
 	}
 	
 	// 회원 가입 시 아이디 중복 체크(ajax)
-	public UserVO userIdCheck(UserVO vo) {
-		return mybatis.selectOne("UserDAO.userIdCheck",vo);
+	public UserVO userIdCheck(String userId) {
+		return mybatis.selectOne("UserDAO.userIdCheck",userId);
 	}
 	
 	// 회원 가입

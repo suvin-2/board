@@ -47,15 +47,15 @@
 		WHERE USERID=#{userId}
 	</select>
 	
-	<!-- 회원 로그인 -->
+	<!-- 회원 로그인 (권한조회)-->
 	<select id="selectUserAuth" resultType="com.suvin.project.security.CustomUserDetails">
 		SELECT AUTH
 		FROM B_USER
 		WHERE USERID=#{userId}
 	</select>
 	
-	<!-- 기존 회원 아이디 조회 -->
-	<select id="userIdCheck" resultType="userVO">
+	<!-- 기존 회원 아이디 조회(회원가입 시 아이디 중복 체크) -->
+	<select id="userIdCheck" resultType="userVO" parameterType="String">
 		SELECT USERID
 		FROM B_USER
 		WHERE USERID = #{userId}

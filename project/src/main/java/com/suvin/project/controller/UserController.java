@@ -3,7 +3,6 @@ package com.suvin.project.controller;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -65,14 +64,14 @@ public class UserController {
 	}
 	
 	// 회원가입 시 아이디 중복 체크(ajax)
+	@RequestMapping(value="/userIdCheck/{id}", method= RequestMethod.GET)
 	@ResponseBody
-	@RequestMapping(value="/userIdCheck/{userId}", method= RequestMethod.GET)
-	public UserVO userIdCheck(@PathVariable("userId") String userId, UserVO vo, Model model) throws Exception {
-		logger.info(vo.toString());
-		vo.getUserId(userId);
+	public UserVO userIdCheck(@PathVariable("id") String userId, Model model) throws Exception {
+		logger.info("user id check controller in (ajax) id : "+userId);
 		
-		return service.userIdCheck(vo);
+		return service.userIdCheck(userId);
 	}
+
 	
 	// 회원가입
 	@RequestMapping(value="/userInsert.do")

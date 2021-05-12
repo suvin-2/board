@@ -17,7 +17,7 @@
 <script type="text/javascript">
 $(function(){
 	
-	var userId = document.querySelector('#userId');
+	var userId = document.querySelector("#userId");
 	var userIdCheck_word = document.querySelector('#userIdCheck_word');
 	var userPw1 = document.querySelector('#userPw1');
 	var pwMsg = document.querySelector('#alertTxt');
@@ -29,9 +29,9 @@ $(function(){
 	var tel = document.querySelector('#tel');
 	
 	var birthday;
-	var yyyy = document.getElementById("yyyy").value;
-	var mm = document.getElementById("mm").value;
-	var dd = document.getElementById("dd").value;
+	var yyyy = document.querySelector("#yyyy");
+	var mm = document.querySelector("#mm");
+	var dd = document.querySelector("#dd");
 	
 	var idPattern = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
     var pwPattern = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
@@ -44,8 +44,13 @@ $(function(){
 	$("#submit").click(function(){
 		
 		console.log('userIdCheck_word : ' + userIdCheck_word.value);
-		birthday = yyyy+mm+dd;
+		
+		
+		birthday = yyyy.value+mm.value+dd.value;
 		document.getElementById("birthday").value = birthday;
+		
+		console.log('생년월일 : ' + birthday);
+		console.log('태어난 년도 : ' + yyyy.value);
 		
 		if(userIdCheck_word.value == "N") {
 			alert("아이디 중복확인을 해주세요.");
@@ -99,43 +104,43 @@ $(function(){
         }
 	    
 		// 생년월일 유효성 체크
-	    if(yyyy == "") {
+	    if(yyyy.value == "") {
 	        alert("태어난 년도 4자리를 입력하세요.");
 	    	$("#yyyy").focus(); 
 			return false;
 	    }
 
-        if(mm == "월") {
+        if(mm.value == "월") {
         	alert("태어난 월을 선택하세요.");
 	    	$("#mm").focus(); 
 			return false;
         }
         
-        if(dd == "") {
+        if(dd.value == "") {
             alert("태어난 일(날짜) 2자리를 정확하게 입력하세요.");
 	    	$("#dd").focus(); 
 			return false;
         }
 
-	    if(!datePattern.test(dd)) {
+	    if(!datePattern.test(dd.value)) {
 	        alert("태어난 일(날짜) 2자리로 입력해주세요.(ex)07)");
 	    	$("#dd").focus(); 
 			return false;
 	    }
 		
-		if(Number(dd)<1 || Number(dd)>31) {
+		if(Number(dd.value)<1 || Number(dd.value)>31) {
 		    alert("태어난 일(날짜) 2자리를 다시 확인해주세요.");
 			$("#dd").focus(); 
 			return false;
 		}
 		
-	    if(Number(yyyy) < 1920) {
+	    if(Number(yyyy.value) < 1920) {
 	        alert("태어난 년도를 다시 확인해주세요.");
 	    	$("#yyyy").focus(); 
 			return false;
 	    }
 	    
-	    if(Number(yyyy) > 2022) {
+	    if(Number(yyyy.value) > 2022) {
 	        alert("태어난 년도를 다시 확인해주세요.");
 	    	$("#yyyy").focus(); 
 			return false;
@@ -192,30 +197,29 @@ $(function(){
 			alert("ID를 입력하세요.");
 			$("#userId").focus(); 
 			return false; 
-		} else if(!idPattern.test(userId.value)) {
+		} else if(!idPattern.test($("#userId").val())) {
 			alert("아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."); 
 			$("#userId").focus(); 
 			return false;
 	    } else if($("#userId").val().length != 0) {
-	    	
-			console.log('입력한 id : ' + userId.value);
+	    	var id = userId.value;
+			console.log('입력한 id : ' + id);
 			
 			$.ajax({
-				url : 'userIdCheck/'+ userId.value, 
+				url : '${pageContext.request.contextPath}/userIdCheck/'+id,
 				type : 'GET',
-				dataType : 'json',
 				error : function(xhr, status, msg) {
+					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
 					console.log(data);
-					console.log(data.userId);
-					
-					if(userId.value == data) {
+					if(id == data.userId) {
 						alert("이미 등록된 아이디입니다. 새로운 아이디를 입력하세요.");
 						$("#userId").focus(); 
-						return false; 
-					} else if(userId.value != data) {
+						
+					} else if(id != data.userId) {
+						alert("사용 가능한 아이디입니다.");
 						userIdCheck_word.value = "Y";
 						console.log('중복확인 후 userIdCheck_word : ' + userIdCheck_word.value);
 					}
@@ -322,7 +326,7 @@ select {
 								<form name="userJoinForm" action="/userInsert.do" method="post">
 									<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<input type="hidden" id="birthday" name="birthday">
-									<input type="hidden" id="userIdCheck_word" name="userIdCheck_word" value="N">
+									<input type="hidden" id="userIdCheck_word" value="N">
 					                <!-- ID -->
 					                <div>
 				                        <h4>아이디</h4>

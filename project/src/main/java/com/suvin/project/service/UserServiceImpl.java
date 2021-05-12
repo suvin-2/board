@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
 
 	// 회원 가입 시 아이디 중복 체크(ajax)
 	@Override
-	public UserVO userIdCheck(UserVO vo) {
-		return dao.userIdCheck(vo);
+	public UserVO userIdCheck(String userId) {
+		return dao.userIdCheck(userId);
 	}
 
 	// 회원 가입
