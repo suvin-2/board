@@ -61,6 +61,20 @@
 		WHERE USERID = #{userId}
 	</select>
 	
+	<!-- 기존 회원 아이디 조회(회원가입 시 이메일 중복 체크) -->
+	<select id="userEmailCheck" resultType="userVO" parameterType="String">
+		SELECT EMAIL
+		FROM B_USER
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 기존 회원 아이디 조회(회원가입 시 전화번호 중복 체크) -->
+	<select id="userTelCheck" resultType="userVO" parameterType="String">
+		SELECT TEL
+		FROM B_USER
+		WHERE TEL = #{tel}
+	</select>
+	
 	<!-- 회원 가입 -->
 	<insert id="userInsert" parameterType="userVO">
 		INSERT INTO B_USER(USERID,USERPW,USERNAME,BIRTHDAY,GENDER,EMAIL,TEL,AUTH,ENABLED)

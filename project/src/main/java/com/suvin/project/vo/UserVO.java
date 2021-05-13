@@ -70,6 +70,7 @@ public class UserVO {
 	public String getUserId(String userId) {
 		return userId;
 	}
+	
 	@Override
 	public String toString() {
 		return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", birthday=" + birthday

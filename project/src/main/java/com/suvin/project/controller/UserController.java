@@ -1,6 +1,7 @@
 package com.suvin.project.controller;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +71,24 @@ public class UserController {
 		
 		return service.userIdCheck(userId);
 	}
+	
+	// 회원가입 시 이메일 중복 체크(ajax) 이메일 dot 뒤에 잘릴 때 :.+ 추가로 입력해주면 됨
+	@RequestMapping(value="/userEmailCheck/{Email:.+}", method= RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public UserVO userEmailCheck(@PathVariable("Email") String email, Model model) throws Exception {
+		logger.info("user Email check controller in (ajax) Email : "+email);
+		
+		return service.userEmailCheck(email);
+	}
+	
+	// 회원가입 시 전화번호 중복 체크(ajax)
+	@RequestMapping(value="/userTelCheck/{Tel}", method= RequestMethod.GET)
+	@ResponseBody
+	public UserVO userTelCheck(@PathVariable("Tel") String tel, Model model) throws Exception {
+		logger.info("user Tel check controller in (ajax) Tel : "+tel);
+		
+		return service.userTelCheck(tel);
+	}
 
 	
 	// 회원가입
@@ -100,5 +119,26 @@ public class UserController {
 		return "/user/userLogin";
 	}
 
+	// 회원수정 화면
+	@RequestMapping(value="/userInfoForm.do")
+	public String userInfoForm() throws Exception {
+		return "/user/userInfo";
+	}
+	
+	// 회원 정보 조회
+	@ResponseBody
+	@RequestMapping(value="/userInfoSelect/{ID}", method= RequestMethod.GET)
+	public UserVO userInfoSelect(@PathVariable("ID") String userId, UserVO vo, Model model) throws Exception {
+		System.out.println("user controller 회원정보조회 id : "+userId);
+		vo.getUserId(userId);
+		System.out.println("user controller 회원정보조회 vo : "+vo);
+		return service.userInfoSelect(vo);
+	}
+	
+	// 회원 정보 수정
+	@RequestMapping(value="/userInfo.do")
+	public String userInfo() throws Exception {
+		return "/user/userInfo";
+	}
 	
 }

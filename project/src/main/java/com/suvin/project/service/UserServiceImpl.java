@@ -28,6 +28,18 @@ public class UserServiceImpl implements UserService {
 	public UserVO userIdCheck(String userId) {
 		return dao.userIdCheck(userId);
 	}
+	
+	// 회원 가입 시 이메일 중복 체크(ajax)
+	@Override
+	public UserVO userEmailCheck(String email) {
+		return dao.userEmailCheck(email);
+	}
+
+	// 회원 가입 시 전화번호 중복 체크(ajax)
+	@Override
+	public UserVO userTelCheck(String tel) {
+		return dao.userTelCheck(tel);
+	}
 
 	// 회원 가입
 	@Override
@@ -35,7 +47,7 @@ public class UserServiceImpl implements UserService {
 		return dao.userInsert(vo);
 	}
 
-	// 회원 로그인
+	// 회원 로그인 (security)
 	@Override
 	public UserVO userLogin(String userId) throws Exception {
 		
@@ -47,6 +59,12 @@ public class UserServiceImpl implements UserService {
 		}
 		return vo;
 		
+	}
+
+	// 회원 정보 조회
+	@Override
+	public UserVO userInfoSelect(UserVO vo) {
+		return dao.userInfoSelect(vo);
 	}
 
 }

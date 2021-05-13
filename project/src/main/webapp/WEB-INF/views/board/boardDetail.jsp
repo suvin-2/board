@@ -57,10 +57,8 @@
 						<div align="center">
 							<a href="${path}/boardList.do?cName=${item.cName}&sName=${item.sName}&cNo=${item.cNo}" class="button">목록</a>
 							<%  String writer = request.getParameter("writer");
-								System.out.println("로그인 한 id : "+userId+", 넘어온 작성자 : "+writer);
 								
 								if(userId.equals(writer)) {
-									System.out.println("로그인 한 사람이랑 작성자랑 아이디가 똑같다.");
 							%>
 								<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button">수정</a>
 				   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button primary">삭제</a>

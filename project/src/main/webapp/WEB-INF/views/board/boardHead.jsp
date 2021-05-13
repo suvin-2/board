@@ -45,6 +45,7 @@
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li><p><sec:authentication property="principal.username"/>님, 반갑습니다.</p></li>
+							<li><a href="userInfoForm.do?userId=<%=userId%>"><span class="label">MY PAGE</span></a></li>
 							<li><a href="#" onclick="document.getElementById('logout-form').submit();"><span class="label">LOGOUT</span></a></li>
 						</sec:authorize>
 						<li><a href="https://github.com/suvin-2" class="icon brands fa-github"><span class="label">Github</span></a></li>

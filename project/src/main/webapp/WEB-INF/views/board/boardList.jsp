@@ -55,12 +55,12 @@
 							<c:set value="${item.cNo}" var="cNoCopy"/>
 							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-								  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}&writer=${item.writer}'">
+								<tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}&writer=${item.writer}'">
 								    <td id="title">${item.title}</td>
 								    <td id="writer">${item.writer}</td>
 								    <td id="bDate">${bDate}</td>
 								    <td id="cnt">${item.cnt}</td>
-								  </tr>
+								</tr>
 						    </c:forEach>
 							</tbody>
 						</table>

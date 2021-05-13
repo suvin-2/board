@@ -40,7 +40,7 @@ $(function(){
 			<div id="main">
 				<div class="inner">	
 					<!-- Header -->
-					<jsp:include page="../board/boardHead.jsp" flush="false"/>	
+					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 					<!-- Section -->
 						<section>
 							<header class="major">

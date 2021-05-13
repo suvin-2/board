@@ -12,10 +12,19 @@ public interface UserService {
 	// 회원 가입 시 아이디 중복 체크(ajax)
 	public UserVO userIdCheck(String userId);
 	
+	// 회원 가입 시 이메일 중복 체크(ajax)
+	public UserVO userEmailCheck(String email);
+	
+	// 회원 가입 시 전화번호 중복 체크(ajax)
+	public UserVO userTelCheck(String tel);
+	
 	// 회원 가입
 	public int userInsert(UserVO vo);
 
-	// 회원 로그인
+	// 회원 로그인 (security)
 	public UserVO userLogin(String userId) throws Exception;
+	
+	// 회원 정보 조회
+	public UserVO userInfoSelect(UserVO vo);
 		
 }
