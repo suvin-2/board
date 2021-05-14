@@ -40,7 +40,7 @@ $(function(){
 			<div id="main">
 				<div class="inner">	
 					<!-- Header -->
-					<jsp:include page="../board/boardHead.jsp" flush="false"/>	
+					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 					<!-- Section -->
 						<section>
 							<header class="major">
@@ -49,21 +49,27 @@ $(function(){
 							<div style="padding: 0 200px 0 200px; height: auto; min-height: 100px; overflow: auto;">
 							     <form name="userLoginForm" action="/login" method="post">
 							         <div class="form-group">
-							             <label for="exampleDropdownFormEmail1">ID</label>
-							             <input type="text" class="form-control" name="userId" id="userId" placeholder="example" />
+							             <label >ID</label>
+							             <input type="text" class="form-control" name="userId" id="userId" placeholder="id" />
 							         </div>
 							         <br>
 							         <div class="form-group">
-							             <label for="exampleDropdownFormPassword1">Password</label>
+							             <label>Password</label>
 							             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" />
 							         </div>
 							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							         <br>
 							         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-									    <font color="red">
+									    <font color="red" name="ERRORMSG">
 									        <p>Your login attempt was not successful due to <br/>
 									            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
 									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
+									    </font>
+									</c:if>
+									<c:if test="${param.error != null}">
+										<font color="red">
+									        <p> 아이디와 비밀번호를 다시 확인해 주세요. <br/>
+									            ${requestScope.loginFailMsg}</p>
 									    </font>
 									</c:if>
 									<input type="submit" id="submit" class="button primary" value="Login"/>

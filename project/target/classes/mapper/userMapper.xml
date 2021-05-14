@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserDAO">
+	
+	<!-- 전체 회원 조회 -->
+	<select id="userSelect" resultType="userVO">
+		SELECT USERID,
+			   USERPW,
+			   USERNAME,
+			   BIRTHDAY,
+			   GENDER,
+			   EMAIL,
+			   TEL,
+			   AUTH,
+			   ENABLED
+		FROM B_USER
+	</select>
+	
+	<!-- 회원 로그인 사용 X -->
+	<select id="getUserById" resultType="com.suvin.project.security.CustomUserDetails">
+		SELECT USERID,
+			   USERPW,
+			   USERNAME,
+			   BIRTHDAY,
+			   GENDER,
+			   EMAIL,
+			   TEL,
+			   AUTH,
+			   ENABLED
+		FROM B_USER
+		WHERE USERID = #{userId}
+	</select>
+	
+	<!-- 회원 로그인 -->
+	<select id="userLogin" resultType="userVO">
+		SELECT USERID,
+		       USERPW,
+		       USERNAME,
+		       BIRTHDAY,
+		       GENDER,
+		       EMAIL,
+		       TEL,
+		       AUTH,
+		       ENABLED
+		FROM B_USER
+		WHERE USERID=#{userId}
+	</select>
+	
+	<!-- 회원 로그인 (권한조회)-->
+	<select id="selectUserAuth" resultType="com.suvin.project.security.CustomUserDetails">
+		SELECT AUTH
+		FROM B_USER
+		WHERE USERID=#{userId}
+	</select>
+	
+	<!-- 기존 회원 아이디 조회(회원가입 시 아이디 중복 체크) -->
+	<select id="userIdCheck" resultType="userVO" parameterType="String">
+		SELECT USERID
+		FROM B_USER
+		WHERE USERID = #{userId}
+	</select>
+	
+	<!-- 기존 회원 아이디 조회(회원가입 시 이메일 중복 체크) -->
+	<select id="userEmailCheck" resultType="userVO" parameterType="String">
+		SELECT EMAIL
+		FROM B_USER
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<!-- 기존 회원 아이디 조회(회원가입 시 전화번호 중복 체크) -->
+	<select id="userTelCheck" resultType="userVO" parameterType="String">
+		SELECT TEL
+		FROM B_USER
+		WHERE TEL = #{tel}
+	</select>
+	
+	<!-- 회원 가입 -->
+	<insert id="userInsert" parameterType="userVO">
+		INSERT INTO B_USER(USERID,USERPW,USERNAME,BIRTHDAY,GENDER,EMAIL,TEL,AUTH,ENABLED)
+		VALUES(#{userId},#{userPw},#{userName},TO_DATE(#{birthday},'YYYY-MM-DD'),#{gender},#{email},#{tel},'ROLE_USER',1)
+	</insert>
+	
+</mapper>

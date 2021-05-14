@@ -13,15 +13,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript">
+	var userId = $("#securityLogin");
+	
+	console.log('user id (다른 페이지들로 넘겨줘야함) '+userId);
+</script>
 </head>
 <%
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     Object principal = auth.getPrincipal();
  
-    String name = "";
+    String userId = "";
     if(principal != null) {
-        name = auth.getName();
+    	userId = auth.getName();
     }
+    
 %>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -34,18 +40,19 @@
 				<a href="/" class="logo"><strong>Suvin's Cooking Class</strong> by suvin</a>
 					<ul class="icons">
 						<sec:authorize access="isAnonymous()">
-							<li><a href='<c:url value="/userLogin"/>'><span class="label">LOGIN</span></a></li>
+							<li><a href='<c:url value="/userLoginForm"/>'><span class="label">LOGIN</span></a></li>
 							<li><a href="/userJoin.do"><span class="label">JOIN</span></a></li>
 						</sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<li><p><sec:authentication property="principal.username"/>님, 반갑습니다.</p></li>
+							<li><a href="userInfoForm.do?userId=<%=userId%>"><span class="label">MY PAGE</span></a></li>
 							<li><a href="#" onclick="document.getElementById('logout-form').submit();"><span class="label">LOGOUT</span></a></li>
 						</sec:authorize>
 						<li><a href="https://github.com/suvin-2" class="icon brands fa-github"><span class="label">Github</span></a></li>
 					</ul>	
 			</header>
 <form id="logout-form" action='<c:url value='/logout'/>' method="POST">
-   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+   <input id="securityLogin" name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 </form>
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>

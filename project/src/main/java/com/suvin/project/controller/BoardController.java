@@ -2,11 +2,9 @@ package com.suvin.project.controller;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,6 @@ import com.suvin.project.vo.CategoryVO;
 import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.PageMaker;
 
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 /**
  * Handles requests for the application home page.
@@ -84,18 +81,6 @@ public class BoardController {
 		return mv;
 	}
 	
-	/*
-	// 게시판 카테고리 별 글 목록
-	@RequestMapping(value = "/boardList.do")
-	public String boardSelect(BoardVO vo, Model model) throws Exception {
-		List<BoardVO> list = service.boardCategorySelect(vo);
-		logger.info(list.toString());
-		model.addAttribute("list",list);
-		
-		return "/board/boardList";
-	}
-	*/
-	
 	// 게시판 카테고리 별 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public ModelAndView boardSelect(Criteria cri, Model model) throws Exception {
@@ -111,15 +96,6 @@ public class BoardController {
 		
 		return mv;
 	}
-	
-	/*
-	// 게시글 단건조회 폼 
-	@RequestMapping(value = "/boardDetailForm.do")
-	public String boardDetailForm(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception{
-		System.out.println("board detail form in ");
-		return "board/boardDetail";
-	}
-	*/
 	
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
@@ -145,7 +121,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {
-		
+		logger.info(vo.toString());
 		vo.getbNo(bNo);
 		return service.boardSelectOne(vo);
 	}
@@ -167,7 +143,6 @@ public class BoardController {
 	}
 	
 	// 게시글 수정 폼 
-	
 	@RequestMapping(value = "/boardUpdateForm.do")
 	public String boardUpdateForm(@ModelAttribute("boardVO") BoardVO vo, CategoryVO cVo, Model model) throws Exception{
 		
@@ -175,7 +150,6 @@ public class BoardController {
 		model.addAttribute("list",list);
 		return "board/boardUpdate";
 	}
-	
 	
 	// 게시글 수정
 	@RequestMapping(value = "/boardUpdate.do")
