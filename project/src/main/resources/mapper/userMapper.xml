@@ -81,4 +81,14 @@
 		VALUES(#{userId},#{userPw},#{userName},TO_DATE(#{birthday},'YYYY-MM-DD'),#{gender},#{email},#{tel},'ROLE_USER',1)
 	</insert>
 	
+	<!-- 회원 정보 수정 -->
+	<update id="userUpdate">
+		UPDATE B_USER
+		SET USERPW = #{userPw},
+			USERNAME = #{userName},
+			EMAIL = #{email},
+			TEL = #{tel} 
+		WHERE USERID = #{userId}
+	</update>
+	
 </mapper>

@@ -59,5 +59,8 @@ public class UserDAO {
 	public UserVO userInfoSelect(UserVO vo) {
 		return mybatis.selectOne("UserDAO.userLogin",vo);
 	}
-
+	// 회원 정보 수정
+	public int userUpdate(UserVO vo) {
+		return mybatis.update("UserDAO.userUpdate",vo);
+	}
 }

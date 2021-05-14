@@ -67,4 +67,9 @@ public class UserServiceImpl implements UserService {
 		return dao.userInfoSelect(vo);
 	}
 
+	@Override
+	public int userUpdate(UserVO vo) {
+		return dao.userUpdate(vo);
+	}
+
 }

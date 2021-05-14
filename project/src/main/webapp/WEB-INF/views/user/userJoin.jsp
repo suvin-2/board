@@ -17,16 +17,15 @@
 <script type="text/javascript">
 $(function(){
 	
-	var userId = document.querySelector("#userId");
-	var userIdCheck_word = document.querySelector('#userIdCheck_word');
+	var userId_jsp = document.querySelector("#userId");
 	var userPw1 = document.querySelector('#userPw1');
 	var pwMsg = document.querySelector('#alertTxt');
 	var userPw2 = document.querySelector('#userPw2');
 	var pwMsgArea = document.querySelector('.int_pass');
 	var userName = document.querySelector('#userName');
 	var gender = document.querySelector('#gender');
-	var email = document.querySelector('#email');
-	var tel = document.querySelector('#tel');
+	var email_jsp = document.querySelector('#email');
+	var tel_jsp = document.querySelector('#tel');
 	
 	var birthday;
 	var yyyy = document.querySelector("#yyyy");
@@ -188,23 +187,23 @@ $(function(){
 			idCheck = "N";
 			return false;
 	    } else if($("#userId").val().length != 0) {
-	    	var id = userId.value;
-			console.log('입력한 id : ' + id);
+	    	var userId = userId_jsp.value;
+			console.log('입력한 id : ' + userId);
 			
 			$.ajax({
-				url : '${pageContext.request.contextPath}/userIdCheck/'+id,
+				url : '${pageContext.request.contextPath}/userIdCheck/'+userId,
 				type : 'GET',
 				error : function(xhr, status, msg) {
 					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					if(id == data.userId) {
+					if(userId == data.userId) {
 						alert("이미 등록된 아이디입니다. 새로운 아이디를 입력하세요.");
 						idCheck = "N";
 						$("#userId").focus(); 
 						
-					} else if(id != data.userId) {
+					} else if(userId != data.userId) {
 						alert("사용 가능한 아이디입니다.");
 						idCheck = "Y";
 					}
@@ -217,22 +216,22 @@ $(function(){
 	$("#userEmailCheck").click(function() {
 		
 	    // 이메일 유휴성 체크
-	    if(email.value === ""){ 
+	    if(email_jsp.value === ""){ 
 	    	alert("이메일을 입력하세요.");
 	    	$("#email").focus(); 
 	    	emailCheck = "N";
 			return false;
-	    } else if(!emailPattern.test(email.value)) {
+	    } else if(!emailPattern.test(email_jsp.value)) {
 	    	alert("이메일 형식을 확인해주세요.");
 	    	$("#email").focus(); 
 	    	emailCheck = "N";
 			return false;
 	    } else {
-	    	var Email = email.value;
-	    	console.log('입력한 이메일 : '+Email);
+	    	var email = email_jsp.value;
+	    	console.log('입력한 이메일 : '+email);
 	    	
 	    	$.ajax({
-				url : 'userEmailCheck/'+Email,
+				url : 'userEmailCheck/'+email,
 				type : 'GET',
 				dataType : 'json',
 				error : function(xhr, status, msg) {
@@ -240,12 +239,12 @@ $(function(){
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					if(Email === data.email) {
+					if(email === data.email) {
 						alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
 						emailCheck = "N";
 						$("#userId").focus(); 
 						
-					} else if(Email != data.email) {
+					} else if(email != data.email) {
 						alert("사용 가능한 이메일입니다.");
 						emailCheck = "Y";
 						console.log('중복확인 후 emailCheck : ' + emailCheck);
@@ -259,34 +258,34 @@ $(function(){
 	$("#userTelCheck").click(function() {
 		
 		// 전화번호 유호성 체크
-	    if(tel.value === "") {
+	    if(tel_jsp.value === "") {
 	    	alert("휴대폰 번호를 입력하세요.");
 	    	$("#tel").focus(); 
 	    	telCheck = "N";
 			return false;
-	    } else if(!isPhoneNum.test(tel.value)) {
+	    } else if(!isPhoneNum.test(tel_jsp.value)) {
 	        alert("형식에 맞지 않는 번호입니다.");
 	    	$("#tel").focus(); 
 	    	telCheck = "N";
 			return false;
 	    } else if($("#tel").val().length != 0) {
-	    	var Tel = tel.value;
-			console.log('입력한 Tel : ' + Tel);
+	    	var tel = tel_jsp.value;
+			console.log('입력한 Tel : ' + tel);
 			
 			$.ajax({
-				url : 'userTelCheck/'+Tel,
+				url : 'userTelCheck/'+tel,
 				type : 'GET',
 				error : function(xhr, status, msg) {
 					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					if(Tel == data.tel) {
+					if(tel == data.tel) {
 						telCheck = "N";
 						alert("이미 등록된 전화번호입니다.");
 						$("#tel").focus(); 
 						
-					} else if(Tel != data.tel) {
+					} else if(tel != data.tel) {
 						telCheck = "Y";
 						alert("사용 가능한 전화번호입니다.");
 					}

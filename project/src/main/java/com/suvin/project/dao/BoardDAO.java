@@ -43,7 +43,6 @@ public class BoardDAO {
 	
 	// 게시글 수정
 	public int boardUpdate(BoardVO vo) {
-		System.out.println("vo : " + vo);
 		return mybatis.update("BoardDAO.boardUpdate",vo);
 	}
 	

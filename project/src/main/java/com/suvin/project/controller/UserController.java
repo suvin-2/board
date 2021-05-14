@@ -73,19 +73,19 @@ public class UserController {
 	}
 	
 	// 회원가입 시 이메일 중복 체크(ajax) 이메일 dot 뒤에 잘릴 때 :.+ 추가로 입력해주면 됨
-	@RequestMapping(value="/userEmailCheck/{Email:.+}", method= RequestMethod.GET, produces = "application/json; charset=utf8")
+	@RequestMapping(value="/userEmailCheck/{email:.+}", method= RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public UserVO userEmailCheck(@PathVariable("Email") String email, Model model) throws Exception {
-		logger.info("user Email check controller in (ajax) Email : "+email);
+	public UserVO userEmailCheck(@PathVariable("email") String email, Model model) throws Exception {
+		logger.info("user Email check controller in (ajax) email : "+email);
 		
 		return service.userEmailCheck(email);
 	}
 	
 	// 회원가입 시 전화번호 중복 체크(ajax)
-	@RequestMapping(value="/userTelCheck/{Tel}", method= RequestMethod.GET)
+	@RequestMapping(value="/userTelCheck/{tel}", method= RequestMethod.GET)
 	@ResponseBody
-	public UserVO userTelCheck(@PathVariable("Tel") String tel, Model model) throws Exception {
-		logger.info("user Tel check controller in (ajax) Tel : "+tel);
+	public UserVO userTelCheck(@PathVariable("tel") String tel, Model model) throws Exception {
+		logger.info("user Tel check controller in (ajax) tel : "+tel);
 		
 		return service.userTelCheck(tel);
 	}
@@ -95,27 +95,17 @@ public class UserController {
 	@RequestMapping(value="/userInsert.do")
 	public String userInsert(@ModelAttribute("userVO") UserVO vo, Model model,HttpServletResponse response) throws Exception {
 		
-		System.out.println("회원가입 된 값 : "+vo);
-		System.out.println("암호화 전 비밀번호 : "+vo.getUserPw());
-		
 		String encodePw = bcryptPasswordEncoder.encode(vo.getUserPw());
 		vo.setUserPw(encodePw);
 		
-		System.out.println("암호화 후 비밀번호 : "+vo.getUserPw());
-				
 		// 회원 등록 전 alert 창 띄우기
 		if(vo != null) {
 			response.setContentType("text/html; charset=UTF-8");
-			 
 			PrintWriter out = response.getWriter();
-			
 			out.println("<script>alert('회원가입이 완료되었습니다');</script>");
 			out.flush();
-
+			service.userInsert(vo);
 		}
-		
-		service.userInsert(vo);
-		
 		return "/user/userLogin";
 	}
 
@@ -127,17 +117,26 @@ public class UserController {
 	
 	// 회원 정보 조회
 	@ResponseBody
-	@RequestMapping(value="/userInfoSelect/{ID}", method= RequestMethod.GET)
-	public UserVO userInfoSelect(@PathVariable("ID") String userId, UserVO vo, Model model) throws Exception {
-		System.out.println("user controller 회원정보조회 id : "+userId);
+	@RequestMapping(value="/userInfoSelect/{userId}", method= RequestMethod.GET)
+	public UserVO userInfoSelect(@PathVariable("userId") String userId, UserVO vo, Model model) throws Exception {
 		vo.getUserId(userId);
-		System.out.println("user controller 회원정보조회 vo : "+vo);
 		return service.userInfoSelect(vo);
 	}
 	
 	// 회원 정보 수정
 	@RequestMapping(value="/userInfo.do")
-	public String userInfo() throws Exception {
+	public String userInfo(@ModelAttribute("userVO") UserVO vo, Model model,HttpServletResponse response) throws Exception {
+		
+		String encodePw = bcryptPasswordEncoder.encode(vo.getUserPw());
+		vo.setUserPw(encodePw);
+		
+		if(vo != null) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보 수정이 완료되었습니다');</script>");
+			out.flush();
+			service.userUpdate(vo);
+		}
 		return "/user/userInfo";
 	}
 	

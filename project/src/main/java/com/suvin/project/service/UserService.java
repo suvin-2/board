@@ -26,5 +26,8 @@ public interface UserService {
 	
 	// 회원 정보 조회
 	public UserVO userInfoSelect(UserVO vo);
+	
+	// 회원 정보 수정
+	public int userUpdate(UserVO vo);
 		
 }

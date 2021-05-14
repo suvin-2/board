@@ -17,18 +17,18 @@
 <script type="text/javascript">
 $(function(){
 	
-	var ID = "<%= request.getParameter("userId") %>";
-	console.log('ID : '+ID);
+	var userId = "<%= request.getParameter("userId") %>";
+	console.log('ID : '+userId);
 	
-	var userId = document.querySelector("#userId");
+	var userId_jsp = document.querySelector("#userId");
 	var userPw1 = document.querySelector('#userPw1');
 	var pwMsg = document.querySelector('#alertTxt');
 	var userPw2 = document.querySelector('#userPw2');
 	var pwMsgArea = document.querySelector('.int_pass');
 	var userName = document.querySelector('#userName');
 	var gender = document.querySelector('#gender');
-	var email = document.querySelector('#email');
-	var tel = document.querySelector('#tel');
+	var email_jsp = document.querySelector('#email');
+	var tel_jsp = document.querySelector('#tel');
 	
 	var birthday;
 	var yyyy = document.querySelector("#yyyy");
@@ -47,21 +47,6 @@ $(function(){
 	userInfo();
 
 	$("#submit").click(function(){
-		
-		console.log('idCheck : ' + idCheck);
-		
-		
-		birthday = yyyy.value+mm.value+dd.value;
-		document.getElementById("birthday").value = birthday;
-		
-		console.log('생년월일 : ' + birthday);
-		console.log('태어난 년도 : ' + yyyy.value);
-
-		if(telCheck == "N") {
-			alert("전화번호 중복확인을 해주세요.");
-	    	$("#tel").focus(); 
-			return false;
-		}
 		
 		// pw 유효성 체크
 	    if(userPw1.value == "") {
@@ -87,7 +72,13 @@ $(function(){
 	    	$("#userPw2").focus(); 
 			return false;
 	    }
-
+	    
+	    if(telCheck == "N") {
+			alert("전화번호 중복확인을 해주세요.");
+	    	$("#tel").focus(); 
+			return false;
+		}
+		
 	    // 이름 유효성 체크
 	    if(userName.value == "") {
 	    	alert("이름을 입력하세요.");
@@ -105,7 +96,7 @@ $(function(){
 	
 	function userInfo() {
 		$.ajax({
-			url : 'userInfoSelect/'+ID, 
+			url : 'userInfoSelect/'+userId, 
 			type : 'GET',
 			dataType : 'json',
 			contentType : 'application/json; charset=UTF-8',
@@ -114,7 +105,19 @@ $(function(){
 			},
 			success : function(data) {
 				console.log(data);
-				userId.value = data.userId;
+				userId_jsp.value = data.userId;
+				userName.value = data.userName;
+				birthday = data.birthday;
+				yyyy.value = birthday.substr(0,4);
+				mm.value = birthday.substr(5,2);
+				dd.value = birthday.substr(8,2);
+				if(data.gender == "F") {
+					gender.value = "여자";
+				} else if(data.gender =="M") {
+					gender.value ="남자";
+				}
+				email_jsp.value = data.email;
+				tel_jsp.value = data.tel;
 				/* $('input:text[name="title"]').val(data.title);
 				$('textarea[name="content"]:visible').val(data.content);
 				$('input:text[name="writer"]').val(data.writer);
@@ -138,27 +141,27 @@ $(function(){
 	 
 	    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));           
 	});
-	
+
 	// 이메일 인증
 	$("#userEmailCheck").click(function() {
 		
 	    // 이메일 유휴성 체크
-	    if(email.value === ""){ 
+	    if(email_jsp.value === ""){ 
 	    	alert("이메일을 입력하세요.");
 	    	$("#email").focus(); 
 	    	emailCheck = "N";
 			return false;
-	    } else if(!emailPattern.test(email.value)) {
+	    } else if(!emailPattern.test(email_jsp.value)) {
 	    	alert("이메일 형식을 확인해주세요.");
 	    	$("#email").focus(); 
 	    	emailCheck = "N";
 			return false;
 	    } else {
-	    	var Email = email.value;
-	    	console.log('입력한 이메일 : '+Email);
+	    	var email = email_jsp.value;
+	    	console.log('입력한 이메일 : '+email);
 	    	
 	    	$.ajax({
-				url : 'userEmailCheck/'+Email,
+				url : 'userEmailCheck/'+email,
 				type : 'GET',
 				dataType : 'json',
 				error : function(xhr, status, msg) {
@@ -166,12 +169,12 @@ $(function(){
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					if(Email === data.email) {
+					if(email === data.email) {
 						alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
 						emailCheck = "N";
 						$("#userId").focus(); 
 						
-					} else if(Email != data.email) {
+					} else if(email != data.email) {
 						alert("사용 가능한 이메일입니다.");
 						emailCheck = "Y";
 						console.log('중복확인 후 emailCheck : ' + emailCheck);
@@ -185,34 +188,34 @@ $(function(){
 	$("#userTelCheck").click(function() {
 		
 		// 전화번호 유호성 체크
-	    if(tel.value === "") {
+	    if(tel_jsp.value === "") {
 	    	alert("휴대폰 번호를 입력하세요.");
 	    	$("#tel").focus(); 
 	    	telCheck = "N";
 			return false;
-	    } else if(!isPhoneNum.test(tel.value)) {
+	    } else if(!isPhoneNum.test(tel_jsp.value)) {
 	        alert("형식에 맞지 않는 번호입니다.");
 	    	$("#tel").focus(); 
 	    	telCheck = "N";
 			return false;
 	    } else if($("#tel").val().length != 0) {
-	    	var Tel = tel.value;
-			console.log('입력한 Tel : ' + Tel);
+	    	var tel = tel_jsp.value;
+			console.log('입력한 Tel : ' + tel);
 			
 			$.ajax({
-				url : 'userTelCheck/'+Tel,
+				url : 'userTelCheck/'+tel,
 				type : 'GET',
 				error : function(xhr, status, msg) {
 					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					if(Tel == data.tel) {
+					if(tel == data.tel) {
 						telCheck = "N";
 						alert("이미 등록된 전화번호입니다.");
 						$("#tel").focus(); 
 						
-					} else if(Tel != data.tel) {
+					} else if(tel != data.tel) {
 						telCheck = "Y";
 						alert("사용 가능한 전화번호입니다.");
 					}
@@ -301,7 +304,7 @@ select {
 }
 </style>
 </head>
-<body class="is-preload" onload="document.userJoinForm.userId.focus();">
+<body class="is-preload" onload="document.userInfoForm.userId.focus();">
 	<!-- Wrapper -->
 	<div id="wrapper">
 		<!-- Main -->
@@ -316,7 +319,7 @@ select {
 							</header>
 							<!-- content-->
 				            <div id="content">
-								<form name="userJoinForm" action="/userInsert.do" method="post">
+								<form name="userInfoForm" action="/userInfo.do" method="post">
 									<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<input type="hidden" id="birthday" name="birthday">
 					                <!-- ID -->
@@ -392,7 +395,7 @@ select {
 					                </div>
 					                <!-- JOIN BTN-->
 					                <center>
-					                	<input type="submit" id="submit" onclick="return confirm('내 정보를 수정하시겠습니까?');" class="button" value="수정하기"/>
+					                	<input type="submit" id="submit" class="button" value="수정하기"/>
 					                	<input type="button" id="back" onclick="history.back()" value="돌아가기"/>
 					                </center>
 					        	</form>

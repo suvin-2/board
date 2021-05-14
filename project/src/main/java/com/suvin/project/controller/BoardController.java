@@ -123,6 +123,7 @@ public class BoardController {
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {
 		logger.info(vo.toString());
 		vo.getbNo(bNo);
+		System.out.println("board controller 게시글 단건 조회 vo get bno : "+vo.getbNo());
 		return service.boardSelectOne(vo);
 	}
 	
