@@ -138,8 +138,7 @@ public class BoardController {
 	@RequestMapping(value = "/boardInsert.do")
 	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception {
 		service.boardInsert(vo);
-		System.out.println("boardController insert 된 값 : " + vo);
-		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo();
+		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo()+"&writer="+vo.getWriter();
 	}
 	
 	// 게시글 수정 폼 
