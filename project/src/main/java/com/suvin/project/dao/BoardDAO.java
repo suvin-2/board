@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.ReplyVO;
 
 @Repository
 public class BoardDAO {
@@ -64,5 +65,15 @@ public class BoardDAO {
 	// 조회수 update
 	public int boardUpdateCnt(BoardVO vo) {
 		return mybatis.update("BoardDAO.boardUpdateCnt",vo);
+	}
+	
+	// 댓글 조회
+	public List<ReplyVO> replySelect(int bNo) {
+		return mybatis.selectList("BoardDAO.replySelect",bNo);
+	}
+	
+	// 댓글 등록
+	public int replyInsert(ReplyVO vo) {
+		return mybatis.insert("BoardDAO.replyInsert",vo);
 	}
 }

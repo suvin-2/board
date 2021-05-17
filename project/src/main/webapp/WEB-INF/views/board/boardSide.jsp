@@ -52,7 +52,7 @@
 				});
 				
 				for(var i=0;i<finalData.length;i++) {
-					$("#sideLi").append("<span class='opener' id='cName'>"+finalData[i]+"</span>");
+					$("#sideLi").append("<span id='cName' style='font-weight : bold;'>"+finalData[i]+"</span>");
 					for(var j=0;j<cNameList.length;j++) {
 						if(finalData[i] == list[j].cName) {
 							$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a>");
@@ -66,9 +66,6 @@
 </script> 
 </head>
 <body>
-	<!-- Wrapper -->
-	<div id="wrapper">
-
 		<!-- Sidebar -->
 			<div id="sidebar">
 				<div class="inner">
@@ -84,10 +81,10 @@
 							</header>
 							<ul>
 								<li id="sideLi">
-									<ul>
+									<!-- <ul>
 										<li id="sideLi2">
 										</li>
-									</ul>
+									</ul> -->
 								</li>
 							</ul>
 						</nav>
@@ -112,9 +109,6 @@
 	
 				</div>
 			</div>
-	
-	</div>
-
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>

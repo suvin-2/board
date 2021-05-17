@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.suvin.project.service.BoardService;
 import com.suvin.project.service.CategoryService;
@@ -22,6 +23,7 @@ import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.CategoryVO;
 import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.PageMaker;
+import com.suvin.project.vo.ReplyVO;
 
 
 /**
@@ -109,12 +111,32 @@ public class BoardController {
 		List<BoardVO> list = service.boardSelectDetail(vo);	
 		mv.addObject("list",list);
 		
+		// 댓글 select
+		List<ReplyVO> replyList = service.replySelect(vo.getbNo());
+		mv.addObject("replyList",replyList);
+		
 		PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
         mv.addObject("page",cri.getPage());
         mv.addObject("pageMaker", pageMaker);
 		
 		return mv;
+	}
+	
+	// 댓글 등록
+	@RequestMapping(value = "/replyInsert", method = RequestMethod.POST)
+	public String replyInsert(@ModelAttribute("ReplyVO") ReplyVO vo, Criteria cri, RedirectAttributes rttr) throws Exception {
+		
+		service.replyInsert(vo);
+		
+		PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+		
+        rttr.addAttribute("bNo",vo.getbNo());
+        rttr.addAttribute("page",cri.getPage());
+        rttr.addAttribute("pageMaker",pageMaker);
+        
+		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo()+"&writer="+vo.getrWriter();
 	}
 	
 	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용
@@ -164,5 +186,5 @@ public class BoardController {
 		service.boardDelete(bNo);
 		return "redirect:/boardList.do";
 	}
-	
+
 }

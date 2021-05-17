@@ -15,6 +15,24 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<script type="text/javascript">
+$(function(){
+	
+	// 댓글 등록
+	$("#replyWriteBtn").click(function() {
+		console.log('댓글 작성 버튼 누름');
+		if($("#rContent").val().length == 0) {
+			alert("댓글 내용을 입력하세요.");
+			$("#rContent").focus(); 
+			return false; 
+		} else {
+			var formObj = $("form[name='replyForm']");
+			formObj.attr("action", "/replyInsert");
+			formObj.submit();
+		}
+	});
+});
+</script>
 </head>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -54,6 +72,48 @@
 							    <td colspan="3"><p id="content">${item.content}</p></td>
 							  </tr>
 						</table>
+						
+						<%  
+							if(!userId.equals("anonymousUser")) {
+						%>
+							<!-- 댓글 (insert) -->
+							<form name="replyForm" method="post">
+							<input type="hidden" id="bNo" name="bNo" value="${item.bNo}" />
+							<input type="hidden" id="rWriter" name="rWriter" value="<%= userId %>" />
+								<div>
+									<table border="1">
+										  <tr>
+										  	<th>댓글 작성자</th>
+										  	<td><p><%= userId %></p></td>
+										  </tr>
+										  <tr>
+										    <th>댓글 내용</th>
+										    <td colspan="3"><input type="text" id="rContent" name="rContent" maxlength="300" placeholder="최대 300자까지 입력가능합니다."></td>
+										  </tr>
+									</table>
+									<div align="center">
+										<input type="button" id="replyWriteBtn" class="button" value="댓글 작성"/>
+									</div>
+								</div>
+							</form>
+						<%
+							}
+						%>
+						<!-- 댓글 (select) -->
+						<div id="reply">
+							<ol class="replyList">
+								<c:forEach items="${replyList}" var="replyList">
+									<li>
+										<p>
+											작성자 : ${replyList.rWriter}<br />
+											작성 날짜 :  <fmt:formatDate value="${replyList.rDate}" pattern="yyyy-MM-dd HH:mm" />
+										</p>
+									
+										<p>${replyList.rContent}</p>
+									</li>
+								</c:forEach>   
+							</ol>
+						</div>
 						<div align="center">
 							<a href="${path}/boardList.do?cName=${item.cName}&sName=${item.sName}&cNo=${item.cNo}" class="button">목록</a>
 							<%  String writer = request.getParameter("writer");

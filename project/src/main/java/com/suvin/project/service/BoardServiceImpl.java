@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.suvin.project.dao.BoardDAO;
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.ReplyVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -67,6 +68,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int boardUpdateCnt(BoardVO vo) {
 		return dao.boardUpdateCnt(vo);
+	}
+	
+	@Override
+	public List<ReplyVO> replySelect(int bNo) {
+		return dao.replySelect(bNo);
+	}
+	
+	@Override
+	public int replyInsert(ReplyVO vo) {
+		return dao.replyInsert(vo);
 	}
 
 }

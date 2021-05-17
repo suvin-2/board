@@ -97,6 +97,32 @@
 		ORDER BY BNO DESC
 	</select>
 	
+	<!-- 게시판 댓글 조회  -->
+	<select id="replySelect" resultType="com.suvin.project.vo.ReplyVO">
+		SELECT BNO,
+		       RNO,
+		       RCONTENT,
+		       RWRITER,
+		       RDATE
+		FROM B_REPLY
+		WHERE BNO = #{bNo}
+	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="replyInsert">
+		INSERT INTO B_REPLY(
+			BNO,
+			RNO,
+			RCONTENT,
+			RWRITER
+		) VALUES (
+			#{bNo},
+			B_REPLY_SEQ.NEXTVAL,
+			#{rContent},
+			#{rWriter}
+		)
+	</insert>
+	
 	<!-- 게시글 작성 -->
 	<insert id="boardInsert">
 		<selectKey resultType="int" keyProperty="bNo" order="BEFORE">
@@ -120,6 +146,23 @@
 			#{cNo}
 		)
 	</insert>
+	
+	<!-- 파일 등록 -->
+	<insert id="fileInsert" parameterType="hashMap">
+		INSERT INTO MP_FILE(
+			FILE_NO,
+			BNO,
+			ORG_FILE_NAME,
+			STORED_FILE_NAME,
+			FILE_SIZE
+		)VALUES(
+			SEQ_MP_FILE_NO.NEXTVAL,
+			#{bNo},
+			#{ORG_FILE_NAME},
+			#{STORED_FILE_NAME},
+			#{FILE_SIZE}
+		)
+    </insert>
 	
 	<!-- 게시글 수정 -->
 	<update id="boardUpdate">

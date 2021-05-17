@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.ReplyVO;
 
 public interface BoardService {
 
@@ -37,5 +38,11 @@ public interface BoardService {
 	
 	// 게시글 조회수 증가
 	public int boardUpdateCnt(BoardVO vo);
+	
+	// 댓글 조회
+	public List<ReplyVO> replySelect(int bNo);
+	
+	// 댓글 등록
+	public int replyInsert(ReplyVO vo);
 
 }
