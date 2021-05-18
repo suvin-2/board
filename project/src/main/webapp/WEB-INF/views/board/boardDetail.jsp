@@ -222,6 +222,9 @@ function reply_delete(rNo) {
     float: right;
 }
 
+#content {
+	border : none;
+}
 </style>
 </head>
 <body class="is-preload">
@@ -256,7 +259,7 @@ function reply_delete(rNo) {
 						</div>
 						<hr>
 						<div class="main_content">
-							<textarea id="content" cols="100" rows="10">${item.content}</textarea>
+							<textarea id="content">${item.content}</textarea>
 						</div>
 						<br>
 						
@@ -328,6 +331,15 @@ function reply_delete(rNo) {
 	</div>
 
 <!-- Scripts -->
+<script type="text/javascript">
+// 내용 textarea 스크롤 없애기
+var txtArea = $("#content");
+if (txtArea) {
+    txtArea.each(function(){
+        $(this).height(this.scrollHeight);
+    });
+}
+</script>
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>
 <script src="js/breakpoints.min.js"></script>
