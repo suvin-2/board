@@ -132,16 +132,16 @@ public class BoardController {
 		vo.setrContent(rContent);
 		vo.setrWriter(rWiter);
 		
-		System.out.println("댓글 등록 vo : "+vo);
-		
-//		PageMaker pageMaker = new PageMaker();
-//        pageMaker.setCri(cri);
-//		
-//        rttr.addAttribute("bNo",vo.getbNo());
-//        rttr.addAttribute("page",cri.getPage());
-//        rttr.addAttribute("pageMaker",pageMaker);
-        
 		return service.replyInsert(vo);
+	}
+	
+	// 댓글 수정(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.GET)
+	public int replyUpdate(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rNo") int rNo, @ModelAttribute("rContent") String rContent) throws Exception {
+		
+		
+		return service.replyUpdate(vo);
 	}
 	
 	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용

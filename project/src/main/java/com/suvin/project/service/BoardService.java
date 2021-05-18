@@ -44,5 +44,8 @@ public interface BoardService {
 	
 	// 댓글 등록
 	public int replyInsert(ReplyVO vo);
+	
+	// 댓글 수정
+	public int replyUpdate(ReplyVO vo);
 
 }

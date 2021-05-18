@@ -76,4 +76,9 @@ public class BoardDAO {
 	public int replyInsert(ReplyVO vo) {
 		return mybatis.insert("BoardDAO.replyInsert",vo);
 	}
+	
+	// 댓글 수정
+	public int replyUpdate(ReplyVO vo) {
+		return mybatis.update("BoardDAO.replyUpdate",vo);
+	}
 }
