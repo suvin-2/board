@@ -33,6 +33,7 @@
 					<div class="content">
 					<%  
 						String sName = request.getParameter("sName"); 
+						String cNo = request.getParameter("cNo"); 
 						System.out.println("boardList.jsp 넘어온 sName : " + sName);
 					%>
 					<header class="major">
@@ -70,7 +71,7 @@
 							if(userId != "anonymousUser") {
 						%>
 							<div align="right">
-								<a href="boardInsertForm.do?sName=<%=sName%>" class="button">글쓰기</a>
+								<a href="boardInsertForm.do?sName=<%=sName%>&cNo=<%=cNo%>" class="button">글쓰기</a>
 							</div>
 						<% } %>
 						<div class="pagingBnt">

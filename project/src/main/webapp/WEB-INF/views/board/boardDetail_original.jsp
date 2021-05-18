@@ -16,7 +16,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 <script type="text/javascript">
-
 $(function(){
 	
 	// 댓글 등록
@@ -35,92 +34,22 @@ $(function(){
 			console.log('content :'+rContent+', bNo:'+bNo+', writer:'+rWriter);
 			
 			$.ajax({
-				url : '/replyInsert.do',
+				url : 'replyInsert.do',
 				data : param,
-				type : 'get',
-				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+				type : 'POST',
 				error : function(xhr, status, msg) {
 					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					//alert("댓글이 등록되었습니다.");
-					// 페이지 새로고침
-					location.href = location.href;
+					alert("댓글이 등록되었습니다.");
+					//replyList();
 				}
 			});
 		}
 	});
 });
 </script>
-<style>
-.title {
-	text-align : center;
-}
-
-.title p {
-	color : silver;
-}
-
-#writer {
-	font-weight : 600;
-}
-
-#bDate {
-	color : silver;
-	width : 49%;
-}
-
-.writer_info {
-	display: table;
-    width: 100%;
-}
-
-.writer_info1 {
-    display: table-cell;
-    width: 70%;
-}
-
-.writer_info2 {
-    display: table-cell;
-    text-align : right;
-} 
-
-#reply_writer {
-	font-weight : 600;
-	margin : 0 0 10px 0;
-}
-
-#reply_content {
-	margin : 0 0 5px 0;
-}
-
-#reply_date {
-	color : silver;
-}
-
-#reply_insert_writer {
-	font-weight : 600;
-	margin : 0 0 10px 0;
-}
-
-.reply_insert_box {
-    display: table;
-    width: 100%;
-}
-
-.reply_insert_content {
-    display: table-cell;
-    width: 80%;
-}
-
-.reply_insert_btn {
-    display: table-cell;
-    padding-left: 50px;
-    float: right;
-}
-
-</style>
 </head>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -137,52 +66,29 @@ $(function(){
 					<div class="content">
 						<c:forEach var="item" items="${list}">
 						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-						<!-- 카테고리, 제목 -->
-						<div class="title">
-							<p id="sName">${item.sName}</p>
-							<h2 id="title">${item.title}</h2>
-						</div>
-						<!-- 작성자, 작성시간, 조회수 -->
-						<div class="writer_info">
-							<div class="writer_info1">
-								<span id="writer">${item.writer}</span>&nbsp;
-								<span id="bDate">${bDate}</span>
-							</div>
-							<div class="writer_info2">
-								<span id="cnt">조회수 ${item.cnt}</span>
-							</div>
-						</div>
-						<hr>
-						<div class="main_content">
-							<p id="content">${item.content}</p>
-						</div>
-						<br><br><hr>
-						
-						<!-- 댓글 (select) -->
-						<div id="reply">
-							<ol class="alt">
-							<table border="1">
-								<c:forEach items="${replyList}" var="replyList">
-									<tr>
-										<td>
-											<li>
-												<p id="reply_writer">${replyList.rWriter}</p>
-												<p id="reply_content">${replyList.rContent}</p>
-												<span id="reply_date"><fmt:formatDate value="${replyList.rDate}" pattern="yyyy-MM-dd HH:mm" /></span>
-												<c:set var="userId" value="<%= userId %>"/>
-												<c:if test="${replyList.rWriter eq userId}">
-													<div id="reply_btn">
-														<a class="button small" id="reply_update">수정</a>&nbsp;
-														<a class="button small" id="reply_delete">삭제</a>
-													</div>
-												</c:if>
-											</li>
-										</td>
-									</tr>
-								</c:forEach>
-							</table>
-							</ol>
-						</div>
+						<header class="major">
+							<h2>${item.sName}</h2>
+						</header>
+						<table border="1">
+							  <tr>
+							    <th>제목</th>
+							    <td colspan="3"><p id="title">${item.title}</p></td>
+							  </tr>
+							  <tr>
+							    <th>작성자</th>
+							    <td><p id="writer">${item.writer}</p></td>
+							  </tr>
+							  <tr>
+							    <th>작성일</th>
+							    <td><p id="bDate">${bDate}</p></td>
+							    <th>조회수</th>
+							    <td><p id="cnt">${item.cnt}</p></td>
+							  </tr>
+							  <tr>
+							    <th>내용</th>
+							    <td colspan="3"><p id="content">${item.content}</p></td>
+							  </tr>
+						</table>
 						
 						<%  
 							if(!userId.equals("anonymousUser")) {
@@ -191,30 +97,48 @@ $(function(){
 							<form name="replyForm" method="post">
 							<input type="hidden" id="bNo" name="bNo" value="${item.bNo}" />
 							<input type="hidden" id="rWriter" name="rWriter" value="<%= userId %>" />
-								<div class="box">
-									<p id="reply_insert_writer"><%= userId %></p>
-									<div class="reply_insert_box">
-										<div class="reply_insert_content">
-											<input type="text" id="rContent" name="rContent" maxlength="300" placeholder="최대 300자까지 입력가능합니다.">
-										</div>
-										<div class="reply_insert_btn">
-											<input type="button" id="replyWriteBtn" class="button" value="댓글 작성"/>
-										</div>
+								<div>
+									<table border="1">
+										  <tr>
+										  	<th>댓글 작성자</th>
+										  	<td><p><%= userId %></p></td>
+										  </tr>
+										  <tr>
+										    <th>댓글 내용</th>
+										    <td colspan="3"><input type="text" id="rContent" name="rContent" maxlength="300" placeholder="최대 300자까지 입력가능합니다."></td>
+										  </tr>
+									</table>
+									<div align="center">
+										<input type="button" id="replyWriteBtn" class="button" value="댓글 작성"/>
 									</div>
 								</div>
 							</form>
 						<%
 							}
 						%>
-						
+						<!-- 댓글 (select) -->
+						<div id="reply">
+							<ol class="replyList">
+								<c:forEach items="${replyList}" var="replyList">
+									<li>
+										<p>
+											작성자 : ${replyList.rWriter}<br />
+											작성 날짜 :  <fmt:formatDate value="${replyList.rDate}" pattern="yyyy-MM-dd HH:mm" />
+										</p>
+									
+										<p>${replyList.rContent}</p>
+									</li>
+								</c:forEach>   
+							</ol>
+						</div>
 						<div align="center">
 							<a href="${path}/boardList.do?cName=${item.cName}&sName=${item.sName}&cNo=${item.cNo}" class="button">목록</a>
-							<%
-								String writer = request.getParameter("writer");
+							<%  String writer = request.getParameter("writer");
+								
 								if(userId.equals(writer)) {
 							%>
 								<a href="${path}/boardUpdateForm.do?bNo=${item.bNo}" class="button">수정</a>
-				   				<a href="${path}/boardDelete.do?bNo=${item.bNo}&cName=${item.cName}&sName=${item.sName}&cNo=${item.cNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button primary">삭제</a>
+				   				<a href="${path}/boardDelete.do?bNo=${item.bNo}" onclick="return confirm('게시글을 삭제하시겠습니까?');" class="button primary">삭제</a>
 				   			<% } %>
 						</div>
 						</c:forEach>

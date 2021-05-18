@@ -17,8 +17,16 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<%  String sName = request.getParameter("sName"); 
+	String cNo = request.getParameter("cNo"); 
+	System.out.println("boardInsert.jsp 넘어온 sName : " + sName);
+%>
 <script type="text/javascript">
 $(function(){
+
+	// 카테고리 seleced
+	$("#category").val("<%=cNo%>").prop("selected",true);
+
 	$("#submit").click(function(){
 		if($("#category option:selected").text()=='카테고리 선택') { 
 			alert("카테고리를 선택하세요."); 
@@ -54,15 +62,20 @@ $(function(){
 		console.log($("#category option:selected").val()); //text값 가져오기
 	});
 	
-	
+	function cNoSelected() {
+		
+		console.log('sName : '+<%= sName %>);
+		console.log('cNoSelect : '+$("#category").text());
+		
+		<%-- if($("#cNoSelect").val()=="<%= sName %>") {
+			$("#cNoSelect").attr("selected","selected");
+		} --%>
+	}
 	
 });
 
 </script>
 </head>
-<%  String sName = request.getParameter("sName"); 
-	System.out.println("boardInsert.jsp 넘어온 sName : " + sName);
-%>
 <body class="is-preload">
 	<!-- Wrapper -->
 	<div id="wrapper">
@@ -81,6 +94,7 @@ $(function(){
 						</header>
 						<c:url var="insert" value="/boardInsert.do" />
 						<form:form commandName="boardVO" action="${insert}" name="boardVO" method="post">
+						<form:input type="hidden" path="writer" id="writer" value="<%= userId %>"/>
 							<table border="1">
 								<tbody>
 									<tr>
@@ -98,7 +112,7 @@ $(function(){
 										   			<c:if test="${item.cName eq cList}">
 										   				<c:set var="cNo" value="${item.cNo}"/>
 										   				<fmt:parseNumber var="cNo" value="${item.cNo}" type="number" />
-											   			<form:option value="${cNo}" label="${item.sName}" />
+											   			<form:option id="cNoSelect" value="${cNo}" label="${item.sName}" />
 											   		</c:if>
 										   		</c:forEach>
 										   	</form:select>
@@ -110,7 +124,7 @@ $(function(){
 									</tr>
 									<tr>
 									   <th>작성자</th>
-									   <td colspan="3"><form:input path="writer" id="writer" size="20" value="<%= userId %>" readonly="readonly"/></td>
+									   <td colspan="3"><input type="text" id="writer_print" size="20" value="<%= userId %>" readonly/></td>
 									</tr>
 									<tr>
 									   <th>내용</th>

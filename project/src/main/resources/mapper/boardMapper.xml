@@ -103,7 +103,8 @@
 		       RNO,
 		       RCONTENT,
 		       RWRITER,
-		       RDATE
+		       RDATE,
+		       UDATE
 		FROM B_REPLY
 		WHERE BNO = #{bNo}
 	</select>

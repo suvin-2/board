@@ -123,29 +123,32 @@ public class BoardController {
 		return mv;
 	}
 	
-	// 댓글 등록
-	@RequestMapping(value = "/replyInsert", method = RequestMethod.POST)
-	public String replyInsert(@ModelAttribute("ReplyVO") ReplyVO vo, Criteria cri, RedirectAttributes rttr) throws Exception {
+	// 댓글 등록(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.GET)
+	public int replyInsert(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rContent") String rContent, @ModelAttribute("rWriter") String rWiter) throws Exception {
 		
-		service.replyInsert(vo);
+		vo.setbNo(bNo);
+		vo.setrContent(rContent);
+		vo.setrWriter(rWiter);
 		
-		PageMaker pageMaker = new PageMaker();
-        pageMaker.setCri(cri);
+		System.out.println("댓글 등록 vo : "+vo);
 		
-        rttr.addAttribute("bNo",vo.getbNo());
-        rttr.addAttribute("page",cri.getPage());
-        rttr.addAttribute("pageMaker",pageMaker);
+//		PageMaker pageMaker = new PageMaker();
+//        pageMaker.setCri(cri);
+//		
+//        rttr.addAttribute("bNo",vo.getbNo());
+//        rttr.addAttribute("page",cri.getPage());
+//        rttr.addAttribute("pageMaker",pageMaker);
         
-		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo()+"&writer="+vo.getrWriter();
+		return service.replyInsert(vo);
 	}
 	
 	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
 	public BoardVO boardSelectOne(@PathVariable("bNo") int bNo, BoardVO vo, Model model) throws Exception {
-		logger.info(vo.toString());
 		vo.getbNo(bNo);
-		System.out.println("board controller 게시글 단건 조회 vo get bno : "+vo.getbNo());
 		return service.boardSelectOne(vo);
 	}
 	
@@ -182,7 +185,7 @@ public class BoardController {
 	
 	// 게시글 삭제
 	@RequestMapping(value = "/boardDelete.do")
-	public String boardDelete(int bNo) {
+	public String boardDelete(@ModelAttribute("bNo") int bNo, @ModelAttribute("cName") String cName, @ModelAttribute("sName") String sName, @ModelAttribute("cNo") String cNo) {
 		service.boardDelete(bNo);
 		return "redirect:/boardList.do";
 	}
