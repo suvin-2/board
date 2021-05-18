@@ -154,9 +154,9 @@ $(function(){
 						</div>
 						<hr>
 						<div class="main_content">
-							<p id="content">${item.content}</p>
+							<textarea id="content" cols="100" rows="10">${item.content}</textarea>
 						</div>
-						<br><br><hr>
+						<br>
 						
 						<!-- 댓글 (select) -->
 						<div id="reply">

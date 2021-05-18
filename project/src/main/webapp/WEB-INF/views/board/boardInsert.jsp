@@ -128,7 +128,7 @@ $(function(){
 									</tr>
 									<tr>
 									   <th>내용</th>
-									   <td colspan="3"><form:textarea path="content" id="content" /></td>
+									   <td colspan="3"><form:textarea path="content" id="content" cols="100" rows="10"/></td>
 									</tr>
 								</tbody>
 							</table>
