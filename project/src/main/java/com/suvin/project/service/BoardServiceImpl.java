@@ -83,5 +83,9 @@ public class BoardServiceImpl implements BoardService {
 	public int replyUpdate(ReplyVO vo) {
 		return dao.replyUpdate(vo);
 	}
+	@Override
+	public int replyDelete(int rNo) {
+		return dao.replyDelete(rNo);
+	}
 
 }

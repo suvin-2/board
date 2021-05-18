@@ -81,4 +81,9 @@ public class BoardDAO {
 	public int replyUpdate(ReplyVO vo) {
 		return mybatis.update("BoardDAO.replyUpdate",vo);
 	}
+	
+	// 댓글 삭제
+	public int replyDelete(int rNo) {
+		return mybatis.update("BoardDAO.replyDelete",rNo);
+	}
 }

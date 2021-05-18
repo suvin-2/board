@@ -21,18 +21,15 @@ $(function(){
 	
 	// 댓글 등록
 	$("#replyWriteBtn").click(function() {
-		console.log('댓글 작성 버튼 누름');
-		if($("#rContent").val().length == 0) {
+		if($("#rContent_insert").val().length == 0) {
 			alert("댓글 내용을 입력하세요.");
-			$("#rContent").focus(); 
+			$("#rContent_insert").focus(); 
 			return false; 
 		} else {
-			var rContent = $("#rContent").val();
-			var bNo = $("#bNo").val();
-			var rWriter = $("#rWriter").val();
+			var bNo = $("#bNo_insert").val();
+			var rContent = $("#rContent_insert").val();
+			var rWriter = $("#rWriter_insert").val();
 			var param = {"bNo":bNo, "rContent":rContent, "rWriter":rWriter};
-			
-			console.log('content :'+rContent+', bNo:'+bNo+', writer:'+rWriter);
 			
 			$.ajax({
 				url : '/replyInsert.do',
@@ -40,18 +37,123 @@ $(function(){
 				type : 'get',
 				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 				error : function(xhr, status, msg) {
-					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					//alert("댓글이 등록되었습니다.");
 					// 페이지 새로고침
 					location.href = location.href;
 				}
 			});
 		}
 	});
+	
 });
+
+//댓글 수정폼 rNo : db에서 받아온 rNo
+function reply_update_form(rNo,rWriter,rContent) {
+	
+	console.log('onclick으로 넘긴 값 : '+rNo+', '+rWriter+', '+rContent);
+	
+	// 클릭한 수정버튼이 있는 li
+	var reply_li_id = $("#reply_li_"+rNo).attr('id');
+	var html = "";
+	
+	html += '<li id="reply_li_'+rNo+'">';
+	html += '<p id="reply_writer">'+rWriter+'</p>';
+	html += '<input type="text" id="reply_rContent_edit" value="'+rContent+'"/>';
+	html += '<br>';
+	html += '<div id="reply_btn">';
+	html += '<a class="button small" id="reply_'+rNo+'" onclick="reply_update("'+rContent+'","'+rNo+'")">저장</a>&nbsp;';
+	html += '<a class="button small" href="reply_update_cancle()">취소</a>&nbsp;';
+	html += '</div>';
+	html += '</li>';
+	
+	$("#reply_li_"+rNo).replaceWith(html);
+	$("#reply_rContent_edit").focus();
+}
+
+
+// 댓글 수정
+function reply_update(rContent, rNo) {
+	
+	if($("#reply_rContent_edit").val().length == 0) {
+		alert("댓글 내용을 입력하세요.");
+		$("#reply_rContent_edit").focus(); 
+		return false; 
+	} else {
+		
+		var param = {"rContent":rContent, "rNo":rNo};
+		
+		$.ajax({
+			url : '/replyUpdate.do',
+			data : param,
+			type : 'get',
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			error : function(xhr, status, msg) {
+				console.log("ajax 실패");
+				console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+			},
+			success : function(data) {
+				alert("수정하시겠습니까?");
+				// 페이지 새로고침
+				location.href = location.href;
+			}
+		});
+	}
+}
+
+// 수정 취소
+function reply_update_cancle() {
+	location.href = location.href;
+}
+
+//댓글 삭제
+function reply_delete(rNo) {
+	
+	console.log('rNo : '+rNo);
+	
+	$.ajax({
+		url : '/replyDelete.do',
+		data : rNo,
+		type : 'get',
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			alert("댓글이 삭제되었습니다.");
+			// 페이지 새로고침
+			location.href = location.href;
+		}
+	});
+	/*
+	var delete_check = confirm("댓글을 삭제하시겠습니까?");
+	document.write(delete_check);
+	
+	if(delete_check) {
+		
+		$.ajax({
+			url : '/replyDelete.do',
+			data : rNo,
+			type : 'get',
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			error : function(xhr, status, msg) {
+				console.log("ajax 실패");
+				console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+			},
+			success : function(data) {
+				alert("댓글이 삭제되었습니다.");
+				// 페이지 새로고침
+				location.href = location.href;
+			}
+		});
+		
+	} else {
+		$("#rContent").focus();
+	}
+	*/
+}
 </script>
 <style>
 .title {
@@ -163,17 +265,18 @@ $(function(){
 							<ol class="alt">
 							<table border="1">
 								<c:forEach items="${replyList}" var="replyList">
+								<input type="hidden" id="rNo" value="${replyList.rNo}">
 									<tr>
 										<td>
-											<li>
+											<li id="reply_li_${replyList.rNo}">
 												<p id="reply_writer">${replyList.rWriter}</p>
 												<p id="reply_content">${replyList.rContent}</p>
 												<span id="reply_date"><fmt:formatDate value="${replyList.rDate}" pattern="yyyy-MM-dd HH:mm" /></span>
 												<c:set var="userId" value="<%= userId %>"/>
 												<c:if test="${replyList.rWriter eq userId}">
 													<div id="reply_btn">
-														<a class="button small" id="reply_update">수정</a>&nbsp;
-														<a class="button small" id="reply_delete">삭제</a>
+														<a class="button small" id="reply_${replyList.rNo}" onclick="reply_update_form(${replyList.rNo},'${replyList.rWriter}','${replyList.rContent}')">수정</a>&nbsp;
+														<a class="button small" onclick="reply_delete(${replyList.rNo})">삭제</a>
 													</div>
 												</c:if>
 											</li>
@@ -189,13 +292,13 @@ $(function(){
 						%>
 							<!-- 댓글 (insert) -->
 							<form name="replyForm" method="post">
-							<input type="hidden" id="bNo" name="bNo" value="${item.bNo}" />
-							<input type="hidden" id="rWriter" name="rWriter" value="<%= userId %>" />
+							<input type="hidden" id="bNo_insert" name="bNo" value="${item.bNo}" />
+							<input type="hidden" id="rWriter_insert" name="rWriter" value="<%= userId %>" />
 								<div class="box">
 									<p id="reply_insert_writer"><%= userId %></p>
 									<div class="reply_insert_box">
 										<div class="reply_insert_content">
-											<input type="text" id="rContent" name="rContent" maxlength="300" placeholder="최대 300자까지 입력가능합니다.">
+											<input type="text" id="rContent_insert" name="rContent" maxlength="300" placeholder="최대 300자까지 입력가능합니다.">
 										</div>
 										<div class="reply_insert_btn">
 											<input type="button" id="replyWriteBtn" class="button" value="댓글 작성"/>

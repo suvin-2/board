@@ -137,11 +137,18 @@ public class BoardController {
 	
 	// 댓글 수정(ajax)
 	@ResponseBody
-	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/replyUpdate.do", method = RequestMethod.GET)
 	public int replyUpdate(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rNo") int rNo, @ModelAttribute("rContent") String rContent) throws Exception {
-		
-		
+
 		return service.replyUpdate(vo);
+	}
+	
+	// 댓글 삭제(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyDelete.do", method = RequestMethod.GET)
+	public int replyDelete(@ModelAttribute("rNo") int rNo) throws Exception {
+		
+		return service.replyDelete(rNo);
 	}
 	
 	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용

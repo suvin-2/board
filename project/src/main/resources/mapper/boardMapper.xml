@@ -97,33 +97,6 @@
 		ORDER BY BNO DESC
 	</select>
 	
-	<!-- 게시판 댓글 조회  -->
-	<select id="replySelect" resultType="com.suvin.project.vo.ReplyVO">
-		SELECT BNO,
-		       RNO,
-		       RCONTENT,
-		       RWRITER,
-		       RDATE,
-		       UDATE
-		FROM B_REPLY
-		WHERE BNO = #{bNo}
-	</select>
-	
-	<!-- 댓글 등록 -->
-	<insert id="replyInsert">
-		INSERT INTO B_REPLY(
-			BNO,
-			RNO,
-			RCONTENT,
-			RWRITER
-		) VALUES (
-			#{bNo},
-			B_REPLY_SEQ.NEXTVAL,
-			#{rContent},
-			#{rWriter}
-		)
-	</insert>
-	
 	<!-- 게시글 작성 -->
 	<insert id="boardInsert">
 		<selectKey resultType="int" keyProperty="bNo" order="BEFORE">
@@ -181,5 +154,38 @@
 		DELETE FROM 
 				BOARD
 		WHERE BNO = #{bNo}
+	</delete>
+	
+	<!-- 게시판 댓글 조회  -->
+	<select id="replySelect" resultType="com.suvin.project.vo.ReplyVO">
+		SELECT BNO,
+		       RNO,
+		       RCONTENT,
+		       RWRITER,
+		       RDATE,
+		       UDATE
+		FROM B_REPLY
+		WHERE BNO = #{bNo}
+	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="replyInsert">
+		INSERT INTO B_REPLY(
+			BNO,
+			RNO,
+			RCONTENT,
+			RWRITER
+		) VALUES (
+			#{bNo},
+			B_REPLY_SEQ.NEXTVAL,
+			#{rContent},
+			#{rWriter}
+		)
+	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete">
+		DELETE FROM B_REPLY
+		WHERE RNO = #{rNo}
 	</delete>
 </mapper>
