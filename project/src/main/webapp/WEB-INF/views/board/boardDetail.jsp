@@ -63,7 +63,7 @@ function reply_update_form(rNo,rWriter,rContent) {
 	html += '<input type="text" id="reply_rContent_edit" value="'+rContent+'"/>';
 	html += '<br>';
 	html += '<div id="reply_btn">';
-	html += '<a class="button small" id="reply_'+rNo+'" onclick="reply_update("'+rContent+'","'+rNo+'")">저장</a>&nbsp;';
+	html += '<a class="button small" id="reply_'+rNo+'" onclick="reply_update('+rNo+')">저장</a>&nbsp;';
 	html += '<a class="button small" href="reply_update_cancle()">취소</a>&nbsp;';
 	html += '</div>';
 	html += '</li>';
@@ -74,14 +74,14 @@ function reply_update_form(rNo,rWriter,rContent) {
 
 
 // 댓글 수정
-function reply_update(rContent, rNo) {
-	
+function reply_update(rNo) {
+		
 	if($("#reply_rContent_edit").val().length == 0) {
 		alert("댓글 내용을 입력하세요.");
 		$("#reply_rContent_edit").focus(); 
 		return false; 
 	} else {
-		
+		var rContent = $("#reply_rContent_edit").val();
 		var param = {"rContent":rContent, "rNo":rNo};
 		
 		$.ajax({
@@ -94,12 +94,12 @@ function reply_update(rContent, rNo) {
 				console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 			},
 			success : function(data) {
-				alert("수정하시겠습니까?");
 				// 페이지 새로고침
 				location.href = location.href;
 			}
 		});
 	}
+	
 }
 
 // 수정 취소
@@ -113,9 +113,9 @@ function reply_delete(rNo) {
 	console.log('rNo : '+rNo);
 	
 	$.ajax({
-		url : '/replyDelete.do',
-		data : rNo,
-		type : 'get',
+		url : '/replyDelete.do/'+rNo,
+		type : 'GET',
+		dataType : 'json',
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		error : function(xhr, status, msg) {
 			console.log("ajax 실패");

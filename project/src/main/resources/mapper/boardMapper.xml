@@ -183,6 +183,13 @@
 		)
 	</insert>
 	
+	<!-- 댓글 수정 -->
+	<update id="replyUpdate">
+		UPDATE B_REPLY
+		SET RCONTENT = #{rContent}, UDATE = SYSDATE
+		WHERE RNO = #{rNo}
+	</update>
+	
 	<!-- 댓글 삭제 -->
 	<delete id="replyDelete">
 		DELETE FROM B_REPLY

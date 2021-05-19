@@ -123,34 +123,6 @@ public class BoardController {
 		return mv;
 	}
 	
-	// 댓글 등록(ajax)
-	@ResponseBody
-	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.GET)
-	public int replyInsert(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rContent") String rContent, @ModelAttribute("rWriter") String rWiter) throws Exception {
-		
-		vo.setbNo(bNo);
-		vo.setrContent(rContent);
-		vo.setrWriter(rWiter);
-		
-		return service.replyInsert(vo);
-	}
-	
-	// 댓글 수정(ajax)
-	@ResponseBody
-	@RequestMapping(value = "/replyUpdate.do", method = RequestMethod.GET)
-	public int replyUpdate(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rNo") int rNo, @ModelAttribute("rContent") String rContent) throws Exception {
-
-		return service.replyUpdate(vo);
-	}
-	
-	// 댓글 삭제(ajax)
-	@ResponseBody
-	@RequestMapping(value = "/replyDelete.do", method = RequestMethod.GET)
-	public int replyDelete(@ModelAttribute("rNo") int rNo) throws Exception {
-		
-		return service.replyDelete(rNo);
-	}
-	
 	// 게시글 단건 조회(ajax) boardUpdate.jsp 에서 사용
 	@ResponseBody
 	@RequestMapping(value = "/boardListOne/{bNo}", method= RequestMethod.GET)
@@ -197,4 +169,27 @@ public class BoardController {
 		return "redirect:/boardList.do";
 	}
 
+	// 댓글 등록(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.GET)
+	public int replyInsert(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rContent") String rContent, @ModelAttribute("rWriter") String rWiter) throws Exception {
+		
+		return service.replyInsert(vo);
+	}
+	
+	// 댓글 수정(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyUpdate.do", method = RequestMethod.GET)
+	public int replyUpdate(ReplyVO vo, @ModelAttribute("rNo") int rNo, @ModelAttribute("rContent") String rContent) throws Exception {
+
+		return service.replyUpdate(vo);
+	}
+	
+	// 댓글 삭제(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyDelete.do/{rNo}", method = RequestMethod.GET)
+	public int replyDelete(@ModelAttribute("rNo") int rNo) throws Exception {
+		
+		return service.replyDelete(rNo);
+	}
 }
