@@ -206,6 +206,7 @@ $(function(){
 					} else if(userId != data.userId) {
 						alert("사용 가능한 아이디입니다.");
 						idCheck = "Y";
+						document.getElementById('userId').readOnly = true;
 					}
 				}
 			});
@@ -231,9 +232,11 @@ $(function(){
 	    	console.log('입력한 이메일 : '+email);
 	    	
 	    	$.ajax({
-				url : 'userEmailCheck/'+email,
+				url : '/userEmailCheck',
 				type : 'GET',
+				data : email,
 				dataType : 'json',
+				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 				error : function(xhr, status, msg) {
 					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
@@ -247,6 +250,7 @@ $(function(){
 					} else if(email != data.email) {
 						alert("사용 가능한 이메일입니다.");
 						emailCheck = "Y";
+						document.getElementById('email').readOnly = true;
 						console.log('중복확인 후 emailCheck : ' + emailCheck);
 					}
 				}
@@ -288,6 +292,7 @@ $(function(){
 					} else if(tel != data.tel) {
 						telCheck = "Y";
 						alert("사용 가능한 전화번호입니다.");
+						document.getElementById('tel').readOnly = true;
 					}
 				}
 			});
@@ -470,7 +475,7 @@ select {
 					                        	<input type="text" id="email" name="email" class="int" maxlength="100" placeholder="이메일 입력">
 					                        </div>
 					                        <div id="id_btn">
-					                        	<input type="button" id="userEmailCheck" class="button" value="이메일 인증"/>
+					                        	<input type="button" id="userEmailCheck" class="button" value="중복확인"/>
 					                        </div>
 				                        </div>
 					                </div>

@@ -25,19 +25,19 @@ public class UserServiceImpl implements UserService {
 
 	// 회원 가입 시 아이디 중복 체크(ajax)
 	@Override
-	public UserVO userIdCheck(String userId) {
+	public String userIdCheck(String userId) {
 		return dao.userIdCheck(userId);
 	}
 	
 	// 회원 가입 시 이메일 중복 체크(ajax)
 	@Override
-	public UserVO userEmailCheck(String email) {
+	public String userEmailCheck(String email) {
 		return dao.userEmailCheck(email);
 	}
 
 	// 회원 가입 시 전화번호 중복 체크(ajax)
 	@Override
-	public UserVO userTelCheck(String tel) {
+	public String userTelCheck(String tel) {
 		return dao.userTelCheck(tel);
 	}
 

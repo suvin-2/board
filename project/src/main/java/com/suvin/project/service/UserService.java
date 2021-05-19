@@ -10,13 +10,13 @@ public interface UserService {
 	public List<UserVO> userSelect(UserVO vo) throws Exception;
 	
 	// 회원 가입 시 아이디 중복 체크(ajax)
-	public UserVO userIdCheck(String userId);
+	public String userIdCheck(String userId);
 	
 	// 회원 가입 시 이메일 중복 체크(ajax)
-	public UserVO userEmailCheck(String email);
+	public String userEmailCheck(String email);
 	
 	// 회원 가입 시 전화번호 중복 체크(ajax)
-	public UserVO userTelCheck(String tel);
+	public String userTelCheck(String tel);
 	
 	// 회원 가입
 	public int userInsert(UserVO vo);

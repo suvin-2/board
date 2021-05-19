@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,16 +67,16 @@ public class UserController {
 	// 회원가입 시 아이디 중복 체크(ajax)
 	@RequestMapping(value="/userIdCheck/{id}", method= RequestMethod.GET)
 	@ResponseBody
-	public UserVO userIdCheck(@PathVariable("id") String userId, Model model) throws Exception {
+	public String userIdCheck(@PathVariable("id") String userId) throws Exception {
 		logger.info("user id check controller in (ajax) id : "+userId);
 		
 		return service.userIdCheck(userId);
 	}
 	
 	// 회원가입 시 이메일 중복 체크(ajax) 이메일 dot 뒤에 잘릴 때 :.+ 추가로 입력해주면 됨
-	@RequestMapping(value="/userEmailCheck/{email:.+}", method= RequestMethod.GET, produces = "application/json; charset=utf8")
+	@RequestMapping(value="/userEmailCheck", method= RequestMethod.GET)
 	@ResponseBody
-	public UserVO userEmailCheck(@PathVariable("email") String email, Model model) throws Exception {
+	public String userEmailCheck(@PathVariable("email") String email) throws Exception {
 		logger.info("user Email check controller in (ajax) email : "+email);
 		
 		return service.userEmailCheck(email);
@@ -84,7 +85,7 @@ public class UserController {
 	// 회원가입 시 전화번호 중복 체크(ajax)
 	@RequestMapping(value="/userTelCheck/{tel}", method= RequestMethod.GET)
 	@ResponseBody
-	public UserVO userTelCheck(@PathVariable("tel") String tel, Model model) throws Exception {
+	public String userTelCheck(@PathVariable("tel") String tel) throws Exception {
 		logger.info("user Tel check controller in (ajax) tel : "+tel);
 		
 		return service.userTelCheck(tel);
