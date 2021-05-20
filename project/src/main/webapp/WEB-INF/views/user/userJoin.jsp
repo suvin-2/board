@@ -256,7 +256,7 @@ $(function(){
 						if(full_email == data.email) {
 							alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
 							emailCheck = "N";
-							$("#userId").focus(); 
+							$("#email").focus(); 
 							
 						} else if(full_email != data.email) {						
 							$.ajax({
