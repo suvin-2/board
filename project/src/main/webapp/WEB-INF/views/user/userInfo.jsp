@@ -169,10 +169,9 @@ $(function(){
 	    	} else {
 
 	    		$.ajax({
-					url : '/userEmailCheck',
-					type : 'get',
-					data : {"email":email},
-					dataType : 'json',
+					url : 'userEmailCheck/',
+					type : 'GET',
+					data : "email="+email,
 					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 					error : function(xhr, status, msg) {
 						console.log("ajax 실패");

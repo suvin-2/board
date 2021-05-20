@@ -21,17 +21,17 @@ public class UserDAO {
 	}
 	
 	// 회원 가입 시 아이디 중복 체크(ajax)
-	public String userIdCheck(String userId) {
+	public UserVO userIdCheck(String userId) {
 		return mybatis.selectOne("UserDAO.userIdCheck",userId);
 	}
 	
 	// 회원 가입 시 이메일 중복 체크(ajax)
-	public String userEmailCheck(String email) {
+	public UserVO userEmailCheck(String email) {
 		return mybatis.selectOne("UserDAO.userEmailCheck",email);
 	}
 	
 	// 회원 가입 시 전화번호 중복 체크(ajax)
-	public String userTelCheck(String tel) {
+	public UserVO userTelCheck(String tel) {
 		return mybatis.selectOne("UserDAO.userTelCheck",tel);
 	}
 	

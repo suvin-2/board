@@ -93,7 +93,7 @@ $(function(){
 							<h2>글 등록</h2>
 						</header>
 						<c:url var="insert" value="/boardInsert.do" />
-						<form:form commandName="boardVO" action="${insert}" name="boardVO" method="post" enctype="multipart/form-data">
+						<form:form commandName="boardVO" action="${insert}" name="boardVO" method="post">
 						<form:input type="hidden" path="writer" id="writer" value="<%= userId %>"/>
 							<table border="1">
 								<tbody>
@@ -129,10 +129,6 @@ $(function(){
 									<tr>
 									   <th>내용</th>
 									   <td colspan="3"><form:textarea path="content" id="content" cols="100" rows="10"/></td>
-									</tr>
-									<tr>
-									   <th>파일첨부</th>
-									   <td colspan="3"><input type="file" id="file" /></td>
 									</tr>
 								</tbody>
 							</table>

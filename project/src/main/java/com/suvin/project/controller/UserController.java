@@ -67,16 +67,16 @@ public class UserController {
 	// 회원가입 시 아이디 중복 체크(ajax)
 	@RequestMapping(value="/userIdCheck/{id}", method= RequestMethod.GET)
 	@ResponseBody
-	public String userIdCheck(@PathVariable("id") String userId) throws Exception {
+	public UserVO userIdCheck(@PathVariable("id") String userId) throws Exception {
 		logger.info("user id check controller in (ajax) id : "+userId);
 		
 		return service.userIdCheck(userId);
 	}
 	
 	// 회원가입 시 이메일 중복 체크(ajax) 이메일 dot 뒤에 잘릴 때 :.+ 추가로 입력해주면 됨
-	@RequestMapping(value="/userEmailCheck", method= RequestMethod.GET)
+	@RequestMapping(value="/userEmailCheck/{email}", method= RequestMethod.GET)
 	@ResponseBody
-	public String userEmailCheck(@PathVariable("email") String email) throws Exception {
+	public UserVO userEmailCheck(@PathVariable("email") String email) throws Exception {
 		logger.info("user Email check controller in (ajax) email : "+email);
 		
 		return service.userEmailCheck(email);
@@ -85,7 +85,7 @@ public class UserController {
 	// 회원가입 시 전화번호 중복 체크(ajax)
 	@RequestMapping(value="/userTelCheck/{tel}", method= RequestMethod.GET)
 	@ResponseBody
-	public String userTelCheck(@PathVariable("tel") String tel) throws Exception {
+	public UserVO userTelCheck(@PathVariable("tel") String tel) throws Exception {
 		logger.info("user Tel check controller in (ajax) tel : "+tel);
 		
 		return service.userTelCheck(tel);
