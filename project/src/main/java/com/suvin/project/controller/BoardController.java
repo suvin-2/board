@@ -173,7 +173,6 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/replyInsert.do", method = RequestMethod.GET)
 	public int replyInsert(ReplyVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("rContent") String rContent, @ModelAttribute("rWriter") String rWiter) throws Exception {
-		
 		return service.replyInsert(vo);
 	}
 	
@@ -181,7 +180,6 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/replyUpdate.do", method = RequestMethod.GET)
 	public int replyUpdate(ReplyVO vo, @ModelAttribute("rNo") int rNo, @ModelAttribute("rContent") String rContent) throws Exception {
-
 		return service.replyUpdate(vo);
 	}
 	
@@ -189,7 +187,34 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/replyDelete.do/{rNo}", method = RequestMethod.GET)
 	public int replyDelete(@ModelAttribute("rNo") int rNo) throws Exception {
-		
 		return service.replyDelete(rNo);
+	}
+	
+	// 게시글 좋아요 여부 체크(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/boardLikeSelect.do", method = RequestMethod.GET)
+	public BoardVO boardLikeSelect(BoardVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("userId") String userId) throws Exception {
+		return service.boardLikeSelect(vo);
+	}
+	
+	// 게시글 좋아요 첫 클릭(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/boardLikeInsert.do", method = RequestMethod.GET)
+	public int boardLikeInsert(BoardVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("userId") String userId) throws Exception {
+		return service.boardLikeInsert(vo);
+	}
+	
+	// 게시글 좋아요 클릭/클릭 취소(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/boardLikeUpdate.do", method = RequestMethod.GET)
+	public int boardLikeUpdate(BoardVO vo, @ModelAttribute("bNo") int bNo, @ModelAttribute("userId") String userId, @ModelAttribute("enabled") String enabled) throws Exception {
+		return service.boardLikeUpdate(vo);
+	}
+	
+	// 게시글 좋아요 총 개수(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/boardLikeAllSelect.do", method = RequestMethod.GET)
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo, @ModelAttribute("bNo") int bNo) throws Exception {
+		return service.boardLikeAllSelect(vo);
 	}
 }

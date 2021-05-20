@@ -19,24 +19,6 @@
 		ORDER BY BNO DESC
 	</select>
 	
-	<!-- 게시판 카테고리 별 게시글 조회 -->
-	<!-- 
-	<select id="boardCategorySelect" resultType="boardVO">
-		SELECT B.BNO,
-		       B.TITLE,
-		       B.CONTENT,
-		       B.CNT,
-		       B.BDATE,
-		       B.WRITER,
-		       B.CNO,
-		       C.CNAME,
-		       C.SNAME
-		FROM BOARD B, CATEGORY C
-		WHERE B.CNO = C.CNO AND C.CNAME = #{cName} AND C.SNAME = #{sName}
-		ORDER BY BNO DESC
-	</select>
-	 -->
-	
 	<!-- 게시판 카테고리 별 게시글 조회 페이징 테스트 -->
 	<select id="boardCategorySelect" resultType="boardVO" parameterType="criteria"> 
 		SELECT  BNO, 
@@ -195,4 +177,31 @@
 		DELETE FROM B_REPLY
 		WHERE RNO = #{rNo}
 	</delete>
+	
+	<!-- 게시글 좋아요 여부 조회 -->
+	<select id="boardLikeSelect" resultType="boardVO">
+		SELECT ENABLED
+		FROM B_LIKE
+		WHERE BNO = #{bNo} AND USERID = #{userId}
+	</select>
+	
+	<!-- 게시글 좋아요 첫 클릭 -->
+	<insert id="boardLikeInsert">
+		INSERT INTO B_LIKE 
+		VALUES (#{bNo},#{userId},1)
+	</insert>
+	
+	<!-- 게시글 좋아요 클릭/클릭취소 -->
+	<update id="boardLikeUpdate">
+		UPDATE B_LIKE
+		SET ENABLED = #{enabled}
+		WHERE BNO = #{bNo} AND USERID = #{userId}
+	</update>
+	
+	<!-- 게시글 좋아요 총 개수 -->
+	<select id="boardLikeAllSelect" resultType="boardVO">
+		SELECT BNO
+		FROM B_LIKE
+		WHERE BNO = #{bNo} AND ENABLED = 1
+	</select>
 </mapper>

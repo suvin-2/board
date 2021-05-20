@@ -18,6 +18,11 @@
 <script type="text/javascript">
 
 $(function(){
+
+	// enabled가 1이면 빨간하트 이미지 출력
+	board_like();
+	// 좋아요 총 개수
+	board_like_all_select();
 	
 	// 댓글 등록
 	$("#replyWriteBtn").click(function() {
@@ -26,10 +31,10 @@ $(function(){
 			$("#rContent_insert").focus(); 
 			return false; 
 		} else {
-			var bNo = $("#bNo_insert").val();
+			var bNo_insert = $("#bNo_insert").val();
 			var rContent = $("#rContent_insert").val();
 			var rWriter = $("#rWriter_insert").val();
-			var param = {"bNo":bNo, "rContent":rContent, "rWriter":rWriter};
+			var param = {"bNo":bNo_insert, "rContent":rContent, "rWriter":rWriter};
 			
 			$.ajax({
 				url : '/replyInsert.do',
@@ -64,14 +69,13 @@ function reply_update_form(rNo,rWriter,rContent) {
 	html += '<br>';
 	html += '<div id="reply_btn">';
 	html += '<a class="button small" id="reply_'+rNo+'" onclick="reply_update('+rNo+')">저장</a>&nbsp;';
-	html += '<a class="button small" href="reply_update_cancle()">취소</a>&nbsp;';
+	html += '<a class="button small" onclick="reply_update_cancle()">취소</a>&nbsp;';
 	html += '</div>';
 	html += '</li>';
 	
 	$("#reply_li_"+rNo).replaceWith(html);
 	$("#reply_rContent_edit").focus();
 }
-
 
 // 댓글 수정
 function reply_update(rNo) {
@@ -127,32 +131,132 @@ function reply_delete(rNo) {
 			location.href = location.href;
 		}
 	});
-	/*
-	var delete_check = confirm("댓글을 삭제하시겠습니까?");
-	document.write(delete_check);
+}
+
+// 좋아요 이미지
+function board_like() {
 	
-	if(delete_check) {
-		
-		$.ajax({
-			url : '/replyDelete.do',
-			data : rNo,
-			type : 'get',
-			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			error : function(xhr, status, msg) {
-				console.log("ajax 실패");
-				console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-			},
-			success : function(data) {
-				alert("댓글이 삭제되었습니다.");
-				// 페이지 새로고침
-				location.href = location.href;
+	var bNo = $("#bNo").val();
+	var userId = $("#userId").val();
+
+	$.ajax({
+		url : '/boardLikeSelect.do',
+		type : 'GET',
+		data : {"bNo":bNo, "userId":userId},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			console.log('board_like enabled :'+data.enabled);
+			if(data.enabled == 1) {
+				document.getElementById('like').src = "/images/full_love_icon.png";
 			}
-		});
-		
-	} else {
-		$("#rContent").focus();
-	}
-	*/
+			
+			// 페이지 새로고침
+			//location.href = location.href;
+		}
+	});
+}
+
+//좋아요 이미지 클릭
+function board_like_click() {
+
+	var bNo = $("#bNo").val();
+	var userId = $("#userId").val();
+	
+	$.ajax({
+		url : '/boardLikeSelect.do',
+		type : 'GET',
+		data : {"bNo":bNo, "userId":userId},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			console.log('data : '+data);
+			
+			// 좋아요를 눌렀을 때 (update 해주기)
+			if(data.enabled == 0) {
+				
+				$.ajax({
+					url : '/boardLikeUpdate.do',
+					type : 'GET',
+					data : {"bNo":bNo, "userId":userId, "enabled":1},
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						
+						board_like_all_select();
+						document.getElementById('like').src = "/images/full_love_icon.png";
+					}
+				});
+			  // 좋아요를 눌렀다가 취소했을 때 (update 해주기)	
+			} else if(data.enabled == 1) {
+				
+				$.ajax({
+					url : '/boardLikeUpdate.do',
+					type : 'GET',
+					data : {"bNo":bNo, "userId":userId, "enabled":0},
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						board_like_all_select();
+						document.getElementById('like').src = "/images/empty_love_icon.png";
+					}
+				});
+			  // enabled가 null 이면 enabled = 1로 insert 해주기
+			} else {
+				
+				$.ajax({
+					url : '/boardLikeInsert.do',
+					type : 'GET',
+					data : {"bNo":bNo, "userId":userId},
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						board_like_all_select();
+						document.getElementById('like').src = "/images/full_love_icon.png";
+					}
+				});
+			}
+			
+		}
+	});
+}
+
+//좋아요 이미지 총 개수
+function board_like_all_select() {
+
+	var bNo = $("#bNo").val();
+	
+	$.ajax({
+		url : '/boardLikeAllSelect.do',
+		type : 'GET',
+		data : {"bNo":bNo},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			var like_cnt = data.length;
+			$("#like_cnt").html("좋아요 "+like_cnt+"개   ");
+			$("#like_cnt").css("vertical-align","6px");
+			
+		}
+	});
 }
 </script>
 <style>
@@ -225,6 +329,15 @@ function reply_delete(rNo) {
 #content {
 	border : none;
 }
+
+.board_like {
+	text-align : right;
+}
+
+#like {
+	width : 25px;
+	height : 25px;
+}
 </style>
 </head>
 <body class="is-preload">
@@ -241,6 +354,8 @@ function reply_delete(rNo) {
 				<section id="banner">
 					<div class="content">
 						<c:forEach var="item" items="${list}">
+						<input type="hidden" id="bNo" value="${item.bNo}">
+						<input type="hidden" id="userId" value="<%= userId %>">
 						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 						<!-- 카테고리, 제목 -->
 						<div class="title">
@@ -261,8 +376,17 @@ function reply_delete(rNo) {
 						<div class="main_content">
 							<textarea id="content">${item.content}</textarea>
 						</div>
-						<br>
-						
+						<br><hr>
+						<%  
+							if(!userId.equals("anonymousUser")) {
+						%>
+						<!-- 게시글 좋아요 -->
+						<div class="board_like">
+							<span id="like_cnt"></span><img src="/images/empty_love_icon.png" id="like" onclick="board_like_click()">
+						</div><br>
+						<%
+							}
+						%>
 						<!-- 댓글 (select) -->
 						<div id="reply">
 							<ol class="alt">

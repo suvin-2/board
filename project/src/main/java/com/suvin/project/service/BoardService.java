@@ -50,5 +50,17 @@ public interface BoardService {
 	
 	// 댓글 삭제
 	public int replyDelete(int rNo);
+	
+	// 게시글 좋아요 여부 조회
+	public BoardVO boardLikeSelect(BoardVO vo);
+	
+	// 게시글 좋아요 첫 클릭
+	public int boardLikeInsert(BoardVO vo);
+	
+	// 게시글 좋아요 클릭/클릭취소
+	public int boardLikeUpdate(BoardVO vo);
+	
+	// 게시글 좋아요 총 개수
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo);
 
 }

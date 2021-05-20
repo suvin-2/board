@@ -87,5 +87,21 @@ public class BoardServiceImpl implements BoardService {
 	public int replyDelete(int rNo) {
 		return dao.replyDelete(rNo);
 	}
+	@Override
+	public BoardVO boardLikeSelect(BoardVO vo) {
+		return dao.boardLikeSelect(vo);
+	}
+	@Override
+	public int boardLikeInsert(BoardVO vo) {
+		return dao.boardLikeInsert(vo);
+	}
+	@Override
+	public int boardLikeUpdate(BoardVO vo) {
+		return dao.boardLikeUpdate(vo);
+	}
+	@Override
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
+		return dao.boardLikeAllSelect(vo);
+	}
 
 }

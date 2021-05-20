@@ -86,4 +86,24 @@ public class BoardDAO {
 	public int replyDelete(int rNo) {
 		return mybatis.update("BoardDAO.replyDelete",rNo);
 	}
+	
+	// 게시글 좋아요 여부 조회
+	public BoardVO boardLikeSelect(BoardVO vo) {
+		return mybatis.selectOne("BoardDAO.boardLikeSelect",vo);
+	}
+	
+	// 게시글 좋아요 첫 클릭
+	public int boardLikeInsert(BoardVO vo) {
+		return mybatis.insert("BoardDAO.boardLikeInsert",vo);
+	}
+	
+	// 게시글 좋아요 클릭/클릭취소
+	public int boardLikeUpdate(BoardVO vo) {
+		return mybatis.update("BoardDAO.boardLikeUpdate",vo);
+	}
+	
+	// 게시글 좋아요 총 개수
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
+		return mybatis.selectList("BoardDAO.boardLikeAllSelect",vo);
+	}
 }

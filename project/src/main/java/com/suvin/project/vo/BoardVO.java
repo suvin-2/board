@@ -10,9 +10,11 @@ public class BoardVO {
 	private int cnt;
 	private Date bDate;
 	private String writer;
+	private String userId;
 	private int cNo;
 	private String cName;
 	private String sName;
+	private int enabled;
 	
 	public Integer getbNo() {
 		return bNo;
@@ -50,6 +52,12 @@ public class BoardVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getcNo() {
 		return cNo;
 	}
@@ -68,6 +76,12 @@ public class BoardVO {
 	public void setsName(String sName) {
 		this.sName = sName;
 	}
+	public int getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
 	// 게시글 단건조회 (boardUpdate.jsp)
 	public Integer getbNo(int bNo) {
 		return bNo;
@@ -76,7 +90,8 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
-				+ ", writer=" + writer + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName + "]";
+				+ ", writer=" + writer + ", userId=" + userId + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName
+				+ ", enabled=" + enabled + "]";
 	}
-	
+			
 }
