@@ -27,7 +27,6 @@ public class UserDAO {
 	
 	// 회원 가입 시 이메일 중복 체크(ajax)
 	public UserVO userEmailCheck(String email) {
-		System.out.println("user dao 이메일중복체크 : "+email);
 		return mybatis.selectOne("UserDAO.userEmailCheck",email);
 	}
 	

@@ -43,7 +43,9 @@ $(function(){
 	var idCheck = "N";
 	var emailCheck = "N";
 	var telCheck = "N";
-
+	
+	var auth_code;
+	
 	$("#submit").click(function(){
 		
 		console.log('idCheck : ' + idCheck);
@@ -64,6 +66,12 @@ $(function(){
 		if(telCheck == "N") {
 			alert("전화번호 중복확인을 해주세요.");
 	    	$("#tel").focus(); 
+			return false;
+		}
+		
+		if(emailCheck == "N") {
+			alert("이메일 인증을 해주세요.");
+	    	$("#email").focus(); 
 			return false;
 		}
 		
@@ -216,46 +224,85 @@ $(function(){
 	// 이메일 인증
 	$("#userEmailCheck").click(function() {
 		
-	    // 이메일 유휴성 체크
-	    if(email_jsp.value === ""){ 
-	    	alert("이메일을 입력하세요.");
-	    	$("#email").focus(); 
-	    	emailCheck = "N";
-			return false;
-	    } else if(!emailPattern.test(email_jsp.value)) {
-	    	alert("이메일 형식을 확인해주세요.");
-	    	$("#email").focus(); 
-	    	emailCheck = "N";
-			return false;
-	    } else {
-	    	var full_email = email_jsp.value;
-	    	var email = full_email.split('.');
-	    	console.log('입력한 이메일 : '+full_email);
-	    	console.log('자른 이메일 : '+email[0]);
-	    	
-	    	$.ajax({
-				url : '${pageContext.request.contextPath}/userEmailCheck/'+email[0],
-				type : 'GET',
-				error : function(xhr, status, msg) {
-					console.log("ajax 실패");
-					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-				},
-				success : function(data) {
-					console.log('data : '+data.email)
-					if(full_email == data.email) {
-						alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
-						emailCheck = "N";
-						$("#userId").focus(); 
+		if(emailCheck == "N") {
+			// 이메일 유휴성 체크
+		    if(email_jsp.value === ""){ 
+		    	alert("이메일을 입력하세요.");
+		    	$("#email").focus(); 
+		    	emailCheck = "N";
+				return false;
+		    } else if(!emailPattern.test(email_jsp.value)) {
+		    	alert("이메일 형식을 확인해주세요.");
+		    	$("#email").focus(); 
+		    	emailCheck = "N";
+				return false;
+		    } else {
+		    	// 입력한 이메일
+		    	var full_email = email_jsp.value;
+		    	// dot(.) 앞까지 자른 이메일
+		    	var email = full_email.split('.');
+		    	
+		    	console.log('email 앞 :'+email[0]+', 이메일 뒤 : '+email[1]);
+		    	
+		    	$.ajax({
+					url : "/userEmailCheck/"+email,
+					type : "get",
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
 						
-					} else if(full_email != data.email) {
-						alert("사용 가능한 이메일입니다.");
-						emailCheck = "Y";
-						document.getElementById('email').readOnly = true;
-						console.log('중복확인 후 emailCheck : ' + emailCheck);
+						if(full_email == data.email) {
+							alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
+							emailCheck = "N";
+							$("#userId").focus(); 
+							
+						} else if(full_email != data.email) {						
+							$.ajax({
+								url : '/userEmailAuthNumber/'+email,
+								type : 'GET',
+								error : function(xhr, status, msg) {
+									console.log("ajax 실패");
+									console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+								},
+								success : function(data) {
+									
+									console.log('메일로 전송한 인증번호 : '+data);
+									auth_code = data;
+									document.getElementById('email').readOnly = true;
+									alert("인증번호가 메일로 발송되었습니다. 인증번호를 입력해주세요.");
+								}
+							});
+							
+						}
+						
 					}
-				}
-			});
-	    }
+				});
+		    	
+		    }
+		} else {
+			alert("이메일 인증을 완료하였습니다.");
+		}
+		
+	    
+	});
+	
+	// 인증번호 비교 (인증번호를 입력 후 마우스로 다른곳을 클릭하면 실행)
+	$("#auth_num").blur(function(){
+		console.log('auth_code : '+auth_code+', auth_num value : '+$("#auth_num").val());
+		if(auth_code == $("#auth_num").val()) {
+			$("#auth_result").html("인증번호가 일치합니다.");
+			$("#auth_result").css("color","green");
+			emailCheck = "Y";
+			document.getElementById('auth_num').readOnly = true;
+			
+		} else {
+			$("#auth_result").html("인증번호가 일치하지 않습니다.");
+			$("#auth_result").css("color","red");
+			emailCheck = "N";
+		}
+	    
 	});
 	
 	// 전화번호 중복 체크
@@ -377,6 +424,14 @@ select {
     color: red;
     display: none;
 }
+
+#auth_num {
+    margin : 0 0 5px;
+}
+
+#auth_result {
+	margin : 0 0 15px;
+}
 </style>
 </head>
 <body class="is-preload" onload="document.userJoinForm.userId.focus();">
@@ -470,12 +525,14 @@ select {
 					                <!-- EMAIL -->
 					                <div>
 					                    <h4>이메일</h4>
+					                    <input type="text" id="email" name="email" class="int" maxlength="100" placeholder="이메일 입력">
 					                    <div id="id_wrap">
 					                        <div id="id_input">
-					                        	<input type="text" id="email" name="email" class="int" maxlength="100" placeholder="이메일 입력">
+					                        	<input type="text" id="auth_num" name="auth_num" class="int" placeholder="인증번호 입력">
+					                        	<p id="auth_result"></p>
 					                        </div>
 					                        <div id="id_btn">
-					                        	<input type="button" id="userEmailCheck" class="button" value="중복확인"/>
+					                        	<input type="button" id="userEmailCheck" class="button" value="이메일 인증"/>
 					                        </div>
 				                        </div>
 					                </div>
