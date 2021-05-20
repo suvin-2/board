@@ -228,26 +228,26 @@ $(function(){
 	    	emailCheck = "N";
 			return false;
 	    } else {
-	    	var email = email_jsp.value;
-	    	console.log('입력한 이메일 : '+email);
+	    	var full_email = email_jsp.value;
+	    	var email = full_email.split('.');
+	    	console.log('입력한 이메일 : '+full_email);
+	    	console.log('자른 이메일 : '+email[0]);
 	    	
 	    	$.ajax({
-				url : '/userEmailCheck',
+				url : '${pageContext.request.contextPath}/userEmailCheck/'+email[0],
 				type : 'GET',
-				data : email,
-				dataType : 'json',
-				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 				error : function(xhr, status, msg) {
 					console.log("ajax 실패");
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					if(email === data.email) {
+					console.log('data : '+data.email)
+					if(full_email == data.email) {
 						alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
 						emailCheck = "N";
 						$("#userId").focus(); 
 						
-					} else if(email != data.email) {
+					} else if(full_email != data.email) {
 						alert("사용 가능한 이메일입니다.");
 						emailCheck = "Y";
 						document.getElementById('email').readOnly = true;

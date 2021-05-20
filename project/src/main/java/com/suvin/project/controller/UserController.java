@@ -78,7 +78,7 @@ public class UserController {
 	@ResponseBody
 	public UserVO userEmailCheck(@PathVariable("email") String email) throws Exception {
 		logger.info("user Email check controller in (ajax) email : "+email);
-		
+		System.out.println("user controller email check : "+service.userEmailCheck(email));
 		return service.userEmailCheck(email);
 	}
 	

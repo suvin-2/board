@@ -65,7 +65,7 @@
 	<select id="userEmailCheck" resultType="userVO" parameterType="String">
 		SELECT EMAIL
 		FROM B_USER
-		WHERE EMAIL = #{email}
+		WHERE SUBSTR(EMAIL,1,(INSTR(EMAIL,'.')-1)) = #{email}
 	</select>
 	
 	<!-- 기존 회원 전화번호 조회(회원가입 시 전화번호 중복 체크) -->
