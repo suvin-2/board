@@ -10,8 +10,95 @@
 <title>suvin's cooking class</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <link rel="stylesheet" href="css/main.css" />
+<script>
+$(function (){
+	//탭 컨텐츠 숨기기
+	$(".tab_content").hide();
+
+	// 첫번째 탭콘텐츠 보이기
+	$(".tab_container").each(function () {
+	  $(this).children(".tabs li:first").addClass("active"); //Activate first tab
+	  $(this).children(".tab_content").first().show();
+	});
+	
+	writing_list();
+	
+	//탭메뉴 클릭 이벤트
+	$(".tabs li a").click(function () {
+	  
+	  $(this).parent().siblings("li").removeClass("active");
+	  $(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
+	  var activeTab = $(this).attr("rel");
+	   $("#" + activeTab).fadeIn();
+	});
+});
+
+function writing_list(){
+	
+	var userId = $("#userId").val();
+		
+	$.ajax({
+		url : '/writingList.do',
+		type : 'GET',
+		data : {'userId':userId},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			console.log('user writing list');
+			console.log(data);
+			var table_html = "";
+			var ul_html = "";
+			
+			for(var i=0;i<data.list.length;i++) {
+				//날짜 형식 포맷
+				var bDate = moment(data.list[i].bDate).format('YYYY-MM-DD HH:MM');
+				var url = "location.href=\"/boardSelectDetail.do?bNo="+data.list[i].bNo+"&sName="+data.list[i].sName+"&cNo="+data.list[i].cNo+"&writer="+data.list[i].writer+"\"";
+
+				table_html += "<tr id='writing_tr' onClick="+url+">";
+				table_html += "<td id='writing_sName'>"+data.list[i].sName+"</td>";
+				table_html += "<td id='writing_title'>"+data.list[i].title+"</td>";
+				table_html += "<td id='writing_writer'>"+data.list[i].writer+"</td>";
+				table_html += "<td id='writing_bDate'>"+bDate+"</td>";
+				table_html += "<td id='writing_cnt'>"+data.list[i].cnt+"</td>";
+				table_html += "</tr>";
+			}
+			$("#writing_tbody").empty();
+			$("#writing_tbody").append(table_html);
+			
+			if(data.pageMaker.prev == true) {
+				ul_html += "<li>";
+				ul_html += "<a href='#'></a>";
+				ul_html += "</li>";
+			}
+			for(var i=data.pageMaker.startPage;i<=data.pageMaker.endPage;i++) {
+				ul_html += "<li>";
+				ul_html += "<a href='#' class='page active'></a>";
+				ul_html += "</li>";
+			}
+			if(data.pageMaker.next == true && data.pageMaker.endPage > 0) {
+				ul_html += "<li>";
+				ul_html += "<a href='#'></a>";
+				ul_html += "</li>";
+			}
+			
+			$("#writing_page").empty();
+			$("#writing_page").append(ul_html);
+		}
+	});
+}
+
+</script>
 <style type="text/css">
+.tabs ul li a {
+	border-bottom : 0;
+}
 .pagingBnt li {
 	list-style: none; 
 	float: middle; 
@@ -22,6 +109,52 @@
 }
 .btn-group pagination {
 	float : middle;
+}
+
+.tab_container {
+  position: relative;
+
+  margin:auto;
+}
+.tab_container .tab_content {
+  width:100%
+  padding: 30px 0;
+}
+
+.tabs ul {
+  width: 100%;
+  display:table;
+  table-layout: fixed;
+  padding:0
+}
+.tabs li {
+  display: table-cell;
+  background: #f6f7f9;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  border-bottom: 1px solid #222;
+  text-align: center;
+}
+.tabs li.active {
+  background: #fff;
+  border-top: 1px solid #222;
+  border-left: 1px solid #222;
+  border-right: 1px solid #222;
+  border-bottom: 0;
+}
+.tabs li.active a {
+  color: #f56a6a;
+  font-weight: 500;
+}
+.tabs li a {
+  font-size: 14px;
+  color: #f56a6a;
+  display: block;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  text-decoration: none;color: #000
 }
 </style>
 </head>
@@ -35,77 +168,82 @@
 			<div class="inner">	
 				<!-- Header -->
 				<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
+				<input type="hidden" id="userId" value="<%=userId%>">
 				<!-- Section -->
-				<section id="banner">
-					<div class="content">
-					<%  
-						String sName = request.getParameter("sName"); 
-						String cNo = request.getParameter("cNo"); 
-						System.out.println("boardList.jsp 넘어온 sName : " + sName);
-					%>
-					<header class="major">
-							<h2 id="sName"><%= sName %></h2>
-						</header>
-						<!-- 카페 내 전체 글 -->
+				<div class="tab_container">
+					<br>
+					<!--탭 메뉴 영역 -->
+					<div class="tabs">
+						<ul>
+							<li class="active"><a href="#" rel="tab1">작성한 글</a></li>
+							<li><a href="#" rel="tab2">작성한 댓글</a></li>
+							<li><a href="#" rel="tab3">좋아요 글</a></li>
+						</ul>
+					</div>
+					<!-- 작성한 글 출력 -->
+					<div id="tab1" class="tab_content">
 						<table border="1">
 							<thead>
-							  <tr>
-							    <th>제목</th>
-							    <th>작성자</th>
-							    <th>작성일</th>
-							    <th>조회수</th>
-							  </tr>
+								<tr>
+								  	<th>카테고리</th>
+								    <th>제목</th>
+								    <th>작성자</th>
+								    <th>작성일</th>
+								    <th>조회수</th>
+							    </tr>
 							</thead>
-							<tbody>
+							<tbody id="writing_tbody">
+							<%-- 
 							<c:forEach var="item" items="${list}">
 							<c:set value="${item.cName}" var="cNameCopy"/>
 							<c:set value="${item.sName}" var="sNameCopy"/>
 							<c:set value="${item.cNo}" var="cNoCopy"/>
 							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-								<tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}&writer=${item.writer}'">
-								    <td id="title">${item.title}</td>
-								    <td id="writer">${item.writer}</td>
-								    <td id="bDate">${bDate}</td>
-								    <td id="cnt">${item.cnt}</td>
+							<fmt:formatDate var="writing_bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+								<tr id="writing_tr">
+								    <td id="writing_sName"></td>
+								    <td id="writing_title"></td>
+								    <td id="writing_writer"></td>
+								    <td id="writing_bDate"></td>
+								    <td id="writing_cnt"></td>
 								</tr>
 						    </c:forEach>
+						     --%>
 							</tbody>
 						</table>
-						<%-- <jsp:param name="userId" value=""> --%>
-						<%
-							System.out.println("head에서 가지고오는 user id : "+userId);
-							if(userId != "anonymousUser") {
-						%>
-							<div align="right">
-								<a href="boardInsertForm.do?sName=<%=sName%>&cNo=<%=cNo%>" class="button">글쓰기</a>
-							</div>
-						<% } %>
+						<!-- 페이징 -->
 						<div class="pagingBnt">
-							  <ul class="btn-group pagination">
-							    <c:if test="${pageMaker.prev }"> 
+							  <ul class="pagination" id="writing_page">
+							    <c:if test="${pageMaker.prev}"> 
 							    <li> 
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'><i class="fa fa-chevron-left"></i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'></a>
 							    </li>
 							    </c:if>
 							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
 							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>' class="page active">${pageNum}</a>
 							    </li>
 							    </c:forEach>
 							    <c:if test="${pageMaker.next && pageMaker.endPage >0}">
 							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>'><i class="fa fa-chevron-right"></i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>' class="button"></a>
 							    </li>
 							    </c:if>
 							</ul>
 						</div>
 					</div>
-				</section>	
+					<!-- 작성한 댓글 출력 -->
+					<div id="tab2" class="tab_content">
+						탭2
+					</div>
+					<!-- 좋아요 한 글 출력 -->
+					<div id="tab3" class="tab_content">
+						탭3		
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>

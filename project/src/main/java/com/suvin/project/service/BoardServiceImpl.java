@@ -103,5 +103,9 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
 		return dao.boardLikeAllSelect(vo);
 	}
+	@Override
+	public List<BoardVO> writingList(Criteria cri) throws Exception {
+		return dao.writingList(cri);
+	}
 
 }

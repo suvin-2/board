@@ -21,12 +21,7 @@ public class BoardDAO {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return mybatis.selectList("BoardDAO.boardSelect",vo);
 	}
-	/*
-	// 게시글 카테고리 별 조회
-	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
-		return mybatis.selectList("BoardDAO.boardCategorySelect",vo);
-	}
-	*/
+
 	// 게시글 카테고리 별 조회 (페이징 처리)
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
 		return mybatis.selectList("BoardDAO.boardCategorySelect",cri);
@@ -105,5 +100,10 @@ public class BoardDAO {
 	// 게시글 좋아요 총 개수
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
 		return mybatis.selectList("BoardDAO.boardLikeAllSelect",vo);
+	}
+	
+	// 내가 작성한 게시글 목록 (페이징 처리)
+	public List<BoardVO> writingList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.writingList",cri);
 	}
 }

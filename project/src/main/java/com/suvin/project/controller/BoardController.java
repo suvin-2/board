@@ -1,5 +1,6 @@
 package com.suvin.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.suvin.project.service.BoardService;
 import com.suvin.project.service.CategoryService;
 import com.suvin.project.vo.BoardVO;
@@ -25,10 +24,6 @@ import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.PageMaker;
 import com.suvin.project.vo.ReplyVO;
 
-
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class BoardController {
 	
@@ -38,39 +33,9 @@ public class BoardController {
 	private CategoryService cService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 * @throws Exception 
-	 */
+
 	// url mapping
 	// 기본, 루트 페이지 -> home메서드 호출
-	/*
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(BoardVO vo, Locale locale, Model model) throws Exception {
-		logger.info("Welcome home! The client locale is {}.", locale);*/
-		
-		/*
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		// 모델(서블릿의 request 객체를 대체한 것)
-		model.addAttribute("serverTime", formattedDate );
-		*/
-		/*List<BoardVO> list = service.boardSelect(vo);
-		logger.info(list.toString());
-		model.addAttribute("list",list);
-		
-		// home.jsp로 포워딩
-        // servlet-context.xml
-        // <beans:property name="prefix" value="/WEB-INF/views/" />
-        // <beans:property name="suffix" value=".jsp" />
-        // 디렉토리(접두어)와 jsp(접미어)확장자를 제외하고 이름만 작성하도록 세팅
-		return "home";
-	}
-	*/
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(BoardVO vo, CategoryVO cVo, Locale locale, Model model) throws Exception {
 		
@@ -102,12 +67,11 @@ public class BoardController {
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
 	public ModelAndView boardSelectDetail(BoardVO vo, Criteria cri, Model model) throws Exception {
-		//vo.getbNo(bNo);
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/board/boardDetail");
 		// 조회수 up
-		service.boardUpdateCnt(vo);
-		
+		service.boardUpdateCnt(vo);		
 		List<BoardVO> list = service.boardSelectDetail(vo);	
 		mv.addObject("list",list);
 		
@@ -216,5 +180,21 @@ public class BoardController {
 	@RequestMapping(value = "/boardLikeAllSelect.do", method = RequestMethod.GET)
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo, @ModelAttribute("bNo") int bNo) throws Exception {
 		return service.boardLikeAllSelect(vo);
+	}
+	
+	// 내 작성글 목록 (ajax)
+	@ResponseBody
+	@RequestMapping(value = "/writingList.do", method = RequestMethod.GET)
+	public HashMap<String, Object> writingList(Criteria cri, Model model) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listCount(cri));
+		map.put("list", service.writingList(cri));
+		map.put("pageMaker", pageMaker);
+		
+		return map;
 	}
 }

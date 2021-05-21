@@ -16,7 +16,7 @@
 <script type="text/javascript">
 	var userId = $("#securityLogin");
 	
-	console.log('user id (다른 페이지들로 넘겨줘야함) '+userId);
+	console.log('board head user id : '+userId);
 </script>
 <style>
 #header {
@@ -93,7 +93,7 @@
 							<a href="#"><span class="label">MY PAGE</span></a>
 							<ul class="drop_menu_ul">
 								<li><a href="userInfoForm.do?userId=<%=userId%>">MY INFORMATION</a></li>
-								<li><a href="#">WRITING/REPLY/LIKE</a></li>
+								<li><a href="userWritingList.do?userId=<%=userId%>">WRITING/REPLY/LIKE</a></li>
 							</ul>
 						</li>
 						<li><a href="#" onclick="document.getElementById('logout-form').submit();"><span class="label">LOGOUT</span></a></li>

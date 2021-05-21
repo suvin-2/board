@@ -62,5 +62,8 @@ public interface BoardService {
 	
 	// 게시글 좋아요 총 개수
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo);
+	
+	// 내가 작성한 게시글 목록 (페이징 처리)
+	public List<BoardVO> writingList(Criteria cri) throws Exception;
 
 }

@@ -166,6 +166,12 @@ public class UserController {
 		return "/user/userInfo";
 	}
 	
+	// 회원수정 화면
+	@RequestMapping(value="/userWritingList.do")
+	public String userWritingList() throws Exception {
+		return "/user/user_writing_reply_like";
+	}
+	
 	// 회원 정보 조회
 	@ResponseBody
 	@RequestMapping(value="/userInfoSelect/{userId}", method= RequestMethod.GET)
