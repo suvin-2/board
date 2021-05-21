@@ -107,5 +107,13 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> writingList(Criteria cri) throws Exception {
 		return dao.writingList(cri);
 	}
+	@Override
+	public List<BoardVO> replyList(Criteria cri) throws Exception {
+		return dao.replyList(cri);
+	}
+	@Override
+	public List<BoardVO> likeList(Criteria cri) throws Exception {
+		return dao.likeList(cri);
+	}
 
 }

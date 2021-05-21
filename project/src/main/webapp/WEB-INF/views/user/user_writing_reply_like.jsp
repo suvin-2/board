@@ -21,19 +21,28 @@ $(function (){
 
 	// 첫번째 탭콘텐츠 보이기
 	$(".tab_container").each(function () {
-	  $(this).children(".tabs li:first").addClass("active"); //Activate first tab
-	  $(this).children(".tab_content").first().show();
+		$(this).children(".tabs li:first").addClass("active"); //Activate first tab
+		$(this).children(".tab_content").first().show();
+		writing_list();
 	});
-	
-	writing_list();
 	
 	//탭메뉴 클릭 이벤트
 	$(".tabs li a").click(function () {
 	  
-	  $(this).parent().siblings("li").removeClass("active");
-	  $(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
-	  var activeTab = $(this).attr("rel");
-	   $("#" + activeTab).fadeIn();
+		$(this).parent().siblings("li").removeClass("active");
+		$(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
+		
+		var activeTab = $(this).attr("rel");
+		if(activeTab == "tab1"){
+			$("#" + activeTab).fadeIn();
+			writing_list();
+		} else if(activeTab == "tab2") {
+			$("#" + activeTab).fadeIn();
+			reply_list();
+		} else if(activeTab == "tab3") {
+			$("#" + activeTab).fadeIn();
+			like_list();
+		}
 	});
 });
 
@@ -74,22 +83,95 @@ function writing_list(){
 			
 			if(data.pageMaker.prev == true) {
 				ul_html += "<li>";
-				ul_html += "<a href='#'></a>";
+				ul_html += "<a href='/writingList.do?userId="+userId+"&page="+data.pageMaker.startPage-1+"'></a>";
 				ul_html += "</li>";
 			}
-			for(var i=data.pageMaker.startPage;i<=data.pageMaker.endPage;i++) {
+			for(var pageNum=data.pageMaker.startPage;pageNum<=data.pageMaker.endPage;pageNum++) {
 				ul_html += "<li>";
-				ul_html += "<a href='#' class='page active'></a>";
+				ul_html += "<a href='/writingList.do?userId="+userId+"&page="+pageNum+"' class='page active'>"+pageNum+"</a>";
 				ul_html += "</li>";
 			}
 			if(data.pageMaker.next == true && data.pageMaker.endPage > 0) {
 				ul_html += "<li>";
-				ul_html += "<a href='#'></a>";
+				ul_html += "<a href='/writingList.do?userId="+userId+"&page="+data.pageMaker.startPage+1+"'></a>";
 				ul_html += "</li>";
 			}
 			
 			$("#writing_page").empty();
 			$("#writing_page").append(ul_html);
+		}
+	});
+}
+
+function reply_list(){
+	
+	var userId = $("#userId").val();
+		
+	$.ajax({
+		url : '/replyList.do',
+		type : 'GET',
+		data : {'userId':userId},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			var table_html = "";
+			var ul_html = "";
+			
+			for(var i=0;i<data.list.length;i++) {
+				//날짜 형식 포맷
+				var bDate = moment(data.list[i].bDate).format('YYYY-MM-DD HH:MM');
+				var url = "location.href=\"/boardSelectDetail.do?bNo="+data.list[i].bNo+"&sName="+data.list[i].sName+"&cNo="+data.list[i].cNo+"&writer="+data.list[i].writer+"\"";
+
+				table_html += "<tr id='reply_tr' onClick="+url+">";
+				table_html += "<td id='reply_sName'>"+data.list[i].sName+"</td>";
+				table_html += "<td id='reply_title'>"+data.list[i].title+"</td>";
+				table_html += "<td id='reply_rContent'>"+data.list[i].rContent+"</td>";
+				table_html += "<td id='reply_bDate'>"+bDate+"</td>";
+				table_html += "<td id='reply_cnt'>"+data.list[i].cnt+"</td>";
+				table_html += "</tr>";
+			}
+			$("#reply_tbody").empty();
+			$("#reply_tbody").append(table_html);
+		}
+	});
+}
+
+function like_list(){
+	
+	var userId = $("#userId").val();
+		
+	$.ajax({
+		url : '/likeList.do',
+		type : 'GET',
+		data : {'userId':userId},
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			var table_html = "";
+			var ul_html = "";
+			console.log('like list data ----');
+			console.log(data);
+			for(var i=0;i<data.list.length;i++) {
+				//날짜 형식 포맷
+				var bDate = moment(data.list[i].bDate).format('YYYY-MM-DD HH:MM');
+				var url = "location.href=\"/boardSelectDetail.do?bNo="+data.list[i].bNo+"&sName="+data.list[i].sName+"&cNo="+data.list[i].cNo+"&writer="+data.list[i].writer+"\"";
+
+				table_html += "<tr id='like_tr' onClick="+url+">";
+				table_html += "<td id='like_sName'>"+data.list[i].sName+"</td>";
+				table_html += "<td id='like_title'>"+data.list[i].title+"</td>";
+				table_html += "<td id='like_writer'>"+data.list[i].writer+"</td>";
+				table_html += "<td id='like_bDate'>"+bDate+"</td>";
+				table_html += "<td id='like_cnt'>"+data.list[i].cnt+"</td>";
+				table_html += "</tr>";
+			}
+			$("#like_tbody").empty();
+			$("#like_tbody").append(table_html);
 		}
 	});
 }
@@ -193,22 +275,6 @@ function writing_list(){
 							    </tr>
 							</thead>
 							<tbody id="writing_tbody">
-							<%-- 
-							<c:forEach var="item" items="${list}">
-							<c:set value="${item.cName}" var="cNameCopy"/>
-							<c:set value="${item.sName}" var="sNameCopy"/>
-							<c:set value="${item.cNo}" var="cNoCopy"/>
-							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-							<fmt:formatDate var="writing_bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-								<tr id="writing_tr">
-								    <td id="writing_sName"></td>
-								    <td id="writing_title"></td>
-								    <td id="writing_writer"></td>
-								    <td id="writing_bDate"></td>
-								    <td id="writing_cnt"></td>
-								</tr>
-						    </c:forEach>
-						     --%>
 							</tbody>
 						</table>
 						<!-- 페이징 -->
@@ -234,11 +300,35 @@ function writing_list(){
 					</div>
 					<!-- 작성한 댓글 출력 -->
 					<div id="tab2" class="tab_content">
-						탭2
+						<table border="1">
+							<thead>
+								<tr>
+								  	<th>카테고리</th>
+								    <th>제목</th>
+								    <th>댓글 내용</th>
+								    <th>작성일</th>
+								    <th>조회수</th>
+							    </tr>
+							</thead>
+							<tbody id="reply_tbody">
+							</tbody>
+						</table>
 					</div>
 					<!-- 좋아요 한 글 출력 -->
 					<div id="tab3" class="tab_content">
-						탭3		
+						<table border="1">
+							<thead>
+								<tr>
+								  	<th>카테고리</th>
+								    <th>제목</th>
+								    <th>작성자</th>
+								    <th>작성일</th>
+								    <th>조회수</th>
+							    </tr>
+							</thead>
+							<tbody id="like_tbody">
+							</tbody>
+						</table>	
 					</div>
 				</div>
 			</div>

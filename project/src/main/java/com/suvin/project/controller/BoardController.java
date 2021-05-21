@@ -60,7 +60,6 @@ public class BoardController {
 		pageMaker.setTotalCount(service.listCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
 		mv.addObject("pageMaker", pageMaker);
-		
 		return mv;
 	}
 	
@@ -193,6 +192,38 @@ public class BoardController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
 		map.put("list", service.writingList(cri));
+		map.put("pageMaker", pageMaker);
+		
+		return map;
+	}
+	
+	// 내 작성 댓글 목록 (ajax)
+	@ResponseBody
+	@RequestMapping(value = "/replyList.do", method = RequestMethod.GET)
+	public HashMap<String, Object> replyList(Criteria cri, Model model) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listCount(cri));
+		map.put("list", service.replyList(cri));
+		map.put("pageMaker", pageMaker);
+		
+		return map;
+	}
+	
+	// 내가 좋아요 한 글 목록 (ajax)
+	@ResponseBody
+	@RequestMapping(value = "/likeList.do", method = RequestMethod.GET)
+	public HashMap<String, Object> likeList(Criteria cri, Model model) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listCount(cri));
+		map.put("list", service.likeList(cri));
 		map.put("pageMaker", pageMaker);
 		
 		return map;

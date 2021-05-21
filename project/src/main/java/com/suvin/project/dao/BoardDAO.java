@@ -106,4 +106,14 @@ public class BoardDAO {
 	public List<BoardVO> writingList(Criteria cri) throws Exception {
 		return mybatis.selectList("BoardDAO.writingList",cri);
 	}
+	
+	// 내가 작성한 댓글 목록 (페이징 처리)
+	public List<BoardVO> replyList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.replyList",cri);
+	}
+	
+	// 내가 좋아요 한 게시글 목록 (페이징 처리)
+	public List<BoardVO> likeList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.likeList",cri);
+	}
 }

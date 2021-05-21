@@ -65,5 +65,11 @@ public interface BoardService {
 	
 	// 내가 작성한 게시글 목록 (페이징 처리)
 	public List<BoardVO> writingList(Criteria cri) throws Exception;
+	
+	// 내가 작성한 댓글 목록 (페이징 처리)
+	public List<BoardVO> replyList(Criteria cri) throws Exception;
+	
+	// 내가 좋아요 한 게시글 목록 (페이징 처리)
+	public List<BoardVO> likeList(Criteria cri) throws Exception;
 
 }

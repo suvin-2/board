@@ -45,6 +45,7 @@ public class Criteria {
 	}
 	
 	public int getPageStart() {
+		//현재 페이지의 게시글 시작 번호 = (현재 페이지 번호 - 1) * 페이지당 보여줄 게시글 갯수
 		return (this.page - 1) * perPageNum;
 	}
 	

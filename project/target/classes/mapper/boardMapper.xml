@@ -231,4 +231,63 @@
 		WHERE WRITER = #{userId} AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY BDATE DESC
 	</select>
+	
+	<!-- 내가 작성한 댓글 목록 -->
+	<select id="replyList" resultType="com.suvin.project.vo.ReplyVO" parameterType="criteria">
+		SELECT BNO, 
+		       RNO, 
+		       TITLE,
+		       RCONTENT,
+		       WRITER,
+		       CNO,
+		       SNAME,
+		       RWRITER, 
+		       RDATE, 
+		       UDATE,
+		       CNT
+		FROM (SELECT R.BNO, 
+		             R.RNO,
+		             B.TITLE,
+		             R.RCONTENT,
+		             B.WRITER,
+		             B.CNO,
+		             C.SNAME,
+		             R.RWRITER, 
+		             R.RDATE, 
+		             R.UDATE,
+		             B.CNT,
+		             ROW_NUMBER() OVER(PARTITION BY B.WRITER ORDER BY B.BNO DESC) AS RNUM
+		    FROM BOARD B, B_REPLY R, CATEGORY C
+		    WHERE B.BNO = R.BNO AND B.CNO = C.CNO) BD
+		WHERE RWRITER = #{userId} AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY BNO DESC
+	</select>
+	
+	<!-- 내가 좋아요 한 게시글 목록 -->
+	<select id="likeList" resultType="boardVO" parameterType="criteria">
+		SELECT CNAME,
+		       SNAME, 
+		       BNO,
+		       TITLE,
+		       WRITER,
+		       CNO,
+		       BDATE,
+		       USERID,
+		       CNT
+		FROM (SELECT C.CNAME,
+		             C.SNAME,
+		             B.BNO,
+		             B.TITLE,
+		             B.WRITER,
+		             B.CNO,
+		             B.BDATE,
+		             L.USERID,
+		             B.CNT,
+		             ROW_NUMBER() OVER(PARTITION BY B.WRITER ORDER BY B.BNO DESC) AS RNUM
+		    FROM BOARD B, B_LIKE L, CATEGORY C
+		    WHERE B.BNO = L.BNO AND B.CNO = C.CNO) BD
+		WHERE USERID = #{userId} AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY BDATE DESC
+	</select>
+	
 </mapper>

@@ -6,12 +6,14 @@ public class ReplyVO {
 
 	private int bNo;
 	private int rNo;
+	private String title;
 	private String rContent;
 	private String writer;
 	private String rWriter;
 	private Date rDate;				// 등록 날짜
 	private Date uDate;				// 수정 날짜
-	private String secret_check;	// 비밀댓글 체크
+	private String sName;
+	private int cnt;
 	
 	public int getbNo() {
 		return bNo;
@@ -24,6 +26,12 @@ public class ReplyVO {
 	}
 	public void setrNo(int rNo) {
 		this.rNo = rNo;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getrContent() {
 		return rContent;
@@ -55,15 +63,22 @@ public class ReplyVO {
 	public void setuDate(Date uDate) {
 		this.uDate = uDate;
 	}
-	public String getSecret_check() {
-		return secret_check;
+	public String getsName() {
+		return sName;
 	}
-	public void setSecret_check(String secret_check) {
-		this.secret_check = secret_check;
+	public void setsName(String sName) {
+		this.sName = sName;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	@Override
 	public String toString() {
-		return "ReplyVO [bNo=" + bNo + ", rNo=" + rNo + ", rContent=" + rContent + ", writer=" + writer + ", rWriter="
-				+ rWriter + ", rDate=" + rDate + ", uDate=" + uDate + ", secret_check=" + secret_check + "]";
+		return "ReplyVO [bNo=" + bNo + ", rNo=" + rNo + ", title=" + title + ", rContent=" + rContent + ", writer="
+				+ writer + ", rWriter=" + rWriter + ", rDate=" + rDate + ", uDate=" + uDate + ", sName=" + sName
+				+ ", cnt=" + cnt + "]";
 	}
 }
