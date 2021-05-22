@@ -15,6 +15,30 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
+<script>
+$(function(){
+	new_user_list();
+});
+
+//신규 가입자(최근 10명)
+function new_user_list() {
+	
+	$.ajax({
+		url : '/newUserList.do',
+		type : 'GET',
+		dataType : 'json',
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			console.log('admin main 전체 회원 조회 ------');
+			console.log(data);
+		}
+	});
+}
+</script>
 </head>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -67,7 +91,7 @@
 						<header class="major">
 							<h2>신규 가입자(최근 10명)</h2>
 						</header>
-							<div id="new_user_table">
+							<div id="new_user">
 								<!-- 신규 가입자(최근 10명) -->
 								<table border="1">
 									<thead>
@@ -79,19 +103,7 @@
 									    <th>가입일</th>
 									  </tr>
 									</thead>
-									<tbody>
-									<%-- 
-									<c:forEach var="item" items="${list}" begin="0" end="9">
-									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-									    <td id="bNo">${item.bNo}</td>
-									    <td id="title">${item.title}</td>
-									    <td id="cName">${item.cName}</td>
-									    <td id="bDate">${bDate}</td>
-									  </tr>
-									</c:forEach>
-									 --%>
+									<tbody id="new_user_tbody">
 									</tbody>
 								</table>
 							</div>
@@ -113,19 +125,7 @@
 									    <th>조회수</th>
 									  </tr>
 									</thead>
-									<tbody>
-									<%-- 
-									<c:forEach var="item" items="${list}" begin="0" end="9">
-									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-									    <td id="bNo">${item.bNo}</td>
-									    <td id="title">${item.title}</td>
-									    <td id="cName">${item.cName}</td>
-									    <td id="bDate">${bDate}</td>
-									  </tr>
-									</c:forEach>
-									 --%>
+									<tbody id="like_top5_tbody">
 									</tbody>
 								</table>
 							</div>
