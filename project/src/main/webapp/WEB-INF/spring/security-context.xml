@@ -27,6 +27,7 @@
 			5) authentication-failrue-url : 로그인 실패 시 이동할 페이지.
 			6) default-target-url : 로그인에 성공했을 때 보내줄 페이지. 생략 했을 시 사용자의 요청 경로로 이동한다.
         	-->
+        	<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		    <form-login
 				username-parameter="userId"
 				password-parameter="userPw"

@@ -76,6 +76,9 @@ public class BoardController {
 		
 		// 댓글 select
 		List<ReplyVO> replyList = service.replySelect(vo.getbNo());
+		
+		System.out.println("board controller 게시글 단건 조회 reply list : "+replyList);
+		
 		mv.addObject("replyList",replyList);
 		
 		PageMaker pageMaker = new PageMaker();

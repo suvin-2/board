@@ -24,6 +24,12 @@ $(function(){
 	// 좋아요 총 개수
 	board_like_all_select();
 	
+	
+	// 게시글에 작성된 댓글이 하나도 없을 때
+	if($("#rNo").val() == null) {
+		$("#reply").html('댓글이 없습니다.');
+	}
+	
 	// 댓글 등록
 	$("#replyWriteBtn").click(function() {
 		if($("#rContent_insert").val().length == 0) {
@@ -387,15 +393,13 @@ function board_like_all_select() {
 						<%
 							}
 						%>
+						
 						<!-- 댓글 (select) -->
-						<div id="reply">
-							<ol class="alt">
-							<table border="1">
+						<div id="reply" class="box">
+							<ol class="replyList">
 								<c:forEach items="${replyList}" var="replyList">
 								<input type="hidden" id="rNo" value="${replyList.rNo}">
-									<tr>
-										<td>
-											<li id="reply_li_${replyList.rNo}">
+									<li id="reply_li_${replyList.rNo}">
 												<p id="reply_writer">${replyList.rWriter}</p>
 												<p id="reply_content">${replyList.rContent}</p>
 												<span id="reply_date"><fmt:formatDate value="${replyList.rDate}" pattern="yyyy-MM-dd HH:mm" /></span>
@@ -407,10 +411,7 @@ function board_like_all_select() {
 													</div>
 												</c:if>
 											</li>
-										</td>
-									</tr>
-								</c:forEach>
-							</table>
+								</c:forEach>   
 							</ol>
 						</div>
 						

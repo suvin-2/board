@@ -1836,12 +1836,15 @@ button,
   display: -moz-flex;
   display: -webkit-flex;
   display: -ms-flex;
-  display: flex;
   -moz-flex-direction: row-reverse;
-  -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
+  min-height: 100vh; 
+  /*
+  display: flex;
+  -webkit-flex-direction: row-reverse;
   flex-direction: row-reverse;
-  min-height: 100vh; }
+  */
+  }
 
 /* Main */
 #main {

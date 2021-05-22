@@ -11,7 +11,7 @@ public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	// 로그인 화면
-	@RequestMapping(value="/adminMain")
+	@RequestMapping(value="/adminMainForm.do")
 	public String userLogin() throws Exception {
 		return "/admin/adminMain";
 	}

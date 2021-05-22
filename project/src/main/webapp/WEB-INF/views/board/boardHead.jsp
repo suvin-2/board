@@ -89,6 +89,9 @@
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<li><p><sec:authentication property="principal.username"/>님, 반갑습니다.</p></li>
+						<% if(userId.equals("admin")) { %>
+							<li><a href="/adminMainForm.do">ADMIN PAGE</a></li>
+						<% } %>
 						<li class="drop_menu_li">
 							<a href="#"><span class="label">MY PAGE</span></a>
 							<ul class="drop_menu_ul">
