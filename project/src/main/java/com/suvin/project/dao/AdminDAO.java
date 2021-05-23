@@ -32,4 +32,9 @@ public class AdminDAO {
 	public List<UserVO> newUserList(UserVO vo) throws Exception {
 		return mybatis.selectList("AdminDAO.newUserList",vo);
 	}
+	
+	// 좋아요 1개 이상인 글 전체 조회
+	public List<BoardVO> boardLikeList(BoardVO vo) throws Exception {
+		return mybatis.selectList("AdminDAO.boardLikeList",vo);
+	}
 }

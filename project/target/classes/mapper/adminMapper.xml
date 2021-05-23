@@ -58,7 +58,21 @@
 			   ENABLED, 
 			   JOINDATE
 		FROM B_USER
+		WHERE AUTH = 'ROLE_USER'
 		ORDER BY JOINDATE DESC
+	</select>
+	
+	<!-- 좋아요 1개 이상인 글 전체 조회 -->
+	<select id="boardLikeList" resultType="boardVO">
+		SELECT L.BNO, 
+		       C.SNAME, 
+		       B.TITLE, 
+		       B.WRITER, 
+		       B.BDATE, 
+		       B.CNT
+		FROM BOARD B, CATEGORY C, B_LIKE L
+		WHERE B.CNO = C.CNO AND B.BNO = L.BNO
+		ORDER BY L.BNO
 	</select>
 	
 </mapper>

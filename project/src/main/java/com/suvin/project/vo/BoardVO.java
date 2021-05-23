@@ -15,7 +15,6 @@ public class BoardVO {
 	private String cName;
 	private String sName;
 	private int enabled;
-	private Date joinDate;
 	
 	public Integer getbNo() {
 		return bNo;
@@ -83,20 +82,16 @@ public class BoardVO {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
-	public Date getJoinDate() {
-		return joinDate;
-	}
-	public void setJoinDate(Date joinDate) {
-		this.joinDate = joinDate;
-	}
 	// 게시글 단건조회 (boardUpdate.jsp)
 	public Integer getbNo(int bNo) {
 		return bNo;
 	}
+	
 	@Override
 	public String toString() {
 		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
 				+ ", writer=" + writer + ", userId=" + userId + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName
-				+ ", enabled=" + enabled + ", joinDate=" + joinDate + "]";
-	}	
+				+ ", enabled=" + enabled + "]";
+	}
+	
 }

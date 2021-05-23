@@ -36,4 +36,9 @@ public class AdminServiceImpl implements AdminService {
 		return dao.newUserList(vo);
 	}
 
+	@Override
+	public List<BoardVO> boardLikeList(BoardVO vo) throws Exception {
+		return dao.boardLikeList(vo);
+	}
+
 }

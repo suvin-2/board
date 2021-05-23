@@ -18,6 +18,7 @@
 <script>
 $(function(){
 	new_user_list();
+	board_like_list();
 });
 
 //신규 가입자(최근 10명)
@@ -33,8 +34,57 @@ function new_user_list() {
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log('admin main 전체 회원 조회 ------');
+			var j=0;
+			var today = moment().format('YYYY-MM-DD');
+			var joinDate_format = moment(data[0].joinDate).format('YYYY-MM-DD');
+			if(today == joinDate_format) {
+				if(data.length < 10){
+					for(var i=0;i<data.length;i++) {
+						j=i+1;
+						$("#new_user_tbody").append("<tr id='new_user_tr_"+i+"'></tr>");
+						$("#new_user_tr_"+i).append("<td>"+j+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].userId+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].userName+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].email+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].tel+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+moment(data[i].joinDate).format('YYYY-MM-DD')+"</td>");
+					}
+				} else if(data.length >= 10){
+					for(var i=0;i<10;i++) {
+						j=i+1;
+						$("#new_user_tbody").append("<tr id='new_user_tr_"+i+"'></tr>");
+						$("#new_user_tr_"+i).append("<td>"+j+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].userId+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].userName+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].email+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+data[i].tel+"</td>");
+						$("#new_user_tr_"+i).append("<td>"+moment(data[i].joinDate).format('YYYY-MM-DD')+"</td>");
+					}
+				}
+			} else {
+				$("#new_user").empty();
+				$("#new_user").append("<div class='box'><p style='text-align: center;'>신규 가입자가 없습니다.</p></div>");
+			}
+			
+		}
+	});
+}
+
+function board_like_list() {
+	$.ajax({
+		url : '/boardLikeList.do',
+		type : 'GET',
+		dataType : 'json',
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		error : function(xhr, status, msg) {
+			console.log("ajax 실패");
+			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
 			console.log(data);
+			for(var i=0;i<data.length;i++){
+				console.log(data[i]);
+			}
 		}
 	});
 }
@@ -51,39 +101,23 @@ function new_user_list() {
 					<!-- Header -->
 					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 					<!-- 방문자 통계 -->
-					<section id="banner">
-						<div class="content">
-							<header>
-								<h1>Hi, I’m Editorial<br />
-								by HTML5 UP</h1>
-								<p>A free and fully responsive site template</p>
-							</header>
-							<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button big">Learn More</a></li>
-							</ul>
+					<section>
+						<header class="major">
+							<h2>방문자 통계</h2>
+						</header>
+						<div class="box">
+							<p>방문자 통계 차트</p>
 						</div>
-						<span class="image object">
-							<img src="images/pic10.jpg" alt="" />
-						</span>
 					</section>
 					
 					<!-- 새글/새댓글 통계 -->
-					<section id="banner">
-						<div class="content">
-							<header>
-								<h1>Hi, I’m Editorial<br />
-								by HTML5 UP</h1>
-								<p>A free and fully responsive site template</p>
-							</header>
-							<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button big">Learn More</a></li>
-							</ul>
+					<section>
+						<header class="major">
+							<h2>새글/새댓글 통계</h2>
+						</header>
+						<div class="box">
+							<p>새글/새댓글 통계 차트</p>
 						</div>
-						<span class="image object">
-							<img src="images/pic10.jpg" alt="" />
-						</span>
 					</section>
 	
 					<!-- Section -->
@@ -96,6 +130,7 @@ function new_user_list() {
 								<table border="1">
 									<thead>
 									  <tr>
+									  	<th>NO.</th>
 									  	<th>아이디</th>
 									    <th>이름</th>
 									    <th>이메일</th>
@@ -118,6 +153,7 @@ function new_user_list() {
 								<table border="1">
 									<thead>
 									  <tr>
+									  	<th>NO.</th>
 									  	<th>카테고리</th>
 									    <th>제목</th>
 									    <th>작성자</th>
