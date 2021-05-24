@@ -23,8 +23,7 @@
 				<li>
 					<span class="opener">회원 관리</span>
 					<ul>
-						<li><a href="#">전체 회원</a></li>
-						<li><a href="#">활동 중지 회원</a></li>
+						<li><a href="${path}/adminAllUserForm.do">전체 회원</a></li>
 						<li><a href="#">방문자 통계</a></li>
 					</ul>
 				</li>

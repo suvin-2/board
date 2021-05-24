@@ -12,9 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 <style type="text/css">
-	.pagingBnt li {list-style: none; float: middle; padding: 10px;}
-	.pagingBnt {align : center;}
-	.btn-group pagination {float : middle;}
+.pagingBnt li {list-style: none; float: middle; padding: 10px;}
+.pagingBnt {align : center;}
+.btn-group pagination {float : middle;}
+#title {
+	text-align : left;
+}
 </style>
 </head>
 <body class="is-preload">

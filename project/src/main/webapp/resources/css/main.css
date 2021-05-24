@@ -1452,13 +1452,14 @@ table {
     table tbody tr:nth-child(2n + 1) {
       background-color: rgba(230, 235, 237, 0.25); }
   table td {
-    padding: 0.75em 0.75em; }
+    padding: 0.75em 0.75em;
+    text-align: center; }
   table th {
     color: #3d4449;
     font-size: 0.9em;
     font-weight: 600;
     padding: 0 0.75em 0.75em 0.75em;
-    text-align: left; }
+    text-align: center; }
   table thead {
     border-bottom: solid 2px rgba(210, 215, 217, 0.75); }
   table tfoot {
@@ -2274,3 +2275,7 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+    
+.pagingBnt {
+	text-align : center;
+}

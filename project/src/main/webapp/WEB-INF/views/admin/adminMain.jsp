@@ -125,7 +125,7 @@ function board_like_list() {
 								$("#like_top5_tbody").append("<tr id='like_top5_tr_"+i+"' onClick="+url1+"></tr>");
 								$("#like_top5_tr_"+i).append("<td>"+j+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+sortList[i].sName+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].title+"</td>");
+								$("#like_top5_tr_"+i).append("<td id='title'>"+sortList[i].title+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+sortList[i].writer+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+moment(sortList[i].bDate).format('YYYY-MM-DD')+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+sortList[i].cnt+"</td>");
@@ -138,7 +138,7 @@ function board_like_list() {
 								$("#like_top5_tbody").append("<tr id='like_top5_tr_"+i+"' onClick="+url2+"></tr>");
 								$("#like_top5_tr_"+i).append("<td>"+j+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+sortList[i].sName+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].title+"</td>");
+								$("#like_top5_tr_"+i).append("<td id='title'>"+sortList[i].title+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+sortList[i].writer+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+moment(sortList[i].bDate).format('YYYY-MM-DD')+"</td>");
 								$("#like_top5_tr_"+i).append("<td>"+sortList[i].cnt+"</td>");
@@ -154,6 +154,11 @@ function board_like_list() {
 	});
 }
 </script>
+<style type="text/css">
+#title {
+	text-align : left;
+}
+</style>
 </head>
 <body class="is-preload">
 	<!-- Wrapper -->

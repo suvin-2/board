@@ -46,8 +46,7 @@
 		ORDER BY BNO DESC
 	</select>
 
-	
-	<!-- 전체 회원 조회 -->
+	<!-- 신규 회원 조회 -->
 	<select id="newUserList" resultType="userVO">
 		SELECT USERID, 
 			   USERNAME, 
@@ -83,6 +82,60 @@
 		WHERE ENABLED = 1
 		GROUP BY BNO
 		ORDER BY COUNT(BNO) DESC
+	</select>
+	
+	<!-- 전체 회원 count-->
+	<select id="userCount" resultType="int">
+		SELECT COUNT(USERID)
+		FROM B_USER
+		WHERE AUTH = 'ROLE_USER'
+	</select>
+	
+	<!-- 전체 회원 조회 & 페이징 -->
+	<select id="allUserList" resultType="userVO" parameterType="criteria">
+		SELECT ROWNUM,
+		       USERID, 
+		       USERNAME, 
+		       BIRTHDAY, 
+		       GENDER, 
+		       EMAIL, 
+		       TEL, 
+		       ENABLED, 
+		       JOINDATE
+		FROM (SELECT ROWNUM,
+		             USERID, 
+		             USERNAME, 
+		             BIRTHDAY, 
+		             GENDER, 
+		             EMAIL, 
+		             TEL, 
+		             ENABLED, 
+		             JOINDATE,
+		             ROW_NUMBER() OVER(ORDER BY JOINDATE DESC) AS RNUM
+		    FROM B_USER ) BD
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY JOINDATE DESC
+	</select>
+	
+	<!-- 계정 비활성화 -->
+	<update id="userStopActivity">
+		UPDATE B_USER
+		SET ENABLED = 0
+		WHERE USERID = #{userId}
+	</update>
+	
+	<!-- 계정 활성화 -->
+	<update id="userResumeActivity">
+		UPDATE B_USER
+		SET ENABLED = 1
+		WHERE USERID = #{userId}
+	</update>
+	
+	<!-- 계정 비활성화 체크 -->
+	<select id="userStopActivityCheck" resultType="userVO">
+		SELECT USERID, ENABLED
+		FROM B_USER
+		WHERE USERID = #{userId}
 	</select>
 	
 </mapper>

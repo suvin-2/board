@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class UserVO {
 	
+	private int rowNum;
 	private String userId;
 	private String userPw;
 	private String userName;
@@ -15,6 +16,13 @@ public class UserVO {
 	private int enabled;
 	private Date joinDate;
 	
+	
+	public int getRowNum() {
+		return rowNum;
+	}
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -79,12 +87,10 @@ public class UserVO {
 	public String getUserId(String userId) {
 		return userId;
 	}
-	
 	@Override
 	public String toString() {
-		return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", birthday=" + birthday
-				+ ", gender=" + gender + ", email=" + email + ", tel=" + tel + ", auth=" + auth + ", enabled=" + enabled
-				+ ", joinDate=" + joinDate + "]";
+		return "UserVO [rowNum=" + rowNum + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
+				+ ", birthday=" + birthday + ", gender=" + gender + ", email=" + email + ", tel=" + tel + ", auth="
+				+ auth + ", enabled=" + enabled + ", joinDate=" + joinDate + "]";
 	}
-	
 }
