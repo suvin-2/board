@@ -191,7 +191,7 @@ public class AdminController {
 		return service.adminBoardDelete(bNo);
 	}
 	
-	// admin board.jsp ------------------------------------------------------
+	// admin reply.jsp ------------------------------------------------------
 	// 전체 댓글 조회 & 페이징
 	@RequestMapping(value="/adminReplyForm.do")
 	public ModelAndView allReplyList(Criteria cri) throws Exception {
@@ -214,5 +214,12 @@ public class AdminController {
 	@RequestMapping(value = "/adminReplyDelete.do/{rNo}", method = RequestMethod.GET)
 	public int adminReplyDelete(@ModelAttribute("rNo") int rNo) throws Exception {
 		return service.adminReplyDelete(rNo);
+	}
+	
+	// admin category.jsp ------------------------------------------------------
+	// admin category 화면
+	@RequestMapping(value="/adminCategoryForm.do")
+	public String adminCategoryForm() throws Exception {
+		return "/admin/adminCategory";
 	}
 }

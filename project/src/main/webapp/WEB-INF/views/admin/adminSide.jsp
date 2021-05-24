@@ -30,7 +30,7 @@
 				<li>
 					<span class="opener">게시판 관리</span>
 					<ul>
-						<li><a href="#">카테고리</a></li>
+						<li><a href="${path}/adminCategoryForm.do">카테고리</a></li>
 						<li><a href="${path}/adminBoardForm.do">게시글</a></li>
 						<li><a href="${path}/adminReplyForm.do">댓글</a></li>
 					</ul>
