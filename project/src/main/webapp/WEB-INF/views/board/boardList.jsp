@@ -81,17 +81,17 @@
 							  <ul class="btn-group pagination">
 							    <c:if test="${pageMaker.prev }"> 
 							    <li> 
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'><i class="fa fa-chevron-left"></i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'></a>
 							    </li>
 							    </c:if>
 							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
 							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>' class="page">${pageNum}</a>
 							    </li>
 							    </c:forEach>
 							    <c:if test="${pageMaker.next && pageMaker.endPage >0}">
 							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>'><i class="fa fa-chevron-right"></i></a>
+							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>'></a>
 							    </li>
 							    </c:if>
 							</ul>

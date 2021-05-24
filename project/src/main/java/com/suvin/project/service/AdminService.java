@@ -39,4 +39,13 @@ public interface AdminService {
 	
 	// 회원 계정 비활성화 체크
 	public List<UserVO> userStopActivityCheck(UserVO vo) throws Exception;
+	
+	// 전체 게시글 count
+	public int boardCount() throws Exception;
+	
+	// 전체 게시글 조회 & 페이징
+	public List<BoardVO> boardList(Criteria cri) throws Exception;
+	
+	// 게시글 삭제
+	public int adminBoardDelete(int bNo);
 }

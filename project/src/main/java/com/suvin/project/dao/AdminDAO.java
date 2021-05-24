@@ -28,6 +28,7 @@ public class AdminDAO {
 		return mybatis.selectList("BoardDAO.boardCategorySelect",cri);
 	}
 	
+	// admin main.jsp ------------------------------------------------------
 	// 신규 회원 조회
 	public List<UserVO> newUserList(UserVO vo) throws Exception {
 		return mybatis.selectList("AdminDAO.newUserList",vo);
@@ -43,6 +44,7 @@ public class AdminDAO {
 		return mybatis.selectList("AdminDAO.boardLikeCntList",vo);
 	}
 	
+	// admin all user.jsp ------------------------------------------------------
 	// 전체 회원 count
 	public int userCount() throws Exception {
 		return mybatis.selectOne("AdminDAO.userCount");
@@ -66,5 +68,21 @@ public class AdminDAO {
 	// 회원 계정 비활성화 체크
 	public List<UserVO> userStopActivityCheck(UserVO vo) throws Exception {
 		return mybatis.selectList("AdminDAO.userStopActivityCheck",vo);
+	}
+	
+	// admin board.jsp ------------------------------------------------------
+	// 전체 게시글 count
+	public int boardCount() throws Exception {
+		return mybatis.selectOne("AdminDAO.boardCount");
+	}
+	
+	// 전체 게시글 조회 & 페이징
+	public List<BoardVO> boardList(Criteria cri) throws Exception {
+		return mybatis.selectList("AdminDAO.boardList",cri);
+	}
+	
+	// 게시글 삭제
+	public int adminBoardDelete(int bNo) {
+		return mybatis.delete("AdminDAO.adminBoardDelete",bNo);
 	}
 }

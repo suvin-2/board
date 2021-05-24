@@ -16,9 +16,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 <script>
-$(function(){
-	
-});
 
 // 계정 활성화/비활성화 시 메일 전송
 function userActivity(userId, email, enabled) {
@@ -179,7 +176,7 @@ table td {
 							    </c:if>
 							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
 							    <li>
-							        <a href='<c:url value="adminAllUserForm.do?page=${pageNum}"/>' class="page active">${pageNum}</a>
+							        <a href='<c:url value="adminAllUserForm.do?page=${pageNum}"/>' class="page">${pageNum}</a>
 							    </li>
 							    </c:forEach>
 							    <c:if test="${pageMaker.next && pageMaker.endPage>0}">

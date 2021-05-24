@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,7 @@ public class AdminController {
 	@Resource(name="adminService")
 	private AdminService service;
 	
+	// admin main.jsp ------------------------------------------------------
 	// admin main 화면
 	@RequestMapping(value="/adminMainForm.do")
 	public String adminMain() throws Exception {
@@ -63,6 +65,7 @@ public class AdminController {
 		return service.boardLikeCntList(vo);
 	}
 	
+	// admin all user.jsp ------------------------------------------------------
 	// 전체 회원 조회 & 페이징
 	@RequestMapping(value="/adminAllUserForm.do")
 	public ModelAndView adminAllUserForm(Criteria cri) throws Exception {
@@ -70,7 +73,6 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/adminAllUser");
 		mv.addObject("list", service.allUserList(cri));
-		System.out.println("admin controller 전체 회원 조회 vo :"+service.allUserList(cri));
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -99,9 +101,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value="/userActivityEmail.do", method= RequestMethod.GET)
 	public String userActivityEmail(UserVO vo) throws Exception {
-		
-		System.out.println("admin controller 메일 전송 method in --------------");
-		
+
 		String userId = vo.getUserId();
 		String email = vo.getEmail();
 		int enabled = vo.getEnabled();
@@ -166,5 +166,35 @@ public class AdminController {
 	@RequestMapping(value="/userStopActivityCheck.do")
 	public List<UserVO> userStopActivityCheck(UserVO vo) throws Exception {
 		return service.userStopActivityCheck(vo);
+	}
+	
+	// admin board.jsp ------------------------------------------------------
+	// 전체 게시글 조회 & 페이징
+	@RequestMapping(value="/adminBoardForm.do")
+	public ModelAndView adminBoardForm(Criteria cri) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/adminBoard");
+		
+		System.out.println("admin controller admin용 cri : "+cri);
+		
+		// 페이징
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.boardCount());
+		mv.addObject("list", service.boardList(cri));
+		mv.addObject("pageMaker", pageMaker);
+
+		System.out.println("admin controller admin용 pageMaker :"+pageMaker.getDisplayPageNum()+", "+pageMaker.getStartPage()+", "+pageMaker.getEndPage());
+		System.out.println("admin controller admin용 getCri :"+pageMaker.getCri()+", getTotalCount : "+pageMaker.getTotalCount());
+		
+		return mv;
+	}
+	
+	// 게시글 삭제(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/adminBoardDelete.do/{bNo}", method = RequestMethod.GET)
+	public int adminBoardDelete(@ModelAttribute("bNo") int bNo) throws Exception {
+		return service.adminBoardDelete(bNo);
 	}
 }

@@ -3,6 +3,7 @@ package com.suvin.project.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -55,13 +56,41 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/board/boardList");
 		
+		System.out.println("board controller user용 cri : "+cri);
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
 		mv.addObject("pageMaker", pageMaker);
+		
+		System.out.println("board controller user용 pageMaker :"+pageMaker.getDisplayPageNum()+", "+pageMaker.getStartPage()+", "+pageMaker.getEndPage());
+		System.out.println("board controller user용 getCri :"+pageMaker.getCri()+", getTotalCount : "+pageMaker.getTotalCount());
+		
 		return mv;
 	}
+	
+	// 게시판 카테고리 별 글 목록 (관리자용)
+	@ResponseBody
+	@RequestMapping(value = "/adminBoardSelect.do")
+	public Map<String, Object> adminBoardSelect(Criteria cri, Model model) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("board controller admin용 cri : "+cri);
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listCount(cri));
+		map.put("list", service.boardCategorySelect(cri));
+		map.put("pageMaker", pageMaker);
+		
+		System.out.println("board controller admin용 pageMaker :"+pageMaker.getDisplayPageNum()+", "+pageMaker.getStartPage()+", "+pageMaker.getEndPage());
+		System.out.println("board controller admin용 getCri :"+pageMaker.getCri()+", getTotalCount : "+pageMaker.getTotalCount());
+		
+		return map;
+	}
+	
 	
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
