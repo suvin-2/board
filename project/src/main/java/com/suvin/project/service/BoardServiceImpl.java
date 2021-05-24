@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.suvin.project.dao.BoardDAO;
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.ReplyVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -67,6 +68,52 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int boardUpdateCnt(BoardVO vo) {
 		return dao.boardUpdateCnt(vo);
+	}
+	
+	@Override
+	public List<ReplyVO> replySelect(int bNo) {
+		return dao.replySelect(bNo);
+	}
+	
+	@Override
+	public int replyInsert(ReplyVO vo) {
+		return dao.replyInsert(vo);
+	}
+	@Override
+	public int replyUpdate(ReplyVO vo) {
+		return dao.replyUpdate(vo);
+	}
+	@Override
+	public int replyDelete(int rNo) {
+		return dao.replyDelete(rNo);
+	}
+	@Override
+	public BoardVO boardLikeSelect(BoardVO vo) {
+		return dao.boardLikeSelect(vo);
+	}
+	@Override
+	public int boardLikeInsert(BoardVO vo) {
+		return dao.boardLikeInsert(vo);
+	}
+	@Override
+	public int boardLikeUpdate(BoardVO vo) {
+		return dao.boardLikeUpdate(vo);
+	}
+	@Override
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
+		return dao.boardLikeAllSelect(vo);
+	}
+	@Override
+	public List<BoardVO> writingList(Criteria cri) throws Exception {
+		return dao.writingList(cri);
+	}
+	@Override
+	public List<BoardVO> replyList(Criteria cri) throws Exception {
+		return dao.replyList(cri);
+	}
+	@Override
+	public List<BoardVO> likeList(Criteria cri) throws Exception {
+		return dao.likeList(cri);
 	}
 
 }

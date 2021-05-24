@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
 		return dao.userUpdate(vo);
 	}
 
+	@Override
+	public UserVO userEmailAuthNumber(String email) throws Exception {
+		return null;
+	}
+
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.ReplyVO;
 
 @Repository
 public class BoardDAO {
@@ -20,12 +21,7 @@ public class BoardDAO {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return mybatis.selectList("BoardDAO.boardSelect",vo);
 	}
-	/*
-	// 게시글 카테고리 별 조회
-	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
-		return mybatis.selectList("BoardDAO.boardCategorySelect",vo);
-	}
-	*/
+
 	// 게시글 카테고리 별 조회 (페이징 처리)
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
 		return mybatis.selectList("BoardDAO.boardCategorySelect",cri);
@@ -64,5 +60,60 @@ public class BoardDAO {
 	// 조회수 update
 	public int boardUpdateCnt(BoardVO vo) {
 		return mybatis.update("BoardDAO.boardUpdateCnt",vo);
+	}
+	
+	// 댓글 조회
+	public List<ReplyVO> replySelect(int bNo) {
+		return mybatis.selectList("BoardDAO.replySelect",bNo);
+	}
+	
+	// 댓글 등록
+	public int replyInsert(ReplyVO vo) {
+		return mybatis.insert("BoardDAO.replyInsert",vo);
+	}
+	
+	// 댓글 수정
+	public int replyUpdate(ReplyVO vo) {
+		return mybatis.update("BoardDAO.replyUpdate",vo);
+	}
+	
+	// 댓글 삭제
+	public int replyDelete(int rNo) {
+		return mybatis.update("BoardDAO.replyDelete",rNo);
+	}
+	
+	// 게시글 좋아요 여부 조회
+	public BoardVO boardLikeSelect(BoardVO vo) {
+		return mybatis.selectOne("BoardDAO.boardLikeSelect",vo);
+	}
+	
+	// 게시글 좋아요 첫 클릭
+	public int boardLikeInsert(BoardVO vo) {
+		return mybatis.insert("BoardDAO.boardLikeInsert",vo);
+	}
+	
+	// 게시글 좋아요 클릭/클릭취소
+	public int boardLikeUpdate(BoardVO vo) {
+		return mybatis.update("BoardDAO.boardLikeUpdate",vo);
+	}
+	
+	// 게시글 좋아요 총 개수
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
+		return mybatis.selectList("BoardDAO.boardLikeAllSelect",vo);
+	}
+	
+	// 내가 작성한 게시글 목록 (페이징 처리)
+	public List<BoardVO> writingList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.writingList",cri);
+	}
+	
+	// 내가 작성한 댓글 목록 (페이징 처리)
+	public List<BoardVO> replyList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.replyList",cri);
+	}
+	
+	// 내가 좋아요 한 게시글 목록 (페이징 처리)
+	public List<BoardVO> likeList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.likeList",cri);
 	}
 }

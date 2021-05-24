@@ -16,11 +16,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 <script type="text/javascript">
-
 	var bNo = "<%= request.getParameter("bNo") %>";
 	 
 	console.log("bNo : "+bNo);
-
 	// boardInfo() 함수를 즉시 실행
 	$(function(){
 		
@@ -64,6 +62,7 @@
 			success : function(data) {
 				console.log(data);
 				console.log(data.sName);
+				$("#category").val(data.cNo).prop("selected",true);
 				$('input:text[name="title"]').val(data.title);
 				$('textarea[name="content"]:visible').val(data.content);
 				$('input:text[name="writer"]').val(data.writer);
@@ -71,7 +70,6 @@
 			}
 		});
 	}
-
 </script> 
 </head>
 <body class="is-preload">
@@ -126,7 +124,7 @@
 								</tr>
 								<tr>
 								   <th>내용</th>
-								   <td colspan="3"><form:textarea path="content" name="content" id="content" /></td>
+								   <td colspan="3"><form:textarea path="content" name="content" id="content" cols="100" rows="10"/></td>
 								</tr>
 							</tbody>
 						</table>

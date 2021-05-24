@@ -12,6 +12,7 @@ public class Criteria {
 	private int bNo;
 	private String cName;
 	private String sName;
+	private String userId;
 	
 	public Criteria() {
 		this.page = 1;
@@ -44,6 +45,7 @@ public class Criteria {
 	}
 	
 	public int getPageStart() {
+		//현재 페이지의 게시글 시작 번호 = (현재 페이지 번호 - 1) * 페이지당 보여줄 게시글 갯수
 		return (this.page - 1) * perPageNum;
 	}
 	
@@ -97,10 +99,20 @@ public class Criteria {
 		this.sName = sName;
 	}
 
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", rowStart=" + rowStart + ", rowEnd=" + rowEnd
-				+ ", cNo=" + cNo + ", bNo=" + bNo + ", cName=" + cName + ", sName=" + sName + "]";
+				+ ", cNo=" + cNo + ", bNo=" + bNo + ", cName=" + cName + ", sName=" + sName + ", userId=" + userId
+				+ "]";
 	}
-
+	
 }

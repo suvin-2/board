@@ -2,6 +2,8 @@ package com.suvin.project.service;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.suvin.project.vo.UserVO;
 
 public interface UserService {
@@ -13,10 +15,13 @@ public interface UserService {
 	public UserVO userIdCheck(String userId);
 	
 	// 회원 가입 시 이메일 중복 체크(ajax)
-	public UserVO userEmailCheck(String email);
+	public UserVO userEmailCheck(String string);
 	
 	// 회원 가입 시 전화번호 중복 체크(ajax)
 	public UserVO userTelCheck(String tel);
+	
+	// 회원 가입 시 이메일 인증(ajax)
+	public UserVO userEmailAuthNumber(@PathVariable("email") String email) throws Exception;
 	
 	// 회원 가입
 	public int userInsert(UserVO vo);

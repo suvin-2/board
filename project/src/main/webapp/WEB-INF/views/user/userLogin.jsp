@@ -76,7 +76,6 @@ $(function(){
 							        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
 							    </form>
 							    <div class="dropdown-divider"></div>
-							    <a class="dropdown-item" href="#">New around here? Sign up</a>
 							    <br>
 							    <a class="dropdown-item" href="#">Forgot password?</a>
 							</div>

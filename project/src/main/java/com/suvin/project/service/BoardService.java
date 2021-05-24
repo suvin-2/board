@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.ReplyVO;
 
 public interface BoardService {
 
@@ -37,5 +38,38 @@ public interface BoardService {
 	
 	// 게시글 조회수 증가
 	public int boardUpdateCnt(BoardVO vo);
+	
+	// 댓글 조회
+	public List<ReplyVO> replySelect(int bNo);
+	
+	// 댓글 등록
+	public int replyInsert(ReplyVO vo);
+	
+	// 댓글 수정
+	public int replyUpdate(ReplyVO vo);
+	
+	// 댓글 삭제
+	public int replyDelete(int rNo);
+	
+	// 게시글 좋아요 여부 조회
+	public BoardVO boardLikeSelect(BoardVO vo);
+	
+	// 게시글 좋아요 첫 클릭
+	public int boardLikeInsert(BoardVO vo);
+	
+	// 게시글 좋아요 클릭/클릭취소
+	public int boardLikeUpdate(BoardVO vo);
+	
+	// 게시글 좋아요 총 개수
+	public List<BoardVO> boardLikeAllSelect(BoardVO vo);
+	
+	// 내가 작성한 게시글 목록 (페이징 처리)
+	public List<BoardVO> writingList(Criteria cri) throws Exception;
+	
+	// 내가 작성한 댓글 목록 (페이징 처리)
+	public List<BoardVO> replyList(Criteria cri) throws Exception;
+	
+	// 내가 좋아요 한 게시글 목록 (페이징 처리)
+	public List<BoardVO> likeList(Criteria cri) throws Exception;
 
 }

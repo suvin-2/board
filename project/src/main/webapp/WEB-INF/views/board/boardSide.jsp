@@ -52,13 +52,29 @@
 				});
 				
 				for(var i=0;i<finalData.length;i++) {
-					$("#sideLi").append("<span class='opener' id='cName'>"+finalData[i]+"</span>");
+					$("#sideLi").append("<span id='cName' style='font-weight : bold;'>"+finalData[i]+"</span>");
 					for(var j=0;j<cNameList.length;j++) {
 						if(finalData[i] == list[j].cName) {
 							$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a>");
 						}
 					}
 				}
+				// class opener가 안먹음...
+				/*
+				for(var i=0;i<finalData.length;i++) {
+					$("#sideUl").append("<li id='sideLi"+i+"'></li>");
+					console.log($("#sideLi"+i).text());
+					
+					$("#sideLi"+i).append("<span id='cName' class='opener'>"+finalData[i]+"</span>");
+					$("#sideLi"+i).append("<ul id='chidUl"+i+"'></ul>");
+					
+					for(var j=0;j<cNameList.length;j++) {
+						if(finalData[i] == list[j].cName) {
+							$("#chidUl"+i).append("<li><a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a></li>");
+						}
+					}
+				}
+				*/
 			}
 		});
 	}
@@ -66,9 +82,6 @@
 </script> 
 </head>
 <body>
-	<!-- Wrapper -->
-	<div id="wrapper">
-
 		<!-- Sidebar -->
 			<div id="sidebar">
 				<div class="inner">
@@ -82,14 +95,16 @@
 							<header class="major">
 								<h2>Menu</h2>
 							</header>
+							<!-- 
+							<ul id="sideUl">
+							</ul>
+							 -->
+							
 							<ul>
 								<li id="sideLi">
-									<ul>
-										<li id="sideLi2">
-										</li>
-									</ul>
 								</li>
 							</ul>
+							 
 						</nav>
 	
 					<!-- Section -->
@@ -112,9 +127,6 @@
 	
 				</div>
 			</div>
-	
-	</div>
-
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>

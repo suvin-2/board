@@ -1,5 +1,7 @@
 package com.suvin.project.vo;
 
+import java.util.Date;
+
 public class UserVO {
 	
 	private String userId;
@@ -11,6 +13,7 @@ public class UserVO {
 	private String tel;
 	private String auth;
 	private int enabled;
+	private Date joinDate;
 	
 	public String getUserId() {
 		return userId;
@@ -66,15 +69,22 @@ public class UserVO {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
+	public Date getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
 	// 아이디 단건 조회 (회원가입 시 중복체크)
 	public String getUserId(String userId) {
 		return userId;
 	}
+	
 	@Override
 	public String toString() {
 		return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", birthday=" + birthday
 				+ ", gender=" + gender + ", email=" + email + ", tel=" + tel + ", auth=" + auth + ", enabled=" + enabled
-				+ "]";
+				+ ", joinDate=" + joinDate + "]";
 	}
-
+	
 }

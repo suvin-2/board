@@ -132,7 +132,7 @@ p {
 
 h1, h2, h3, h4, h5, h6 {
   color: #3d4449;
-  font-family: "Roboto Slab", serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 700;
   line-height: 1.5;
   margin: 0 0 1em 0; }
@@ -215,7 +215,7 @@ pre {
 hr {
   border: 0;
   border-bottom: solid 1px rgba(210, 215, 217, 0.75);
-  margin: 2em 0; }
+  margin : 1em 0 2em 0; }
   hr.major {
     margin: 3em 0; }
 
@@ -990,7 +990,7 @@ section.special, article.special {
   text-align: center; }
 
 header p {
-  font-family: "Roboto Slab", serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1em;
   font-weight: 400;
   letter-spacing: 0.075em;
@@ -1499,7 +1499,7 @@ button,
   color: #f56a6a !important;
   cursor: pointer;
   display: inline-block;
-  font-family: "Roboto Slab", serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 0.8em;
   font-weight: 700;
   height: 3.5em;
@@ -1836,12 +1836,15 @@ button,
   display: -moz-flex;
   display: -webkit-flex;
   display: -ms-flex;
-  display: flex;
   -moz-flex-direction: row-reverse;
-  -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
+  min-height: 100vh; 
+  /*
+  display: flex;
+  -webkit-flex-direction: row-reverse;
   flex-direction: row-reverse;
-  min-height: 100vh; }
+  */
+  }
 
 /* Main */
 #main {
@@ -2087,7 +2090,7 @@ button,
   #header .logo {
     border-bottom: 0;
     color: inherit;
-    font-family: "Roboto Slab", serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 1.125em; }
   #header .icons {
     text-align: right; }
@@ -2199,7 +2202,7 @@ button,
   -ms-user-select: none;
   user-select: none;
   color: #3d4449;
-  font-family: "Roboto Slab", serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   letter-spacing: 0.075em;
   list-style: none;

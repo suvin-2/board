@@ -44,6 +44,9 @@ $(function(){
 	var emailCheck = "N";
 	var telCheck = "N";
 	
+	var email_check = document.querySelector("#email_check");
+	var tel_check = document.querySelector("#tel_check");
+	
 	userInfo();
 
 	$("#submit").click(function(){
@@ -72,6 +75,12 @@ $(function(){
 	    	$("#userPw2").focus(); 
 			return false;
 	    }
+	    
+	    if(emailCheck == "N") {
+			alert("이메일 인증을 해주세요.");
+	    	$("#email").focus(); 
+			return false;
+		}
 	    
 	    if(telCheck == "N") {
 			alert("전화번호 중복확인을 해주세요.");
@@ -118,10 +127,9 @@ $(function(){
 				}
 				email_jsp.value = data.email;
 				tel_jsp.value = data.tel;
-				/* $('input:text[name="title"]').val(data.title);
-				$('textarea[name="content"]:visible').val(data.content);
-				$('input:text[name="writer"]').val(data.writer);
-				$("#writer").attr("disabled",true); */
+				// 중복체크하기위해
+				email_check.value = data.email;
+				tel_check.value = data.tel;
 			}
 		});
 	}
@@ -142,46 +150,96 @@ $(function(){
 	    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));           
 	});
 
-	// 이메일 인증
+	// 이메일 체크
 	$("#userEmailCheck").click(function() {
 		
-	    // 이메일 유휴성 체크
-	    if(email_jsp.value === ""){ 
-	    	alert("이메일을 입력하세요.");
-	    	$("#email").focus(); 
-	    	emailCheck = "N";
-			return false;
-	    } else if(!emailPattern.test(email_jsp.value)) {
-	    	alert("이메일 형식을 확인해주세요.");
-	    	$("#email").focus(); 
-	    	emailCheck = "N";
-			return false;
-	    } else {
-	    	var email = email_jsp.value;
-	    	console.log('입력한 이메일 : '+email);
-	    	
-	    	$.ajax({
-				url : 'userEmailCheck/'+email,
-				type : 'GET',
-				dataType : 'json',
-				error : function(xhr, status, msg) {
-					console.log("ajax 실패");
-					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-				},
-				success : function(data) {
-					if(email === data.email) {
-						alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
-						emailCheck = "N";
-						$("#userId").focus(); 
-						
-					} else if(email != data.email) {
-						alert("사용 가능한 이메일입니다.");
-						emailCheck = "Y";
-						console.log('중복확인 후 emailCheck : ' + emailCheck);
-					}
-				}
-			});
-	    }
+		if(emailCheck == "N") {
+		    // 이메일 유휴성 체크
+		    if(email_jsp.value === ""){ 
+		    	alert("이메일을 입력하세요.");
+		    	$("#email").focus(); 
+		    	emailCheck = "N";
+				return false;
+		    } else if(!emailPattern.test(email_jsp.value)) {
+		    	alert("이메일 형식을 확인해주세요.");
+		    	$("#email").focus(); 
+		    	emailCheck = "N";
+				return false;
+		    } else {
+		    	var email = email_jsp.value;
+		    	console.log('입력한 이메일 : '+email);
+		    	
+		    	if(email == email_check.value) {
+		    		alert('이메일을 변경하지 않았습니다.');
+		    		emailCheck = "Y";
+		    		document.getElementById('email').readOnly = true;
+		    	} else {
+		    		
+		    		// 입력한 이메일
+			    	var full_email = email_jsp.value;
+			    	// dot(.) 앞까지 자른 이메일
+			    	var email = full_email.split('.');
+	
+			    	$.ajax({
+						url : "/userEmailCheck/"+email,
+						type : "get",
+						error : function(xhr, status, msg) {
+							console.log("ajax 실패");
+							console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+						},
+						success : function(data) {
+							
+							if(full_email == data.email) {
+								alert("이미 등록된 이메일입니다. 다른 이메일을 입력하세요.");
+								emailCheck = "N";
+								$("#userId").focus(); 
+								
+							} else if(full_email != data.email) {						
+								$.ajax({
+									url : '/userEmailAuthNumber/'+email,
+									type : 'GET',
+									error : function(xhr, status, msg) {
+										console.log("ajax 실패");
+										console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+									},
+									success : function(data) {
+										
+										console.log('메일로 전송한 인증번호 : '+data);
+										auth_code = data;
+										document.getElementById('email').readOnly = true;
+										alert("인증번호가 메일로 발송되었습니다. 인증번호를 입력해주세요.");
+									}
+								});
+								
+							}
+							
+						}
+					});
+		    		
+		    	}
+		    	
+		    }
+		} else {
+			alert("이메일 인증을 완료하였습니다.");
+		}
+		
+	});
+	
+	// 인증번호 비교 (인증번호를 입력 후 마우스로 다른곳을 클릭하면 실행)
+	$("#auth_num").blur(function(){
+		console.log('auth_code : '+auth_code+', auth_num value : '+$("#auth_num").val());
+		if(auth_code == $("#auth_num").val()) {
+			$("#auth_result").html("인증번호가 일치합니다.");
+			$("#auth_result").css("color","green");
+			emailCheck = "Y";
+			document.getElementById('auth_num').readOnly = true;
+			
+		} else {
+			$("#auth_result").html("인증번호가 일치하지 않습니다.");
+			$("#auth_result").css("color","red");
+			emailCheck = "N";
+		}
+	    
 	});
 	
 	// 전화번호 중복 체크
@@ -202,25 +260,32 @@ $(function(){
 	    	var tel = tel_jsp.value;
 			console.log('입력한 Tel : ' + tel);
 			
-			$.ajax({
-				url : 'userTelCheck/'+tel,
-				type : 'GET',
-				error : function(xhr, status, msg) {
-					console.log("ajax 실패");
-					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-				},
-				success : function(data) {
-					if(tel == data.tel) {
-						telCheck = "N";
-						alert("이미 등록된 전화번호입니다.");
-						$("#tel").focus(); 
-						
-					} else if(tel != data.tel) {
-						telCheck = "Y";
-						alert("사용 가능한 전화번호입니다.");
+			if(tel == tel_check.value) {
+	    		alert('전화번호를 변경하지 않았습니다.');
+	    		telCheck = "Y";
+	    		document.getElementById('tel').readOnly = true;
+	    	} else {
+				$.ajax({
+					url : 'userTelCheck/'+tel,
+					type : 'GET',
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						if(tel == data.tel) {
+							telCheck = "N";
+							alert("이미 등록된 전화번호입니다.");
+							$("#tel").focus(); 
+							
+						} else if(tel != data.tel) {
+							telCheck = "Y";
+							alert("사용 가능한 전화번호입니다.");
+							document.getElementById('tel').readOnly = true;
+						}
 					}
-				}
-			});
+				});
+	    	}
 		}
 	});
 });
@@ -302,6 +367,14 @@ select {
     color: red;
     display: none;
 }
+
+#auth_num {
+    margin : 0 0 5px;
+}
+
+#auth_result {
+	margin : 0 0 15px;
+}
 </style>
 </head>
 <body class="is-preload" onload="document.userInfoForm.userId.focus();">
@@ -322,6 +395,8 @@ select {
 								<form name="userInfoForm" action="/userInfo.do" method="post">
 									<input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
 									<input type="hidden" id="birthday" name="birthday">
+									<input type="hidden" id="email_check">
+									<input type="hidden" id="tel_check">
 					                <!-- ID -->
 					                <div>
 				                        <h4>아이디</h4>
@@ -372,9 +447,11 @@ select {
 					                <!-- EMAIL -->
 					                <div>
 					                    <h4>이메일</h4>
+					                    <input type="text" id="email" name="email" class="int" maxlength="100" placeholder="이메일 입력">
 					                    <div id="id_wrap">
 					                        <div id="id_input">
-					                        	<input type="text" id="email" name="email" class="int" maxlength="100" placeholder="이메일 입력">
+					                        	<input type="text" id="auth_num" name="auth_num" class="int" placeholder="인증번호 입력">
+					                        	<p id="auth_result"></p>
 					                        </div>
 					                        <div id="id_btn">
 					                        	<input type="button" id="userEmailCheck" class="button" value="이메일 인증"/>
