@@ -18,7 +18,6 @@
 <script>
 $(function(){
 	new_user_list();
-	board_like_list();
 });
 
 //신규 가입자(최근 10명)
@@ -69,90 +68,6 @@ function new_user_list() {
 		}
 	});
 }
-
-function board_like_list() {
-	$.ajax({
-		url : '/boardLikeList.do',
-		type : 'GET',
-		dataType : 'json',
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		error : function(xhr, status, msg) {
-			console.log("ajax 실패");
-			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-		},
-		success : function(data) {
-			
-			var uniqueList = [];
-			var j = 0;
-			
-			// 중복제거
-			for(var i=0;i<data.length-1;i++) {
-				if(data[i].bNo != data[i+1].bNo) {
-					uniqueList[0] = data[0];
-					j++;
-					uniqueList[j] = data[i+1];
-				}
-			}
-			
-			$.ajax({
-				url : '/boardLikeCntList.do',
-				type : 'GET',
-				dataType : 'json',
-				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-				error : function(xhr, status, msg) {
-					console.log("ajax 실패");
-					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-				},
-				success : function(data) {
-					
-					// 좋아요 많은 순서대로 정렬한 bNo List
-					var sortList = [];
-					for(var i=0;i<data.length;i++){
-						for(var j=0;j<uniqueList.length;j++) {
-							if(data[i].bNo == uniqueList[j].bNo) {
-								sortList[i] = uniqueList[j];
-							}
-						}
-					}
-					
-					
-					if(data.length > 0){
-						if(sortList.length < 5){
-							for(var i=0;i<sortList.length;i++) {
-								var url1 = "location.href=\"/boardSelectDetail.do?bNo="+sortList[i].bNo+"&sName="+sortList[i].sName+"&cNo="+sortList[i].cNo+"&writer="+sortList[i].writer+"\"";
-
-								j=i+1;
-								$("#like_top5_tbody").append("<tr id='like_top5_tr_"+i+"' onClick="+url1+"></tr>");
-								$("#like_top5_tr_"+i).append("<td>"+j+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].sName+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].title+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].writer+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+moment(sortList[i].bDate).format('YYYY-MM-DD')+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].cnt+"</td>");
-							}
-						} else if(sortList.length >= 5){
-							for(var i=0;i<5;i++) {
-								var url2 = "location.href=\"/boardSelectDetail.do?bNo="+sortList[i].bNo+"&sName="+sortList[i].sName+"&cNo="+sortList[i].cNo+"&writer="+sortList[i].writer+"\"";
-
-								j=i+1;
-								$("#like_top5_tbody").append("<tr id='like_top5_tr_"+i+"' onClick="+url2+"></tr>");
-								$("#like_top5_tr_"+i).append("<td>"+j+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].sName+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].title+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].writer+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+moment(sortList[i].bDate).format('YYYY-MM-DD')+"</td>");
-								$("#like_top5_tr_"+i).append("<td>"+sortList[i].cnt+"</td>");
-							}
-						}
-					} else {
-						$("#like_top5").empty();
-						$("#like_top5").append("<div class='box'><p style='text-align: center;'>좋아요를 받은 게시글이 없습니다.</p></div>");
-					}
-				}
-			});
-		}
-	});
-}
 </script>
 </head>
 <body class="is-preload">
@@ -165,26 +80,6 @@ function board_like_list() {
 				<div class="inner">	
 					<!-- Header -->
 					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
-					<!-- 방문자 통계 -->
-					<section>
-						<header class="major">
-							<h2>방문자 통계</h2>
-						</header>
-						<div class="box">
-							<p>방문자 통계 차트</p>
-						</div>
-					</section>
-					
-					<!-- 새글/새댓글 통계 -->
-					<section>
-						<header class="major">
-							<h2>새글/새댓글 통계</h2>
-						</header>
-						<div class="box">
-							<p>새글/새댓글 통계 차트</p>
-						</div>
-					</section>
-	
 					<!-- Section -->
 					<section>
 						<header class="major">
@@ -204,29 +99,6 @@ function board_like_list() {
 									  </tr>
 									</thead>
 									<tbody id="new_user_tbody">
-									</tbody>
-								</table>
-							</div>
-					</section>
-					<hr>
-					<section>
-						<header class="major">
-							<h2>좋아요 TOP5</h2>
-						</header>
-							<div id="like_top5">
-								<!-- 좋아요 TOP5 -->
-								<table border="1">
-									<thead>
-									  <tr>
-									  	<th>NO.</th>
-									  	<th>카테고리</th>
-									    <th>제목</th>
-									    <th>작성자</th>
-									    <th>작성일</th>
-									    <th>조회수</th>
-									  </tr>
-									</thead>
-									<tbody id="like_top5_tbody">
 									</tbody>
 								</table>
 							</div>

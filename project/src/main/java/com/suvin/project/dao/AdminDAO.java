@@ -37,4 +37,9 @@ public class AdminDAO {
 	public List<BoardVO> boardLikeList(BoardVO vo) throws Exception {
 		return mybatis.selectList("AdminDAO.boardLikeList",vo);
 	}
+	
+	// 좋아요 많은 순서대로 정렬한 bNo List
+	public List<BoardVO> boardLikeCntList(BoardVO vo) throws Exception {
+		return mybatis.selectList("AdminDAO.boardLikeCntList",vo);
+	}
 }

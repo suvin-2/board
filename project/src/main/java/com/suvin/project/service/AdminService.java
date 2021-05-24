@@ -21,4 +21,7 @@ public interface AdminService {
 
 	// 좋아요 1개 이상인 글 전체 조회
 	public List<BoardVO> boardLikeList(BoardVO vo) throws Exception;
+	
+	// 좋아요 많은 순서대로 정렬한 bNo List
+	public List<BoardVO> boardLikeCntList(BoardVO vo) throws Exception;
 }
