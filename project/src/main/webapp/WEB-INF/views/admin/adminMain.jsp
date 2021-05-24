@@ -81,10 +81,75 @@ function board_like_list() {
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log(data);
-			for(var i=0;i<data.length;i++){
-				console.log(data[i]);
+			
+			var uniqueList = [];
+			var j = 0;
+			
+			// 중복제거
+			for(var i=0;i<data.length-1;i++) {
+				if(data[i].bNo != data[i+1].bNo) {
+					uniqueList[0] = data[0];
+					j++;
+					uniqueList[j] = data[i+1];
+				}
 			}
+			
+			$.ajax({
+				url : '/boardLikeCntList.do',
+				type : 'GET',
+				dataType : 'json',
+				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+				error : function(xhr, status, msg) {
+					console.log("ajax 실패");
+					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+				},
+				success : function(data) {
+					
+					// 좋아요 많은 순서대로 정렬한 bNo List
+					var sortList = [];
+					for(var i=0;i<data.length;i++){
+						for(var j=0;j<uniqueList.length;j++) {
+							if(data[i].bNo == uniqueList[j].bNo) {
+								sortList[i] = uniqueList[j];
+							}
+						}
+					}
+					
+					
+					if(data.length > 0){
+						if(sortList.length < 5){
+							for(var i=0;i<sortList.length;i++) {
+								var url1 = "location.href=\"/boardSelectDetail.do?bNo="+sortList[i].bNo+"&sName="+sortList[i].sName+"&cNo="+sortList[i].cNo+"&writer="+sortList[i].writer+"\"";
+
+								j=i+1;
+								$("#like_top5_tbody").append("<tr id='like_top5_tr_"+i+"' onClick="+url1+"></tr>");
+								$("#like_top5_tr_"+i).append("<td>"+j+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].sName+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].title+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].writer+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+moment(sortList[i].bDate).format('YYYY-MM-DD')+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].cnt+"</td>");
+							}
+						} else if(sortList.length >= 5){
+							for(var i=0;i<5;i++) {
+								var url2 = "location.href=\"/boardSelectDetail.do?bNo="+sortList[i].bNo+"&sName="+sortList[i].sName+"&cNo="+sortList[i].cNo+"&writer="+sortList[i].writer+"\"";
+
+								j=i+1;
+								$("#like_top5_tbody").append("<tr id='like_top5_tr_"+i+"' onClick="+url2+"></tr>");
+								$("#like_top5_tr_"+i).append("<td>"+j+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].sName+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].title+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].writer+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+moment(sortList[i].bDate).format('YYYY-MM-DD')+"</td>");
+								$("#like_top5_tr_"+i).append("<td>"+sortList[i].cnt+"</td>");
+							}
+						}
+					} else {
+						$("#like_top5").empty();
+						$("#like_top5").append("<div class='box'><p style='text-align: center;'>좋아요를 받은 게시글이 없습니다.</p></div>");
+					}
+				}
+			});
 		}
 	});
 }
@@ -170,18 +235,6 @@ function board_like_list() {
 			</div>
 	</div>
 <!-- Scripts -->
-<script>
-
-// 인기 카테고리 more 버튼 클릭 시 페이지 이동
-var cName1 = $("#cName1").val();
-var sName1 = $("#sName1").val();
-
-
-function category1(){
-	//location.href = "${path}/boardList.do?cName="+cName1+"&sName="+sName1+"&cNo="+${cNo1};
-}
-	
-</script>
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>
 <script src="js/breakpoints.min.js"></script>

@@ -65,14 +65,24 @@
 	<!-- 좋아요 1개 이상인 글 전체 조회 -->
 	<select id="boardLikeList" resultType="boardVO">
 		SELECT L.BNO, 
+			   C.CNAME,
 		       C.SNAME, 
 		       B.TITLE, 
 		       B.WRITER, 
 		       B.BDATE, 
 		       B.CNT
 		FROM BOARD B, CATEGORY C, B_LIKE L
-		WHERE B.CNO = C.CNO AND B.BNO = L.BNO
+		WHERE B.CNO = C.CNO AND B.BNO = L.BNO AND L.ENABLED = 1
 		ORDER BY L.BNO
+	</select>
+	
+	<!-- 좋아요 많은 순 -->
+	<select id="boardLikeCntList" resultType="boardVO">
+		SELECT BNO
+		FROM B_LIKE
+		WHERE ENABLED = 1
+		GROUP BY BNO
+		ORDER BY COUNT(BNO) DESC
 	</select>
 	
 </mapper>

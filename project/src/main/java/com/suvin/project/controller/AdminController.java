@@ -41,4 +41,11 @@ public class AdminController {
 	public List<BoardVO> likeList(BoardVO vo) throws Exception {
 		return service.boardLikeList(vo);
 	}
+	
+	// 좋아요 많은 순서대로 정렬한 bNo List (ajax)
+	@ResponseBody
+	@RequestMapping(value="/boardLikeCntList.do")
+	public List<BoardVO> boardLikeCntList(BoardVO vo) throws Exception {
+		return service.boardLikeCntList(vo);
+	}
 }
