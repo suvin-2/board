@@ -211,7 +211,7 @@ function category_select(){
 								<select id="categorySelect">
 								</select>
 							</div>
-						<div id="all_user">
+						<div id="all_board">
 							<table border="1">
 								<thead>
 									<tr>

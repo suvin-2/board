@@ -86,6 +86,21 @@ public class AdminServiceImpl implements AdminService {
 		return dao.adminBoardDelete(bNo);
 	}
 
+	@Override
+	public int allReplyCount() throws Exception {
+		return dao.allReplyCount();
+	}
+
+	@Override
+	public List<ReplyVO> allReplyList(Criteria cri) throws Exception {
+		return dao.allReplyList(cri);
+	}
+
+	@Override
+	public int adminReplyDelete(int rNo) {
+		return dao.adminReplyDelete(rNo);
+	}
+
 	
 
 }

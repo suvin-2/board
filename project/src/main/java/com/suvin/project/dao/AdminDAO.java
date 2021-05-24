@@ -85,4 +85,20 @@ public class AdminDAO {
 	public int adminBoardDelete(int bNo) {
 		return mybatis.delete("AdminDAO.adminBoardDelete",bNo);
 	}
+	
+	// admin reply.jsp ------------------------------------------------------
+	// 전체 게시글 count
+	public int allReplyCount() throws Exception {
+		return mybatis.selectOne("AdminDAO.allReplyCount");
+	}
+	
+	// 전체 게시글 조회 & 페이징
+	public List<ReplyVO> allReplyList(Criteria cri) throws Exception {
+		return mybatis.selectList("AdminDAO.allReplyList",cri);
+	}
+	
+	// 게시글 삭제
+	public int adminReplyDelete(int rNo) {
+		return mybatis.delete("AdminDAO.adminReplyDelete",rNo);
+	}
 }

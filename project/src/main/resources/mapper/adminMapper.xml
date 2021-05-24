@@ -180,4 +180,49 @@
 		WHERE BNO = #{bNo}
 	</delete>
 	
+	<!-- 전체 댓글 목록 -->
+	<select id="allReplyList" resultType="com.suvin.project.vo.ReplyVO" parameterType="criteria">
+		SELECT BNO, 
+		       RNO, 
+		       TITLE,
+		       RCONTENT,
+		       WRITER,
+		       CNO,
+		       SNAME,
+		       RWRITER, 
+		       RDATE, 
+		       UDATE,
+		       CNT
+		FROM (SELECT R.BNO, 
+		             R.RNO,
+		             B.TITLE,
+		             R.RCONTENT,
+		             B.WRITER,
+		             B.CNO,
+		             C.SNAME,
+		             R.RWRITER, 
+		             R.RDATE, 
+		             R.UDATE,
+		             B.CNT,
+		             ROW_NUMBER() OVER(ORDER BY B.BNO DESC) AS RNUM
+		    FROM BOARD B, B_REPLY R, CATEGORY C
+		    WHERE B.BNO = R.BNO AND B.CNO = C.CNO) BD
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY BNO DESC
+	</select>
+	
+	<!-- 전체 댓글 count-->
+	<select id="allReplyCount" resultType="int">
+		<![CDATA[
+			SELECT COUNT(RNO)
+			FROM B_REPLY
+			WHERE RNO > 0
+		]]>
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="adminReplyDelete">
+		DELETE FROM B_REPLY
+		WHERE RNO = #{RNO}
+	</delete>
 </mapper>

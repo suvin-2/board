@@ -56,16 +56,11 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/board/boardList");
 		
-		System.out.println("board controller user용 cri : "+cri);
-		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
 		mv.addObject("pageMaker", pageMaker);
-		
-		System.out.println("board controller user용 pageMaker :"+pageMaker.getDisplayPageNum()+", "+pageMaker.getStartPage()+", "+pageMaker.getEndPage());
-		System.out.println("board controller user용 getCri :"+pageMaker.getCri()+", getTotalCount : "+pageMaker.getTotalCount());
 		
 		return mv;
 	}
@@ -77,16 +72,11 @@ public class BoardController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println("board controller admin용 cri : "+cri);
-		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
 		map.put("list", service.boardCategorySelect(cri));
 		map.put("pageMaker", pageMaker);
-		
-		System.out.println("board controller admin용 pageMaker :"+pageMaker.getDisplayPageNum()+", "+pageMaker.getStartPage()+", "+pageMaker.getEndPage());
-		System.out.println("board controller admin용 getCri :"+pageMaker.getCri()+", getTotalCount : "+pageMaker.getTotalCount());
 		
 		return map;
 	}
@@ -105,8 +95,6 @@ public class BoardController {
 		
 		// 댓글 select
 		List<ReplyVO> replyList = service.replySelect(vo.getbNo());
-		
-		System.out.println("board controller 게시글 단건 조회 reply list : "+replyList);
 		
 		mv.addObject("replyList",replyList);
 		

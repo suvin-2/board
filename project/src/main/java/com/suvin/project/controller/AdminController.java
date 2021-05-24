@@ -126,7 +126,6 @@ public class AdminController {
         
         
         if(enabled == 1) {
-        	System.out.println("계정 비활성화 메일~~");
     		try {
                 
                 MimeMessage message = mailSender.createMimeMessage();
@@ -141,7 +140,6 @@ public class AdminController {
                 e.printStackTrace();
             }
         } else {
-        	System.out.println("계정 활성화 메일~~");
         	try {
                 
                 MimeMessage message = mailSender.createMimeMessage();
@@ -176,8 +174,6 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/admin/adminBoard");
 		
-		System.out.println("admin controller admin용 cri : "+cri);
-		
 		// 페이징
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -185,9 +181,6 @@ public class AdminController {
 		mv.addObject("list", service.boardList(cri));
 		mv.addObject("pageMaker", pageMaker);
 
-		System.out.println("admin controller admin용 pageMaker :"+pageMaker.getDisplayPageNum()+", "+pageMaker.getStartPage()+", "+pageMaker.getEndPage());
-		System.out.println("admin controller admin용 getCri :"+pageMaker.getCri()+", getTotalCount : "+pageMaker.getTotalCount());
-		
 		return mv;
 	}
 	
@@ -196,5 +189,30 @@ public class AdminController {
 	@RequestMapping(value = "/adminBoardDelete.do/{bNo}", method = RequestMethod.GET)
 	public int adminBoardDelete(@ModelAttribute("bNo") int bNo) throws Exception {
 		return service.adminBoardDelete(bNo);
+	}
+	
+	// admin board.jsp ------------------------------------------------------
+	// 전체 댓글 조회 & 페이징
+	@RequestMapping(value="/adminReplyForm.do")
+	public ModelAndView allReplyList(Criteria cri) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/admin/adminReply");
+		
+		// 페이징
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.allReplyCount());
+		mv.addObject("list", service.allReplyList(cri));
+		mv.addObject("pageMaker", pageMaker);
+	
+		return mv;
+	}
+	
+	// 댓글 삭제(ajax)
+	@ResponseBody
+	@RequestMapping(value = "/adminReplyDelete.do/{rNo}", method = RequestMethod.GET)
+	public int adminReplyDelete(@ModelAttribute("rNo") int rNo) throws Exception {
+		return service.adminReplyDelete(rNo);
 	}
 }

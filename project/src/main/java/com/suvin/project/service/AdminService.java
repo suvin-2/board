@@ -48,4 +48,13 @@ public interface AdminService {
 	
 	// 게시글 삭제
 	public int adminBoardDelete(int bNo);
+	
+	// 전체 게시글 count
+	public int allReplyCount() throws Exception;
+	
+	// 전체 게시글 조회 & 페이징
+	public List<ReplyVO> allReplyList(Criteria cri) throws Exception;
+	
+	// 게시글 삭제
+	public int adminReplyDelete(int rNo);
 }
