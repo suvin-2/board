@@ -22,4 +22,10 @@ public class CategoryDAO {
 	public List<CategoryVO> cNameSelect(CategoryVO vo) throws Exception {
 		return mybatis.selectList("CategoryDAO.cNameSelect",vo);
 	}
+	
+	// 카테고리 대분류 중복체크
+	public List<CategoryVO> cNameDuplicationSelect(CategoryVO vo) throws Exception {
+		return mybatis.selectList("CategoryDAO.cNameDuplicationSelect",vo);
+	}
+	
 }
