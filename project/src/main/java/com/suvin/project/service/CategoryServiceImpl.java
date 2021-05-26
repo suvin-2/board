@@ -36,4 +36,14 @@ public class CategoryServiceImpl implements CategoryService {
 	public int newCategoryInsert(Map<String, Object> map) throws Exception {
 		return dao.newCategoryInsert(map);
 	}
+
+	@Override
+	public int cNameDelete(CategoryVO vo) throws Exception {
+		return dao.cNameDelete(vo);
+	}
+
+	@Override
+	public int sNameDelete(CategoryVO vo) throws Exception {
+		return dao.sNameDelete(vo);
+	}
 }

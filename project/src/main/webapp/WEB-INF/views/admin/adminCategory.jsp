@@ -64,7 +64,6 @@ function category_select(){
 		}
 	});
 }
-var UD_cnt = 1;
 // 카테고리 수정/삭제 폼 (k는 cno이긴한데 sName은 못알아내고 cName은 알아낼 수 있음)
 function category_update_form(cName, k){
 	
@@ -86,12 +85,12 @@ function category_update_form(cName, k){
 			
 			var table_html = "";
 			var div_html = "";
-			//var UD_cnt = 1;
+			var UD_cnt = 1;
 			
 			table_html += "<tr>";
 			table_html += "<th>대분류</th>";
 			table_html += "<td><input type='text' id='UD_cName' value='"+cName+"'></td>";
-			table_html += "<td><input type='button' value='삭제' class='button primary' onclick=\"category_delete('"+cName+"',"+k+")\"></td>";
+			table_html += "<td><input type='button' value='삭제' class='button primary' onclick=\"category_delete('"+cName+"','대분류',"+k+")\"></td>";
 			table_html += "</tr>";
 			for(var i=0;i<data.length;i++){
 				if(cName == data[i].cName){
@@ -100,14 +99,14 @@ function category_update_form(cName, k){
 					table_html += "<tr class='update_sName_value'>";
 					table_html += "<th>소분류</th>";
 					table_html += "<td><input type='text' id='UD_sName"+UD_cnt+"' value='"+data[i].sName+"'></td>";
-					table_html += "<td><input type='button' value='삭제' class='button primary' onclick=\"category_delete('"+data[i].sName+"',"+UD_cnt+")\"></td>";
+					table_html += "<td><input type='button' value='삭제' class='button primary' onclick=\"category_delete('"+cName+"','"+data[i].sName+"',"+UD_cnt+")\"></td>";
 					table_html += "</tr>";
 					UD_cnt++;
 				}
 			}
-			console.log('update form UD_cnt : '+UD_cnt);
-			div_html += "<input type='button' class='button primary' value='소분류 추가' onclick='update_sName_add("+UD_cnt+")'>&nbsp;";
-			div_html += "<input type='button' class='button' value='수정' onclick='category_update("+UD_cnt+")'>";
+			
+			div_html += "<input type='button' class='button primary' value='소분류 추가' onclick='update_sName_add()'>&nbsp;";
+			div_html += "<input type='button' class='button' value='수정' onclick='category_update()'>";
 			
 			$("#category_update_tbody").empty();
 			$("#category_update_tbody").append(table_html);
@@ -119,18 +118,19 @@ function category_update_form(cName, k){
 }
 
 //카테고리 sName 추가
-function update_sName_add(UD_cnt){
+function update_sName_add(){
 	
 	var tr_html = "";
+	var cnt = $(".update_sName_value").length+1;
 	
 	
 	tr_html += "<tr class='update_sName_value'>"
 	tr_html += "<th>소분류</th>";
-	tr_html += "<td><input type='text' id='UD_sName"+UD_cnt+"'></td>";
+	tr_html += "<td><input type='text' id='UD_sName"+cnt+"'></td>";
 	tr_html += "<td><img src='/images/minus.png' onclick='update_sName_minus()'></td>";
 	tr_html += "</tr>";
 	$("#category_update_tbody").append(tr_html);
-	UD_cnt++;
+	
 }
 
 //카테고리 sName 삭제
@@ -163,11 +163,72 @@ function category_update(UD_cnt){
 }
 
 //카테고리 삭제
-function category_delete(name, k){
-	console.log('name : '+name+', k : '+k);
-	console.log('카테고리 대분류 삭제 시 소분류도 전체 삭제');
-	console.log('카테고리 소분류 최소 1개이상 있어야함');
+function category_delete(cName, sName, cnt){
+	// cName 클릭 시 confirm로 대분류 삭제 시 대분류에 포함된 소분류 전체 삭제 된다고 알리기
+	// sName 삭제 시 sName 개수 1개 이하로 남으면 소분류는 더이상 삭제 불가라고 alert로 알리기
+
+	if(sName == '대분류') {
+		if(confirm('대분류 삭제 시, 대분류에 포함된 모든 소분류도 함께 삭제됩니다. 선택한 '+cName+'을(를) 삭제하시겠습니까?') == true){
+			
+			$.ajax({
+				url : '/cNameDelete.do',
+				type : 'GET',
+				data : {"cName":cName},
+				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+				error : function(xhr, status, msg) {
+					console.log("ajax 실패");
+					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+				},
+				success : function(data) {
+					alert(cName+'이(가) 삭제되었습니다.');
+					location.href = location.href;
+				}
+			});
+			
+		} else {
+			alert(cName+'이(가) 삭제되지 않았습니다.');
+		}
+	} else {
+		if(confirm('선택한 '+sName+'을(를) 삭제하시겠습니까?') == true){
+			
+			$.ajax({
+				url : '/cNameDuplicationSelect.do',
+				type : 'GET',
+				data : {"cName":cName},
+				contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+				error : function(xhr, status, msg) {
+					console.log("ajax 실패");
+					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+				},
+				success : function(data) {
+					if(data.length < 2) {
+						alert('소분류가 1개 이상은 존재해야합니다.');
+					} else {
+						$.ajax({
+							url : '/sNameDelete.do',
+							type : 'GET',
+							data : {"cName":cName,"sName":sName},
+							contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+							error : function(xhr, status, msg) {
+								console.log("ajax 실패");
+								console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+							},
+							success : function(data) {
+								alert(sName+'이(가) 삭제되었습니다.');
+								location.href = location.href;
+							}
+						});
+					}
+				}
+			});
+					
+		} else {
+			alert(sName+'이(가) 삭제되지 않았습니다.');
+		}
+	}
+	console.log('cName value : '+cName+', sName : '+sName);
 }
+
 // 카테고리 추가 등록까지 완료 ------------------------------------------------------------------
 // 카테고리 추가 폼
 function category_add_form(){
@@ -350,6 +411,10 @@ function category_add(){
 										</tbody>
 									</table>
 									<div id="category_update_btn">
+									<!-- 
+										<input type="button" class="button primary" value="소분류 추가" onclick="update_sName_add()">
+										<input type="button" class="button" value="수정" onclick="category_update()">
+										 -->
 									</div>
 								</div>
 								<div id="category_add_div">

@@ -35,4 +35,13 @@ public class CategoryDAO {
 		return mybatis.insert("CategoryDAO.newCategoryInsert",map);
 	}
 	
+	// cName 삭제
+	public int cNameDelete(CategoryVO vo) throws Exception {
+		return mybatis.delete("CategoryDAO.cNameDelete",vo);
+	}
+	
+	// sName 삭제
+	public int sNameDelete(CategoryVO vo) throws Exception {
+		return mybatis.delete("CategoryDAO.sNameDelete",vo);
+	}
 }

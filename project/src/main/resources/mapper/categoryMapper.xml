@@ -25,16 +25,6 @@
 		FROM CATEGORY
 		WHERE CNAME = #{cName}
 	</select>
-	<!-- 
-	<insert id="newCategoryInsert" parameterType="java.util.List">
-	    INSERT INTO
-	        CATEGORY (CNO, CNAME, SNAME)
-	    VALUES
-	    <foreach item="item" collection="list" index="index" >
-	        (SEQ_CATEGORY_NO.NEXTVAL, #{item.cName}, #{item.sName})
-	    </foreach>
-	</insert>
-	 -->
 	
 	<insert id="newCategoryInsert">
 		INSERT INTO
@@ -47,5 +37,14 @@
 	        FROM DUAL
 	    </foreach>) A
 	</insert>
-
+	
+	<delete id="cNameDelete">
+		DELETE CATEGORY
+		WHERE CNAME = #{cName}
+	</delete>
+	
+	<delete id="sNameDelete">
+		DELETE CATEGORY
+		WHERE CNAME = #{cName} AND SNAME = #{sName}
+	</delete>
 </mapper>

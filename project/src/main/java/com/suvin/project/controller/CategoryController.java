@@ -81,4 +81,18 @@ public class CategoryController {
 		
 		return service.newCategoryInsert(map);
 	}
+	
+	// cName 삭제
+	@ResponseBody
+	@RequestMapping(value = "/cNameDelete.do")
+	public int cNameDelete(CategoryVO vo) throws Exception {
+		return service.cNameDelete(vo);
+	}
+	
+	// sName 삭제
+	@ResponseBody
+	@RequestMapping(value = "/sNameDelete.do")
+	public int sNameDelete(CategoryVO vo) throws Exception {
+		return service.sNameDelete(vo);
+	}
 }
