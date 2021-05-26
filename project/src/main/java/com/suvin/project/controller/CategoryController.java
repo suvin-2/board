@@ -37,4 +37,12 @@ public class CategoryController {
 		return list;
 	}
 	
+	// 카테고리(대분류) 전체 조회
+	@ResponseBody
+	@RequestMapping(value = "/cNameDuplicationSelect.do")
+	public List<CategoryVO> cNameDuplicationSelect(CategoryVO vo) throws Exception {
+		System.out.println("넘어온 cName : "+vo);
+		return service.cNameDuplicationSelect(vo);
+	}
+	
 }

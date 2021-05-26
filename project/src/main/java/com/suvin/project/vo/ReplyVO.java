@@ -14,6 +14,7 @@ public class ReplyVO {
 	private Date uDate;				// 수정 날짜
 	private String sName;
 	private int cnt;
+	private int cNo;
 	
 	public int getbNo() {
 		return bNo;
@@ -75,10 +76,16 @@ public class ReplyVO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+	public int getcNo() {
+		return cNo;
+	}
+	public void setcNo(int cNo) {
+		this.cNo = cNo;
+	}
 	@Override
 	public String toString() {
 		return "ReplyVO [bNo=" + bNo + ", rNo=" + rNo + ", title=" + title + ", rContent=" + rContent + ", writer="
 				+ writer + ", rWriter=" + rWriter + ", rDate=" + rDate + ", uDate=" + uDate + ", sName=" + sName
-				+ ", cnt=" + cnt + "]";
+				+ ", cnt=" + cnt + ", cNo=" + cNo + "]";
 	}
 }

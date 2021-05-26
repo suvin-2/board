@@ -24,4 +24,9 @@ public class CategoryServiceImpl implements CategoryService {
 		// TODO Auto-generated method stub
 		return dao.cNameSelect(vo);
 	}
+
+	@Override
+	public List<CategoryVO> cNameDuplicationSelect(CategoryVO vo) throws Exception {
+		return dao.cNameDuplicationSelect(vo);
+	}
 }

@@ -3,6 +3,7 @@ package com.suvin.project.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -60,8 +61,26 @@ public class BoardController {
 		pageMaker.setTotalCount(service.listCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
 		mv.addObject("pageMaker", pageMaker);
+		
 		return mv;
 	}
+	
+	// 게시판 카테고리 별 글 목록 (관리자용)
+	@ResponseBody
+	@RequestMapping(value = "/adminBoardSelect.do")
+	public Map<String, Object> adminBoardSelect(Criteria cri, Model model) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.listCount(cri));
+		map.put("list", service.boardCategorySelect(cri));
+		map.put("pageMaker", pageMaker);
+		
+		return map;
+	}
+	
 	
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
@@ -76,8 +95,6 @@ public class BoardController {
 		
 		// 댓글 select
 		List<ReplyVO> replyList = service.replySelect(vo.getbNo());
-		
-		System.out.println("board controller 게시글 단건 조회 reply list : "+replyList);
 		
 		mv.addObject("replyList",replyList);
 		

@@ -16,59 +16,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="css/main.css" />
 <script>
-$(function(){
-	new_user_list();
-});
 
-//신규 가입자(최근 10명)
-function new_user_list() {
-	
-	$.ajax({
-		url : '/newUserList.do',
-		type : 'GET',
-		dataType : 'json',
-		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		error : function(xhr, status, msg) {
-			console.log("ajax 실패");
-			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
-		},
-		success : function(data) {
-			var j=0;
-			var today = moment().format('YYYY-MM-DD');
-			var joinDate_format = moment(data[0].joinDate).format('YYYY-MM-DD');
-			if(today == joinDate_format) {
-				if(data.length < 10){
-					for(var i=0;i<data.length;i++) {
-						j=i+1;
-						$("#new_user_tbody").append("<tr id='new_user_tr_"+i+"'></tr>");
-						$("#new_user_tr_"+i).append("<td>"+j+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].userId+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].userName+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].email+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].tel+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+moment(data[i].joinDate).format('YYYY-MM-DD')+"</td>");
+// 계정 활성화/비활성화 시 메일 전송
+function userActivity(userId, email, enabled) {
+	 
+	 if(enabled == 1) {
+
+		 if(confirm(userId+'님의 계정을 비활성화 하시겠습니까?') == true){
+				
+				$.ajax({
+					url : '/userStopActivity.do',
+					type : 'GET',
+					data : {'userId':userId},
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						var enabled = data;
+						$.ajax({
+							url : 'userActivityEmail.do',
+							type : 'GET',
+							data : {'email':email,'enabled':enabled,'userId':userId},
+							error : function(xhr, status, msg) {
+								console.log("ajax 실패");
+								console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+							},
+							success : function(data) {
+								console.log(data);
+								alert(userId+'님에게 활동중지 관련 메일이 전송되었습니다.');
+								// 페이지 새로고침
+								location.href = location.href;
+							}
+						});
 					}
-				} else if(data.length >= 10){
-					for(var i=0;i<10;i++) {
-						j=i+1;
-						$("#new_user_tbody").append("<tr id='new_user_tr_"+i+"'></tr>");
-						$("#new_user_tr_"+i).append("<td>"+j+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].userId+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].userName+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].email+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+data[i].tel+"</td>");
-						$("#new_user_tr_"+i).append("<td>"+moment(data[i].joinDate).format('YYYY-MM-DD')+"</td>");
-					}
-				}
+				});
+				
 			} else {
-				$("#new_user").empty();
-				$("#new_user").append("<div class='box'><p style='text-align: center;'>신규 가입자가 없습니다.</p></div>");
+				alert('계정이 비활성화 되지 않았습니다.');
 			}
-			
-		}
-	});
+	 } else {
+
+		 if(confirm(userId+'님의 계정을 활성화 하시겠습니까?') == true){
+				
+				$.ajax({
+					url : '/userResumeActivity.do',
+					type : 'GET',
+					data : {'userId':userId},
+					contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						var enabled = data;
+						$.ajax({
+							url : 'userActivityEmail.do',
+							type : 'GET',
+							data : {'email':email,'enabled':enabled,'userId':userId},
+							error : function(xhr, status, msg) {
+								console.log("ajax 실패");
+								console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+							},
+							success : function(data) {
+								console.log(data);
+								alert(userId+'님에게 활동재개 관련 메일이 전송되었습니다.');
+								// 페이지 새로고침
+								location.href = location.href;
+							}
+						});
+					}
+				});
+				
+			} else {
+				alert('계정이 활성화 되지 않았습니다.');
+			}
+	 }
+	 
 }
 </script>
+<style>
+table th {
+	text-align : center;
+}
+table td {
+	text-align : center;
+}
+</style>
 </head>
 <body class="is-preload">
 	<!-- Wrapper -->
@@ -83,25 +118,74 @@ function new_user_list() {
 					<!-- Section -->
 					<section>
 						<header class="major">
-							<h2>신규 가입자(최근 10명)</h2>
+							<h2>전체 회원</h2>
 						</header>
-							<div id="new_user">
-								<!-- 신규 가입자(최근 10명) -->
-								<table border="1">
-									<thead>
-									  <tr>
-									  	<th>NO.</th>
+						<div id="all_user">
+							<table border="1">
+								<thead>
+									<tr>
 									  	<th>아이디</th>
 									    <th>이름</th>
+									    <th>생년월일</th>
+									    <th>성별</th>
 									    <th>이메일</th>
 									    <th>전화번호</th>
 									    <th>가입일</th>
-									  </tr>
-									</thead>
-									<tbody id="new_user_tbody">
-									</tbody>
-								</table>
-							</div>
+									    <th>활동중지</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="item" items="${list}">
+									<fmt:formatDate var="joinDate" value="${item.joinDate}" pattern="yyyy-MM-dd HH:MM"/>
+									<fmt:parseDate value='${item.birthday}' var='birthday' pattern='yyyy-MM-dd HH:mm:ss.S'/>
+									<fmt:formatDate var="birthday" value="${birthday}" pattern="yyyy-MM-dd"/>
+										<tr>
+										    <td id="userId">${item.userId}</td>
+										    <td id="userName">${item.userName}</td>
+										    <td id="birthday">${birthday}</td>
+										    <c:choose>
+										    	<c:when test="${item.gender eq 'F'}">
+										    		<td id="gender">여자</td>
+										    	</c:when>
+										    	<c:when test="${item.gender eq 'M'}">
+										    		<td id="gender">남자</td>
+										    	</c:when>
+										    </c:choose>
+										    <td id="email">${item.email}</td>
+										    <td id="tel">${item.tel}</td>
+										    <td id="joinDate">${joinDate}</td>
+										    <c:choose>
+										    	<c:when test="${item.enabled eq 1}">
+										    		<td><input type="button" class="button" id="stop_activity_btn" onclick="userActivity('${item.userId}','${item.email}',${item.enabled})" value="활동중지"></td>
+										    	</c:when>
+										    	<c:when test="${item.enabled eq 0}">
+										    		<td><input type="button" class="button primary" id="resumex_activity_btn" onclick="userActivity('${item.userId}','${item.email}',${item.enabled})" value="활동재개"></td>
+										    	</c:when>
+										    </c:choose>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div class="pagingBnt">
+							  <ul class="pagination">
+							    <c:if test="${pageMaker.prev}"> 
+							    <li> 
+							        <a href='<c:url value="adminAllUserForm.do?page=${pageMaker.startPage-1}"/>' class="button"></a>
+							    </li>
+							    </c:if>
+							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+							    <li>
+							        <a href='<c:url value="adminAllUserForm.do?page=${pageNum}"/>' class="page">${pageNum}</a>
+							    </li>
+							    </c:forEach>
+							    <c:if test="${pageMaker.next && pageMaker.endPage>0}">
+							    <li>
+							        <a href='<c:url value="adminAllUserForm.do?page=${pageMaker.endPage+1}"/>' class="button"></a>
+							    </li>
+							    </c:if>
+							</ul>
+						</div>
 					</section>
 				</div>
 			</div>

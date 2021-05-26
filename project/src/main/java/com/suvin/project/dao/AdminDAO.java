@@ -28,7 +28,8 @@ public class AdminDAO {
 		return mybatis.selectList("BoardDAO.boardCategorySelect",cri);
 	}
 	
-	// 전체 회원 조회
+	// admin main.jsp ------------------------------------------------------
+	// 신규 회원 조회
 	public List<UserVO> newUserList(UserVO vo) throws Exception {
 		return mybatis.selectList("AdminDAO.newUserList",vo);
 	}
@@ -41,5 +42,63 @@ public class AdminDAO {
 	// 좋아요 많은 순서대로 정렬한 bNo List
 	public List<BoardVO> boardLikeCntList(BoardVO vo) throws Exception {
 		return mybatis.selectList("AdminDAO.boardLikeCntList",vo);
+	}
+	
+	// admin all user.jsp ------------------------------------------------------
+	// 전체 회원 count
+	public int userCount() throws Exception {
+		return mybatis.selectOne("AdminDAO.userCount");
+	}
+	
+	// 전체 회원 조회 & 페이징
+	public List<UserVO> allUserList(Criteria cri) throws Exception {
+		return mybatis.selectList("AdminDAO.allUserList",cri);
+	}
+	
+	// 회원 계정 비활성화
+	public int userStopActivity(UserVO vo) throws Exception {
+		return mybatis.update("AdminDAO.userStopActivity",vo);
+	}
+	
+	// 회원 계정 활성화
+	public int userResumeActivity(UserVO vo) throws Exception {
+		return mybatis.update("AdminDAO.userResumeActivity",vo);
+	}
+	
+	// 회원 계정 비활성화 체크
+	public List<UserVO> userStopActivityCheck(UserVO vo) throws Exception {
+		return mybatis.selectList("AdminDAO.userStopActivityCheck",vo);
+	}
+	
+	// admin board.jsp ------------------------------------------------------
+	// 전체 게시글 count
+	public int boardCount() throws Exception {
+		return mybatis.selectOne("AdminDAO.boardCount");
+	}
+	
+	// 전체 게시글 조회 & 페이징
+	public List<BoardVO> boardList(Criteria cri) throws Exception {
+		return mybatis.selectList("AdminDAO.boardList",cri);
+	}
+	
+	// 게시글 삭제
+	public int adminBoardDelete(int bNo) {
+		return mybatis.delete("AdminDAO.adminBoardDelete",bNo);
+	}
+	
+	// admin reply.jsp ------------------------------------------------------
+	// 전체 게시글 count
+	public int allReplyCount() throws Exception {
+		return mybatis.selectOne("AdminDAO.allReplyCount");
+	}
+	
+	// 전체 게시글 조회 & 페이징
+	public List<ReplyVO> allReplyList(Criteria cri) throws Exception {
+		return mybatis.selectList("AdminDAO.allReplyList",cri);
+	}
+	
+	// 게시글 삭제
+	public int adminReplyDelete(int rNo) {
+		return mybatis.delete("AdminDAO.adminReplyDelete",rNo);
 	}
 }

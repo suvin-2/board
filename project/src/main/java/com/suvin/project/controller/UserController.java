@@ -107,7 +107,7 @@ public class UserController {
 		// 이메일 보내기
         String setFrom = "lsbinnn7@gmail.com";
         String toMail = fullEmail;
-        String title = "회원가입 인증 이메일 입니다.";
+        String title = "회원가입 인증 이메일입니다.";
         String content = 
                 "홈페이지를 방문해주셔서 감사합니다." +
                 "<br><br>" + 

@@ -46,4 +46,61 @@ public class AdminServiceImpl implements AdminService {
 		return dao.boardLikeCntList(vo);
 	}
 
+	@Override
+	public int userCount() throws Exception {
+		return dao.userCount(); 
+	}
+	
+	@Override
+	public List<UserVO> allUserList(Criteria cri) throws Exception {
+		return dao.allUserList(cri);
+	}
+
+	@Override
+	public int userStopActivity(UserVO vo) throws Exception {
+		return dao.userStopActivity(vo);
+	}
+	
+	@Override
+	public int userResumeActivity(UserVO vo) throws Exception {
+		return dao.userResumeActivity(vo);
+	}
+
+	@Override
+	public List<UserVO> userStopActivityCheck(UserVO vo) throws Exception {
+		return dao.userStopActivityCheck(vo);
+	}
+
+	@Override
+	public int boardCount() throws Exception {
+		return dao.boardCount();
+	}
+
+	@Override
+	public List<BoardVO> boardList(Criteria cri) throws Exception {
+		return dao.boardList(cri);
+	}
+
+	@Override
+	public int adminBoardDelete(int bNo) {
+		return dao.adminBoardDelete(bNo);
+	}
+
+	@Override
+	public int allReplyCount() throws Exception {
+		return dao.allReplyCount();
+	}
+
+	@Override
+	public List<ReplyVO> allReplyList(Criteria cri) throws Exception {
+		return dao.allReplyList(cri);
+	}
+
+	@Override
+	public int adminReplyDelete(int rNo) {
+		return dao.adminReplyDelete(rNo);
+	}
+
+	
+
 }

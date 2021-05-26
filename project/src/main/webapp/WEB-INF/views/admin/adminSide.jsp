@@ -23,17 +23,16 @@
 				<li>
 					<span class="opener">회원 관리</span>
 					<ul>
-						<li><a href="#">전체 회원</a></li>
-						<li><a href="#">활동 중지 회원</a></li>
+						<li><a href="${path}/adminAllUserForm.do">전체 회원</a></li>
 						<li><a href="#">방문자 통계</a></li>
 					</ul>
 				</li>
 				<li>
 					<span class="opener">게시판 관리</span>
 					<ul>
-						<li><a href="#">카테고리</a></li>
-						<li><a href="#">게시글</a></li>
-						<li><a href="#">댓글</a></li>
+						<li><a href="${path}/adminCategoryForm.do">카테고리</a></li>
+						<li><a href="${path}/adminBoardForm.do">게시글</a></li>
+						<li><a href="${path}/adminReplyForm.do">댓글</a></li>
 					</ul>
 				</li>
 			</ul>
