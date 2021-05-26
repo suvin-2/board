@@ -21,7 +21,7 @@
 	
 	<!-- category cName 중복 조회 -->
 	<select id="cNameDuplicationSelect" resultType="categoryVO">
-		SELECT CNAME
+		SELECT CNO, CNAME
 		FROM CATEGORY
 		WHERE CNAME = #{cName}
 	</select>
@@ -47,4 +47,8 @@
 		DELETE CATEGORY
 		WHERE CNAME = #{cName} AND SNAME = #{sName}
 	</delete>
+	<!-- 
+	<update id="categoryUpdate">
+	</update>
+	 -->
 </mapper>

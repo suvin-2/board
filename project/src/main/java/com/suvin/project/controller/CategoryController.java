@@ -55,21 +55,8 @@ public class CategoryController {
 		System.out.println("넘어온 cName : "+vo);
 		return service.cNameDuplicationSelect(vo);
 	}
-//	
-//	// 카테고리(대분류) 전체 조회
-//	@ResponseBody
-//	@RequestMapping(value = "/newCategoryInsert.do")
-//	public int newCategoryInsert(ArrayList<CategoryVO> list) throws Exception {
-//		
-//		//System.out.println("넘어온 list.get(0) : "+list.get(0));
-//		
-//		
-//		System.out.println("넘어온 list : "+list+", list size : "+list.size());
-//		return 0;
-//		//return service.newCategoryInsert(list);
-//	}
-//	
-	// 카테고리(대분류) 전체 조회
+	
+	// 카테고리 추가
 	@ResponseBody
 	@RequestMapping(value = "/newCategoryInsert", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json")
 	public int newCategoryInsert(@RequestBody List<Map<String,String>> list) throws Exception {
@@ -94,5 +81,18 @@ public class CategoryController {
 	@RequestMapping(value = "/sNameDelete.do")
 	public int sNameDelete(CategoryVO vo) throws Exception {
 		return service.sNameDelete(vo);
+	}
+	
+	// 카테고리 수정
+	@ResponseBody
+	@RequestMapping(value = "/categoryUpdate", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json")
+	public int categoryUpdate(@RequestBody List<Map<String,String>> list) throws Exception {
+				
+		System.out.println("넘어온 list : "+list);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		return 0;
+		//return service.categoryUpdate(map);
 	}
 }

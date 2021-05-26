@@ -25,4 +25,7 @@ public interface CategoryService {
 	
 	// sName 삭제
 	public int sNameDelete(CategoryVO vo) throws Exception;
+	
+	// 카테고리 수정
+	public int categoryUpdate(Map<String, Object> map) throws Exception;
 }

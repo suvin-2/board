@@ -44,4 +44,9 @@ public class CategoryDAO {
 	public int sNameDelete(CategoryVO vo) throws Exception {
 		return mybatis.delete("CategoryDAO.sNameDelete",vo);
 	}
+	
+	// 카테고리 수정
+	public int categoryUpdate(Map<String, Object> map) throws Exception {
+		return mybatis.update("CategoryDAO.categoryUpdate",map);
+	}
 }
