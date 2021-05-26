@@ -1,6 +1,8 @@
 package com.suvin.project.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,11 @@ public class CategoryDAO {
 	// 카테고리 대분류 중복체크
 	public List<CategoryVO> cNameDuplicationSelect(CategoryVO vo) throws Exception {
 		return mybatis.selectList("CategoryDAO.cNameDuplicationSelect",vo);
+	}
+	
+	// 새로운 카테고리 등록
+	public int newCategoryInsert(Map<String, Object> map) throws Exception {
+		return mybatis.insert("CategoryDAO.newCategoryInsert",map);
 	}
 	
 }

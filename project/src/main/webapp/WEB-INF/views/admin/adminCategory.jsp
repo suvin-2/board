@@ -58,8 +58,8 @@ function category_select(){
 				}
 			}
 			
-			$("#category_update_table").hide();
-			$("#category_add_table").hide();
+			$("#category_update_div").hide();
+			$("#category_add_div").hide();
 			
 		}
 	});
@@ -68,8 +68,8 @@ var UD_cnt = 1;
 // 카테고리 수정/삭제 폼 (k는 cno이긴한데 sName은 못알아내고 cName은 알아낼 수 있음)
 function category_update_form(cName, k){
 	
-	$("#category_update_table").show();
-	$("#category_add_table").hide();
+	$("#category_update_div").show();
+	$("#category_add_div").hide();
 	
 	console.log('cName : '+cName+', k : '+k);
 	
@@ -97,7 +97,7 @@ function category_update_form(cName, k){
 				if(cName == data[i].cName){
 					
 					console.log(data[i].sName);
-					table_html += "<tr>";
+					table_html += "<tr class='update_sName_value'>";
 					table_html += "<th>소분류</th>";
 					table_html += "<td><input type='text' id='UD_sName"+UD_cnt+"' value='"+data[i].sName+"'></td>";
 					table_html += "<td><input type='button' value='삭제' class='button primary' onclick=\"category_delete('"+data[i].sName+"',"+UD_cnt+")\"></td>";
@@ -105,6 +105,7 @@ function category_update_form(cName, k){
 					UD_cnt++;
 				}
 			}
+			console.log('update form UD_cnt : '+UD_cnt);
 			div_html += "<input type='button' class='button primary' value='소분류 추가' onclick='update_sName_add("+UD_cnt+")'>&nbsp;";
 			div_html += "<input type='button' class='button' value='수정' onclick='category_update("+UD_cnt+")'>";
 			
@@ -115,6 +116,26 @@ function category_update_form(cName, k){
 			
 		}
 	});
+}
+
+//카테고리 sName 추가
+function update_sName_add(UD_cnt){
+	
+	var tr_html = "";
+	
+	
+	tr_html += "<tr class='update_sName_value'>"
+	tr_html += "<th>소분류</th>";
+	tr_html += "<td><input type='text' id='UD_sName"+UD_cnt+"'></td>";
+	tr_html += "<td><img src='/images/minus.png' onclick='update_sName_minus()'></td>";
+	tr_html += "</tr>";
+	$("#category_update_tbody").append(tr_html);
+	UD_cnt++;
+}
+
+//카테고리 sName 삭제
+function update_sName_minus(){
+	$("#category_update_table > tbody:last > tr:last").remove();
 }
 
 // 카테고리 수정 (cName, sName 위치)
@@ -147,12 +168,12 @@ function category_delete(name, k){
 	console.log('카테고리 대분류 삭제 시 소분류도 전체 삭제');
 	console.log('카테고리 소분류 최소 1개이상 있어야함');
 }
-
+// 카테고리 추가 등록까지 완료 ------------------------------------------------------------------
 // 카테고리 추가 폼
 function category_add_form(){
 	
-	$("#category_update_table").hide();
-	$("#category_add_table").show();
+	$("#category_update_div").hide();
+	$("#category_add_div").show();
 }
 
 // 카테고리 sName 추가
@@ -174,7 +195,6 @@ function add_sName_add(){
 // 카테고리 sName 삭제
 function add_sName_minus(){
 	$("#category_add_table > tbody:last > tr:last").remove();
-	//$("#sName_add_tr_"+cnt).remove();
 }
 
 //카테고리 추가
@@ -218,45 +238,51 @@ function category_add(){
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log(data);
+			var insert_data = [];
 			if(data.length > 0){
 				alert('이미 등록된 대분류입니다. 새로운 값을 입력하세요.');
 				$("#add_cName").focus();
 			} else {
-				// 대분류가 중복되지 않았을 때 값 insert하기
-				// sName 여러개일 때 어떻게 insert 할 지 생각 (다중 insert로 하기)
+				if(add_sName_cnt > 0){
+					for(var i=0;i<=add_sName_cnt;i++) {
+						insert_data.push({"cName":cName, "sName":$("#add_sName"+i).val()});
+					}
+				} else {
+					insert_data.push({"cName":cName, "sName":$("#add_sName0").val()});
+				}
+				
+				console.log(insert_data);
+				//var insert_data_json = JSON.stringify(insert_data);
+				//console.log(insert_data_json);
+				
+				// spring security 때문에 csrf 토큰 꼭 hidden으로 보내줘야 post로 전송 가능
+				var token = $("input[name='_csrf']").val();
+				var header = "X-CSRF-TOKEN";
+				// category insert 하기
+				$.ajax({
+					url : '/newCategoryInsert',
+					type : 'POST',
+					dataType : 'json',
+					data : JSON.stringify(insert_data),
+					contentType : 'application/json',
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(header, token);
+					},
+					error : function(xhr, status, msg) {
+						console.log("ajax 실패");
+						console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+					},
+					success : function(data) {
+						alert('카테고리 등록이 완료되었습니다.');
+						location.href = location.href;
+					}
+				});
+				
 			}
 		}
 	});
 	
 }
-
-
-
-
-
-/* 
-function update_sName_add(UD_cnt){
-	
-	var tr_html = "";
-	
-	
-	tr_html += "<tr id='sName_add_tr_"+UD_cnt+"'>"
-	tr_html += "<th>소분류</th>";
-	tr_html += "<td><input type='text' id='UD_sName"+UD_cnt+"'></td>";
-	tr_html += "<td><img src='/images/minus.png' onclick='update_sName_minus("+UD_cnt+")'></td>";
-	tr_html += "</tr>";
-	$("#category_update_tbody").append(tr_html);
-	UD_cnt++;
-}
-
-//카테고리 sName 삭제
-function update_sName_minus(UD_cnt){
-	console.log(UD_cnt);
-	$("#sName_add_tr_"+UD_cnt).remove();
-	UD_cnt--;
-}
- */
 </script>
 <style type="text/css">
 #title {
@@ -315,8 +341,8 @@ function update_sName_minus(UD_cnt){
 							</div>
 							
 							<div id="update_after_div">
-								<div id="category_update_table">
-									<table>
+								<div id="category_update_div">
+									<table id="category_update_table">
 										<thead>
 											<tr><th colspan="3">카테고리 수정/삭제</th></tr>
 										</thead>
@@ -326,7 +352,7 @@ function update_sName_minus(UD_cnt){
 									<div id="category_update_btn">
 									</div>
 								</div>
-								<div id="category_add_table">
+								<div id="category_add_div">
 									<table id="category_add_table">
 										<thead>
 											<tr><th colspan="3">카테고리 추가</th></tr>

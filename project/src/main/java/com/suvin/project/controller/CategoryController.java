@@ -1,15 +1,26 @@
 package com.suvin.project.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import com.suvin.project.service.CategoryService;
 import com.suvin.project.vo.CategoryVO;
@@ -44,5 +55,30 @@ public class CategoryController {
 		System.out.println("넘어온 cName : "+vo);
 		return service.cNameDuplicationSelect(vo);
 	}
-	
+//	
+//	// 카테고리(대분류) 전체 조회
+//	@ResponseBody
+//	@RequestMapping(value = "/newCategoryInsert.do")
+//	public int newCategoryInsert(ArrayList<CategoryVO> list) throws Exception {
+//		
+//		//System.out.println("넘어온 list.get(0) : "+list.get(0));
+//		
+//		
+//		System.out.println("넘어온 list : "+list+", list size : "+list.size());
+//		return 0;
+//		//return service.newCategoryInsert(list);
+//	}
+//	
+	// 카테고리(대분류) 전체 조회
+	@ResponseBody
+	@RequestMapping(value = "/newCategoryInsert", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json")
+	public int newCategoryInsert(@RequestBody List<Map<String,String>> list) throws Exception {
+				
+		System.out.println("넘어온 list : "+list);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return service.newCategoryInsert(map);
+	}
 }
