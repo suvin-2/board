@@ -1,6 +1,8 @@
 package com.suvin.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,25 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryVO> cNameDuplicationSelect(CategoryVO vo) throws Exception {
 		return dao.cNameDuplicationSelect(vo);
+	}
+
+	@Override
+	public int newCategoryInsert(Map<String, Object> map) throws Exception {
+		return dao.newCategoryInsert(map);
+	}
+
+	@Override
+	public int cNameDelete(CategoryVO vo) throws Exception {
+		return dao.cNameDelete(vo);
+	}
+
+	@Override
+	public int sNameDelete(CategoryVO vo) throws Exception {
+		return dao.sNameDelete(vo);
+	}
+
+	@Override
+	public int categoryUpdate(Map<String, Object> map) throws Exception {
+		return dao.categoryUpdate(map);
 	}
 }

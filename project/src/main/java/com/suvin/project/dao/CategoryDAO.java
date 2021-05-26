@@ -1,6 +1,8 @@
 package com.suvin.project.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +30,23 @@ public class CategoryDAO {
 		return mybatis.selectList("CategoryDAO.cNameDuplicationSelect",vo);
 	}
 	
+	// 새로운 카테고리 등록
+	public int newCategoryInsert(Map<String, Object> map) throws Exception {
+		return mybatis.insert("CategoryDAO.newCategoryInsert",map);
+	}
+	
+	// cName 삭제
+	public int cNameDelete(CategoryVO vo) throws Exception {
+		return mybatis.delete("CategoryDAO.cNameDelete",vo);
+	}
+	
+	// sName 삭제
+	public int sNameDelete(CategoryVO vo) throws Exception {
+		return mybatis.delete("CategoryDAO.sNameDelete",vo);
+	}
+	
+	// 카테고리 수정
+	public int categoryUpdate(Map<String, Object> map) throws Exception {
+		return mybatis.update("CategoryDAO.categoryUpdate",map);
+	}
 }

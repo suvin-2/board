@@ -21,9 +21,34 @@
 	
 	<!-- category cName 중복 조회 -->
 	<select id="cNameDuplicationSelect" resultType="categoryVO">
-		SELECT CNAME
+		SELECT CNO, CNAME
 		FROM CATEGORY
 		WHERE CNAME = #{cName}
 	</select>
 	
+	<insert id="newCategoryInsert">
+		INSERT INTO
+	        CATEGORY (CNO, CNAME, SNAME)
+	    SELECT SEQ_CATEGORY_NO.NEXTVAL, A.* FROM(
+	    <foreach collection="list" item="item" index="index" separator="UNION ALL " >
+	        SELECT
+		        #{item.cName} as CNAME,
+		        #{item.sName} as SNAME
+	        FROM DUAL
+	    </foreach>) A
+	</insert>
+	
+	<delete id="cNameDelete">
+		DELETE CATEGORY
+		WHERE CNAME = #{cName}
+	</delete>
+	
+	<delete id="sNameDelete">
+		DELETE CATEGORY
+		WHERE CNAME = #{cName} AND SNAME = #{sName}
+	</delete>
+	<!-- 
+	<update id="categoryUpdate">
+	</update>
+	 -->
 </mapper>
