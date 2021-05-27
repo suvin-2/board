@@ -41,16 +41,15 @@ function category_select(){
 			var k=1;
 			
 			// cName 중복제거
-			for(var i=0;i<data.length-1;i++){
+			for(var i=0;i<data.length;i++){
 				var stringified = JSON.stringify(data[i].cName);
 				if(itemsFound[stringified]) {
 					continue;
 				}
 				unique_cName.push(data[i].cName);
 				itemsFound[stringified] = true;
-				
 			}
-			 */
+			
 			console.log(unique_cName);
 			
 			// 카테고리 category_tbody에 append

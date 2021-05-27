@@ -35,6 +35,8 @@ $(function(){
 			}
 		}
 		
+		console.log('cName : '+select_cName+', sName : '+select_sName+', cNo : '+select_cNo);
+		
 		if(select_cName == 'allCategory') {
 			category_select();
 			// 페이지 새로고침
@@ -51,11 +53,12 @@ $(function(){
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					
-					if(data.list.length == 0) {
+					console.log(data);
+					if(data.list.length < 1) {
 						$("#paging_ul").empty();
-						$("#all_user").empty();
-						$("#all_user").append("<div class='box'><p style='text-align:center;'>작성된 글이 없습니다.</p></div>");
+						$("#boardList_table").hide();
+						$("#boardList_zero_div").empty();
+						$("#boardList_zero_div").append("<div class='box'><p style='text-align:center;'>작성된 글이 없습니다.</p></div>");
 						
 					} else {
 						
@@ -76,6 +79,8 @@ $(function(){
 								html += "</tr>";
 							}
 						}
+						$("#boardList_zero_div").empty();
+						$("#boardList_table").show();
 						$("#boardList_tbody").empty();
 						$("#boardList_tbody").append(html);
 						
@@ -152,23 +157,27 @@ function category_select(){
 			console.log(data);
 			
 			var unique_cName = [];
+			var itemsFound = {};
 			var j=0;
 			var k=1;
-			// cName 중복제거
-			for(var i=0;i<data.length-1;i++){
-				if(data[i].cName != data[i+1].cName){
-					unique_cName[0] = data[0].cName;
-					j++;
-					unique_cName[j] = data[i+1].cName;
+			
+			// cName 중복제거			
+			for(var i=0;i<data.length;i++){
+				var stringified = JSON.stringify(data[i].cName);
+				if(itemsFound[stringified]) {
+					continue;
 				}
+				unique_cName.push(data[i].cName);
+				itemsFound[stringified] = true;
 			}
+			
 			$("#categorySelect").append("<option value='allCategory'>카테고리 선택</option>");
 			// 카테고리 select에 append
 			for(var i=0;i<unique_cName.length;i++){
 				$("#categorySelect").append("<optgroup id='cName"+i+"' label='"+unique_cName[i]+"'></optgroup>");
 				for(var j=0;j<data.length;j++){
 					if(unique_cName[i] == data[j].cName) {
-						$("#cName"+i).append("<option value='"+data[j].cName+"' id='"+k+"'>"+data[j].sName+"</option>");
+						$("#cName"+i).append("<option value='"+data[j].cName+"' id='"+data[j].cNo+"'>"+data[j].sName+"</option>");
 						k++;
 					}
 				}
@@ -212,7 +221,7 @@ function category_select(){
 								</select>
 							</div>
 						<div id="all_board">
-							<table border="1">
+							<table border="1" id="boardList_table">
 								<thead>
 									<tr>
 									  	<th>카테고리</th>
@@ -239,6 +248,8 @@ function category_select(){
 								    </c:forEach>
 								</tbody>
 							</table>
+						</div>
+						<div id="boardList_zero_div">
 						</div>
 						<div class="pagingBnt">
 							  <ul class="pagination" id="paging_ul">
