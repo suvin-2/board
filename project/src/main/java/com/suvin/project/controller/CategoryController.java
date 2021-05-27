@@ -91,7 +91,6 @@ public class CategoryController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		
-		return 0;
-		//return service.categoryUpdate(map);
+		return service.categoryUpdate(map);
 	}
 }

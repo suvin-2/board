@@ -36,16 +36,22 @@ function category_select(){
 			console.log(data);
 			
 			var unique_cName = [];
+			var itemsFound = {};
 			var j=0;
 			var k=1;
+			
 			// cName 중복제거
 			for(var i=0;i<data.length-1;i++){
-				if(data[i].cName != data[i+1].cName){
-					unique_cName[0] = data[0].cName;
-					j++;
-					unique_cName[j] = data[i+1].cName;
+				var stringified = JSON.stringify(data[i].cName);
+				if(itemsFound[stringified]) {
+					continue;
 				}
+				unique_cName.push(data[i].cName);
+				itemsFound[stringified] = true;
+				
 			}
+			 */
+			console.log(unique_cName);
 			
 			// 카테고리 category_tbody에 append
 			for(var i=0;i<unique_cName.length;i++){
@@ -177,7 +183,9 @@ function category_update(cName){
 				console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 			},
 			success : function(data) {
+				var data_list = [];
 				var update_data = [];
+				var insert_data = [];
 				var cNo = [];
 				// 이걸로 카테고리 수정 시 소분류를 추가 했는지 알 수 있음
 				var sName_minus_btn_cnt = $(".sName_minus_btn").length;
@@ -195,6 +203,8 @@ function category_update(cName){
 						},
 						success : function(data) {
 							var j = 1;
+							
+							// 기존에 있는 cNo 담기
 							for(var i=0;i<data.length;i++) {
 								if(data[i].cName == cName){
 									cNo[j] = data[i].cNo;
@@ -202,16 +212,19 @@ function category_update(cName){
 								}
 							}
 							
+							// 기존 값 + 새로운 값 한 배열에 담기
 							for(var i=1;i<=sName_cnt;i++) {
-								update_data.push({"cNo":cNo[i], "cName":input_cName, "sName":$("#UD_sName"+i).val()});
-							}
-							console.log(update_data);
-							for(var i=0;i<=update_data.length;i++) {
-								if(typeof(data[i].cNo) == "undefined"){
-									console.log(update_data[i].cNo);
-								}
+								data_list.push({"cNo":cNo[i], "cName":input_cName, "sName":$("#UD_sName"+i).val()});
 							}
 							
+							// cNo 기준으로 기존 값은 update하고 추가된 sName은 insert 하기
+							for(var i=1;i<=sName_cnt;i++) {
+								if(jQuery.type(cNo[i]) === "undefined"){
+									insert_data.push({"cName":input_cName, "sName":$("#UD_sName"+i).val()});
+								} else {
+									update_data.push({"cNo":cNo[i], "cName":input_cName, "sName":$("#UD_sName"+i).val()});
+								}
+							}
 							
 							// spring security 때문에 csrf 토큰 꼭 hidden으로 보내줘야 post로 전송 가능
 							var token = $("input[name='_csrf']").val();
@@ -232,14 +245,33 @@ function category_update(cName){
 									console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 								},
 								success : function(data) {
-									console.log(data);
-									//alert('카테고리 수정이 완료되었습니다.');
-									//location.href = location.href;
+									console.log('기존 카테고리 수정 완.');
 								}
 							});
-							
+							if(insert_data.length > 0) {
+								// category insert 하기
+								$.ajax({
+									url : '/newCategoryInsert',
+									type : 'POST',
+									dataType : 'json',
+									data : JSON.stringify(insert_data),
+									contentType : 'application/json',
+									beforeSend : function(xhr) {
+										xhr.setRequestHeader(header, token);
+									},
+									error : function(xhr, status, msg) {
+										console.log("ajax 실패");
+										console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
+									},
+									success : function(data) {
+										console.log('추가 카테고리 등록 완.');
+									}
+								});
+							}
 						}
 					});
+					alert('카테고리 수정이 완료되었습니다.');
+					location.href = location.href;
 				} else {
 					alert('이미 존재하는 대분류입니다. 새로운 값을 입력하세요.');
 					$("#UD_cName").focus();

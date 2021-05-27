@@ -47,8 +47,16 @@
 		DELETE CATEGORY
 		WHERE CNAME = #{cName} AND SNAME = #{sName}
 	</delete>
-	<!-- 
+	
 	<update id="categoryUpdate">
+		<foreach  item="item" collection="list"  index="index" separator=";" open="DECLARE BEGIN" close="; END;" >
+			UPDATE CATEGORY
+			SET 
+				CNAME = #{item.cName},
+				SNAME = #{item.sName}
+			WHERE 
+				CNO = #{item.cNo}
+		</foreach>
 	</update>
-	 -->
+	 
 </mapper>
