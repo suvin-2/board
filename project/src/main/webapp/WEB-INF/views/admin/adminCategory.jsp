@@ -207,7 +207,7 @@ function category_update(cName){
 							}
 							console.log(update_data);
 							for(var i=0;i<=update_data.length;i++) {
-								if(typeof data[i].cNo == "undefined"){
+								if(typeof(data[i].cNo) == "undefined"){
 									console.log(update_data[i].cNo);
 								}
 							}
@@ -216,8 +216,8 @@ function category_update(cName){
 							// spring security 때문에 csrf 토큰 꼭 hidden으로 보내줘야 post로 전송 가능
 							var token = $("input[name='_csrf']").val();
 							var header = "X-CSRF-TOKEN";
-							/* 
-							// category insert 하기
+							
+							// category update 하기
 							$.ajax({
 								url : '/categoryUpdate',
 								type : 'POST',
@@ -232,11 +232,12 @@ function category_update(cName){
 									console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 								},
 								success : function(data) {
-									alert('카테고리 수정이 완료되었습니다.');
-									location.href = location.href;
+									console.log(data);
+									//alert('카테고리 수정이 완료되었습니다.');
+									//location.href = location.href;
 								}
 							});
-							 */
+							
 						}
 					});
 				} else {

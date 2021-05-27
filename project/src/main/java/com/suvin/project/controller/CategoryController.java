@@ -87,11 +87,10 @@ public class CategoryController {
 	@ResponseBody
 	@RequestMapping(value = "/categoryUpdate", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json")
 	public int categoryUpdate(@RequestBody List<Map<String,String>> list) throws Exception {
-				
-		System.out.println("넘어온 list : "+list);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
+		
 		return 0;
 		//return service.categoryUpdate(map);
 	}
