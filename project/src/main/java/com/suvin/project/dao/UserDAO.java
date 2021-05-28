@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.suvin.project.security.CustomUserDetails;
+import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.UserVO;
 
 @Repository
@@ -62,5 +64,35 @@ public class UserDAO {
 	// 회원 정보 수정
 	public int userUpdate(UserVO vo) {
 		return mybatis.update("UserDAO.userUpdate",vo);
+	}
+
+	// 내가 작성한 게시글 목록 (페이징 처리)
+	public List<BoardVO> writingList(Criteria cri) throws Exception {
+		return mybatis.selectList("UserDAO.writingList",cri);
+	}
+	
+	// 내가 작성한 게시글 개수(페이징 처리에 사용)
+	public int writingListCount(Criteria cri) {
+		return mybatis.selectOne("UserDAO.writingListCount",cri);
+	}
+		
+	// 내가 작성한 댓글 목록 (페이징 처리)
+	public List<BoardVO> replyList(Criteria cri) throws Exception {
+		return mybatis.selectList("UserDAO.replyList",cri);
+	}
+	
+	// 내가 작성한 댓글 개수(페이징 처리에 사용)
+	public int replyListCount(Criteria cri) {
+		return mybatis.selectOne("UserDAO.replyListCount",cri);
+	}
+	
+	// 내가 좋아요 한 게시글 목록 (페이징 처리)
+	public List<BoardVO> likeList(Criteria cri) throws Exception {
+		return mybatis.selectList("UserDAO.likeList",cri);
+	}
+	
+	// 내가 좋아요 한 글 개수(페이징 처리에 사용)
+	public int likeListCount(Criteria cri) {
+		return mybatis.selectOne("UserDAO.likeListCount",cri);
 	}
 }

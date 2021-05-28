@@ -32,6 +32,16 @@ public class BoardDAO {
 		return mybatis.selectOne("BoardDAO.listCount",cri);
 	}
 	
+	// 게시글 카테고리 별 조회 (페이징 처리)
+	public List<BoardVO> boardSearchList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.boardSearchList",cri);
+	}
+	
+	// 총 글 개수(페이징 처리에 사용)
+	public int boardSearchCount(Criteria cri) {
+		return mybatis.selectOne("BoardDAO.boardSearchCount",cri);
+	}
+	
 	// 게시글 등록
 	public int boardInsert(BoardVO vo) {
 		return mybatis.insert("BoardDAO.boardInsert",vo);
@@ -63,8 +73,8 @@ public class BoardDAO {
 	}
 	
 	// 댓글 조회
-	public List<ReplyVO> replySelect(int bNo) {
-		return mybatis.selectList("BoardDAO.replySelect",bNo);
+	public List<ReplyVO> replySelect(Criteria cri) {
+		return mybatis.selectList("BoardDAO.replySelect",cri);
 	}
 	
 	// 댓글 등록
@@ -80,6 +90,11 @@ public class BoardDAO {
 	// 댓글 삭제
 	public int replyDelete(int rNo) {
 		return mybatis.update("BoardDAO.replyDelete",rNo);
+	}
+	
+	// 게시글 별 댓글  count
+	public int boardReplyCount(Criteria cri) throws Exception {
+		return mybatis.selectOne("BoardDAO.boardReplyCount",cri);
 	}
 	
 	// 게시글 좋아요 여부 조회
@@ -102,18 +117,4 @@ public class BoardDAO {
 		return mybatis.selectList("BoardDAO.boardLikeAllSelect",vo);
 	}
 	
-	// 내가 작성한 게시글 목록 (페이징 처리)
-	public List<BoardVO> writingList(Criteria cri) throws Exception {
-		return mybatis.selectList("BoardDAO.writingList",cri);
-	}
-	
-	// 내가 작성한 댓글 목록 (페이징 처리)
-	public List<BoardVO> replyList(Criteria cri) throws Exception {
-		return mybatis.selectList("BoardDAO.replyList",cri);
-	}
-	
-	// 내가 좋아요 한 게시글 목록 (페이징 처리)
-	public List<BoardVO> likeList(Criteria cri) throws Exception {
-		return mybatis.selectList("BoardDAO.likeList",cri);
-	}
 }

@@ -23,8 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.suvin.project.service.UserService;
+import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.Criteria;
+import com.suvin.project.vo.PageMaker;
+import com.suvin.project.vo.ReplyVO;
 import com.suvin.project.vo.UserVO;
 
 @Controller
@@ -166,12 +171,66 @@ public class UserController {
 		return "/user/userInfo";
 	}
 	
-	// 회원수정 화면
+	// 내 작성글/댓글/좋아요글
+//	@RequestMapping(value="/userWritingList.do")
+//	public String userWritingList() throws Exception {
+//		return "/user/user_writing_reply_like";
+//	}
+	
+	// 내 작성글/댓글/좋아요글
 	@RequestMapping(value="/userWritingList.do")
-	public String userWritingList() throws Exception {
-		return "/user/user_writing_reply_like";
+	public ModelAndView userWritingList(Criteria cri) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/user_writing");
+		
+		List<BoardVO> board_list = service.writingList(cri);	
+		mv.addObject("board_list",board_list);
+		
+		PageMaker board_pageMaker = new PageMaker();
+		board_pageMaker.setCri(cri);
+		board_pageMaker.setTotalCount(service.writingListCount(cri));
+        mv.addObject("board_pageMaker", board_pageMaker);
+        
+		return mv;
 	}
 	
+	// 내 댓글
+	@RequestMapping(value="/userReplyList.do")
+	public ModelAndView userReplyList(Criteria cri) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/user/user_reply");
+		
+		List<BoardVO> reply_list = service.replyList(cri);	
+		mv.addObject("reply_list",reply_list);
+		
+        PageMaker reply_pageMaker = new PageMaker();
+        reply_pageMaker.setCri(cri);
+        reply_pageMaker.setTotalCount(service.replyListCount(cri));
+        mv.addObject("reply_pageMaker", reply_pageMaker);
+        
+		return mv;
+	}
+	
+	// 내가 좋아요 누른 글
+	@RequestMapping(value="/userLikeList.do")
+	public ModelAndView userLikeList(Criteria cri) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/user/user_like");
+		
+		List<BoardVO> like_list = service.likeList(cri);	
+		mv.addObject("like_list",like_list);
+		
+		PageMaker like_pageMaker = new PageMaker();
+        like_pageMaker.setCri(cri);
+        like_pageMaker.setTotalCount(service.likeListCount(cri));
+        mv.addObject("like_pageMaker", like_pageMaker);
+        
+		return mv;
+	}
+		
 	// 회원 정보 조회
 	@ResponseBody
 	@RequestMapping(value="/userInfoSelect/{userId}", method= RequestMethod.GET)

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.UserVO;
 
 public interface UserService {
@@ -34,5 +36,22 @@ public interface UserService {
 	
 	// 회원 정보 수정
 	public int userUpdate(UserVO vo);
-		
+
+	// 내가 작성한 게시글 목록 (페이징 처리)
+	public List<BoardVO> writingList(Criteria cri) throws Exception;
+	
+	// 내가 작성한 댓글 목록 (페이징 처리)
+	public List<BoardVO> replyList(Criteria cri) throws Exception;
+	
+	// 내가 좋아요 한 게시글 목록 (페이징 처리)
+	public List<BoardVO> likeList(Criteria cri) throws Exception;
+	
+	// 내가 작성한 게시글 개수(페이징 처리에 사용)
+	public int writingListCount(Criteria cri);
+	
+	// 내가 작성한 댓글 개수(페이징 처리에 사용)
+	public int replyListCount(Criteria cri);
+	
+	// 내가 좋아요 한 글 개수(페이징 처리에 사용)
+	public int likeListCount(Criteria cri);
 }
