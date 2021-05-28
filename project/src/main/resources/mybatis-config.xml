@@ -13,5 +13,6 @@
           <typeAlias alias="categoryVO" type="com.suvin.project.vo.CategoryVO"/>
           <typeAlias alias="criteria" type="com.suvin.project.vo.Criteria"/>
           <typeAlias alias="userVO" type="com.suvin.project.vo.UserVO"/>
+          <typeAlias alias="replyVO" type="com.suvin.project.vo.ReplyVO"/>
     </typeAliases>
 </configuration>

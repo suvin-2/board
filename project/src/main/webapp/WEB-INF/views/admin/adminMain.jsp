@@ -9,6 +9,7 @@
 <head>
 <title>suvin's cooking class admin page</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -19,6 +20,64 @@
 $(function(){
 	new_user_list();
 	board_like_list();
+	
+	function randomColor(labels) {
+		var colors = [];
+		for (let i = 0; i < labels.length; i++) {
+			colors.push("#" + Math.round(Math.random() * 0xffffff).toString(16));
+		}
+		return colors;
+	}
+	
+	function makeChart(ctx, type, labels, data) {
+		var myChart = new Chart(ctx, {
+		    type: type,
+		    data: {
+		        labels: labels,
+		        datasets: [{
+		            label: '날짜별 게시글, 댓글 등록 현황',
+		            data: data,
+		            backgroundColor: randomColor(labels)
+		        }]
+		    },
+		    options: {
+			    responsive: false,
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
+		    }
+		});
+	}
+	
+	$.ajax({
+		
+		type: "GET",
+		url: "boardCntReplyCnt.do",
+		dataType : "json",
+		success: function(data, status, xhr) {
+			
+			console.log(data);
+			
+			var labels = [];
+			var myData = [];
+			
+			//맵안에 list 였으니 for문으로 돌린다
+			$.each(data.list,function (k,v){
+				labels.push(v.reg_date);
+				myData.push(v.count);
+			});
+			var newLabels = labels.slice(-5);
+			var newMyData = myData.slice(-5);
+
+			// Chart.js 선그래프 그리기
+			var ctx = $('#myChart');
+			makeChart(ctx, 'line', newLabels, newMyData);
+		}
+	});
 });
 
 //신규 가입자(최근 10명)
@@ -158,6 +217,17 @@ function board_like_list() {
 #title {
 	text-align : left;
 }
+#chart-container {
+	float: right;
+	position: center;
+	left: -50;
+}
+canvas {
+    float: right;
+    width: 40%;
+    position: right;
+    left: -30%;
+}
 </style>
 </head>
 <body class="is-preload">
@@ -177,6 +247,7 @@ function board_like_list() {
 						</header>
 						<div class="box">
 							<p>새글/새댓글 통계 차트</p>
+							<canvas id="myChart" align="center"></canvas>
 						</div>
 					</section>
 	

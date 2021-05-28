@@ -23,18 +23,22 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return dao.boardSelect(vo);
 	}
-/*
 	@Override
-	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.boardCategorySelect(vo);
+	public List<ReplyVO> boardCntReplyCnt(ReplyVO vo) {
+		return dao.boardCntReplyCnt(vo);
 	}
-*/
+	@Override
+	public List<ReplyVO> BoardCntChart(ReplyVO vo) {
+		return dao.BoardCntChart(vo);
+	}
+	@Override
+	public List<ReplyVO> ReplyCntChart(ReplyVO vo) {
+		return dao.ReplyCntChart(vo);
+	}
 	@Override
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
 		return dao.boardCategorySelect(cri);
-	}
-	
+	}	
 	@Override
 	public int listCount(Criteria cri) throws Exception {
 		return dao.listCount(cri); 
@@ -115,4 +119,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
 		return dao.boardLikeAllSelect(vo);
 	}
+
+
 }

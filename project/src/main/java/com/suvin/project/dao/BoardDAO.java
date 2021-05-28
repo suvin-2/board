@@ -21,6 +21,21 @@ public class BoardDAO {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return mybatis.selectList("BoardDAO.boardSelect",vo);
 	}
+	
+	// 글 개수, 댓글 개수
+	public List<ReplyVO> boardCntReplyCnt(ReplyVO vo) {
+		return mybatis.selectList("BoardDAO.boardCntReplyCnt",vo);
+	}
+	
+	// 글 개수 (chart)
+	public List<ReplyVO> BoardCntChart(ReplyVO vo) {
+		return mybatis.selectList("BoardDAO.BoardCntChart",vo);
+	}
+	
+	// 댓글 개수 (chart)
+	public List<ReplyVO> ReplyCntChart(ReplyVO vo) {
+		return mybatis.selectList("BoardDAO.ReplyCntChart",vo);
+	}
 
 	// 게시글 카테고리 별 조회 (페이징 처리)
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {

@@ -6,7 +6,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -50,6 +53,31 @@ public class BoardController {
 		return mv;
 	}
 	
+	// 게시글 개수, 댓글 개수
+	@ResponseBody
+	@RequestMapping(value = "/boardCntReplyCnt.do")
+	public String boardCntReplyCnt(@ModelAttribute("boardVO") ReplyVO vo, HttpServletRequest request) throws Exception {
+		
+		List<ReplyVO> list = service.boardCntReplyCnt(vo);
+		List<ReplyVO> bList = service.BoardCntChart(vo);
+		List<ReplyVO> rList = service.ReplyCntChart(vo);
+		
+		request.setAttribute("list", list);
+		HashMap map = new HashMap();
+		map.put("list",list);
+		map.put("bList",bList);
+		map.put("rList",rList);
+		
+		String json = null;
+		try {
+			json = new ObjectMapper().writeValueAsString(map);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+					
+		return json;
+	}
+	
 	// 게시판 카테고리 별 글 목록
 	@RequestMapping(value = "/boardList.do")
 	public ModelAndView boardSelect(Criteria cri, Model model) throws Exception {
@@ -60,6 +88,7 @@ public class BoardController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
+		mv.addObject("count",service.boardReplyCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
 		mv.addObject("pageMaker", pageMaker);
 		

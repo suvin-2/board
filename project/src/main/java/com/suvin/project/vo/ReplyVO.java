@@ -10,6 +10,7 @@ public class ReplyVO {
 	private String rContent;
 	private String writer;
 	private String rWriter;
+	private String rDate_string;
 	private Date rDate;				// 등록 날짜
 	private Date uDate;				// 수정 날짜
 	private String sName;
@@ -52,6 +53,12 @@ public class ReplyVO {
 	public void setrWriter(String rWriter) {
 		this.rWriter = rWriter;
 	}
+	public String getrDate_string() {
+		return rDate_string;
+	}
+	public void setrDate_string(String rDate_string) {
+		this.rDate_string = rDate_string;
+	}
 	public Date getrDate() {
 		return rDate;
 	}
@@ -85,7 +92,7 @@ public class ReplyVO {
 	@Override
 	public String toString() {
 		return "ReplyVO [bNo=" + bNo + ", rNo=" + rNo + ", title=" + title + ", rContent=" + rContent + ", writer="
-				+ writer + ", rWriter=" + rWriter + ", rDate=" + rDate + ", uDate=" + uDate + ", sName=" + sName
-				+ ", cnt=" + cnt + ", cNo=" + cNo + "]";
+				+ writer + ", rWriter=" + rWriter + ", rDate_string=" + rDate_string + ", rDate=" + rDate + ", uDate="
+				+ uDate + ", sName=" + sName + ", cnt=" + cnt + ", cNo=" + cNo + "]";
 	}
 }
