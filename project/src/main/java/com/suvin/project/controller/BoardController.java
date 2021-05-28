@@ -67,7 +67,7 @@ public class BoardController {
 	}
 	
 	// 게시글, 댓글, 작성자 검색
-	@RequestMapping(value = "/boardSearchList.do")
+	@RequestMapping(value = "/boardSearchList.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView boardSearchList(Criteria cri, @RequestParam(defaultValue="") String keyword) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();

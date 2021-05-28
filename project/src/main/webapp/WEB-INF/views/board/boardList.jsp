@@ -32,72 +32,70 @@
 				<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
 				<%-- <jsp:include page="boardHead.jsp" flush="false"/> --%>
 				<!-- Section -->
-				<section id="banner">
-					<div class="content">
-					<%  
-						String sName = request.getParameter("sName"); 
-						String cNo = request.getParameter("cNo"); 
-						System.out.println("boardList.jsp 넘어온 sName : " + sName);
+				<div class="content">
+				<%  
+					String sName = request.getParameter("sName"); 
+					String cNo = request.getParameter("cNo"); 
+					System.out.println("boardList.jsp 넘어온 sName : " + sName);
+				%>
+				<header class="major">
+						<h2 id="sName"><%= sName %></h2>
+					</header>
+					<!-- 카페 내 전체 글 -->
+					<table border="1">
+						<thead>
+						  <tr>
+						    <th>제목</th>
+						    <th>작성자</th>
+						    <th>작성일</th>
+						    <th>조회수</th>
+						  </tr>
+						</thead>
+						<tbody>
+						<c:forEach var="item" items="${list}">
+						<c:set value="${item.cName}" var="cNameCopy"/>
+						<c:set value="${item.sName}" var="sNameCopy"/>
+						<c:set value="${item.cNo}" var="cNoCopy"/>
+						<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+							<tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}&writer=${item.writer}'">
+							    <td id="title">${item.title}</td>
+							    <td id="writer">${item.writer}</td>
+							    <td id="bDate">${bDate}</td>
+							    <td id="cnt">${item.cnt}</td>
+							</tr>
+					    </c:forEach>
+						</tbody>
+					</table>
+					<%-- <jsp:param name="userId" value=""> --%>
+					<%
+						System.out.println("head에서 가지고오는 user id : "+userId);
+						if(userId != "anonymousUser") {
 					%>
-					<header class="major">
-							<h2 id="sName"><%= sName %></h2>
-						</header>
-						<!-- 카페 내 전체 글 -->
-						<table border="1">
-							<thead>
-							  <tr>
-							    <th>제목</th>
-							    <th>작성자</th>
-							    <th>작성일</th>
-							    <th>조회수</th>
-							  </tr>
-							</thead>
-							<tbody>
-							<c:forEach var="item" items="${list}">
-							<c:set value="${item.cName}" var="cNameCopy"/>
-							<c:set value="${item.sName}" var="sNameCopy"/>
-							<c:set value="${item.cNo}" var="cNoCopy"/>
-							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-								<tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&cNo=${item.cNo}&writer=${item.writer}'">
-								    <td id="title">${item.title}</td>
-								    <td id="writer">${item.writer}</td>
-								    <td id="bDate">${bDate}</td>
-								    <td id="cnt">${item.cnt}</td>
-								</tr>
-						    </c:forEach>
-							</tbody>
-						</table>
-						<%-- <jsp:param name="userId" value=""> --%>
-						<%
-							System.out.println("head에서 가지고오는 user id : "+userId);
-							if(userId != "anonymousUser") {
-						%>
-							<div align="right">
-								<a href="boardInsertForm.do?sName=<%=sName%>&cNo=<%=cNo%>" class="button">글쓰기</a>
-							</div>
-						<% } %>
-						<div class="pagingBnt">
-							  <ul class="btn-group pagination">
-							    <c:if test="${pageMaker.prev }"> 
-							    <li> 
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'></a>
-							    </li>
-							    </c:if>
-							    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
-							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>' class="page">${pageNum}</a>
-							    </li>
-							    </c:forEach>
-							    <c:if test="${pageMaker.next && pageMaker.endPage >0}">
-							    <li>
-							        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>'></a>
-							    </li>
-							    </c:if>
-							</ul>
+						<div align="right">
+							<a href="boardInsertForm.do?sName=<%=sName%>&cNo=<%=cNo%>" class="button">글쓰기</a>
 						</div>
+					<% } %>
+					<div class="pagingBnt">
+						  <ul class="btn-group pagination">
+						    <c:if test="${pageMaker.prev }"> 
+						    <li> 
+						        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.startPage-1}"/>'></a>
+						    </li>
+						    </c:if>
+						    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+						    <li>
+						        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageNum}"/>' class="page">${pageNum}</a>
+						    </li>
+						    </c:forEach>
+						    <c:if test="${pageMaker.next && pageMaker.endPage >0}">
+						    <li>
+						        <a href='<c:url value="boardList.do?cName=${cNameCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&page=${pageMaker.endPage+1}"/>'></a>
+						    </li>
+						    </c:if>
+						</ul>
 					</div>
-				</section>	
+				</div>
 			</div>
 		</div>
 	</div>
