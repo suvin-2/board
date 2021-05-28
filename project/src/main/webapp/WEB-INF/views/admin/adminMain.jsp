@@ -170,16 +170,6 @@ function board_like_list() {
 				<div class="inner">	
 					<!-- Header -->
 					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
-					<!-- 방문자 통계 -->
-					<section>
-						<header class="major">
-							<h2>방문자 통계</h2>
-						</header>
-						<div class="box">
-							<p>방문자 통계 차트</p>
-						</div>
-					</section>
-					
 					<!-- 새글/새댓글 통계 -->
 					<section>
 						<header class="major">
