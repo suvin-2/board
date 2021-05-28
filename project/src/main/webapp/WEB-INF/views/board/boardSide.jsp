@@ -80,53 +80,61 @@
 	}
 	
 </script> 
+<style>
+#search_btn{
+	display : inline;
+}
+</style>
 </head>
 <body>
-		<!-- Sidebar -->
-			<div id="sidebar">
-				<div class="inner">
-						<section id="search" class="alt">
-							<form method="post" action="#">
-								<input type="text" name="query" id="query" placeholder="Search" />
-							</form>
-						</section>
-					<!-- Menu -->
-						<nav id="menu">
-							<header class="major">
-								<h2>Menu</h2>
-							</header>
-							<!-- 
-							<ul id="sideUl">
-							</ul>
-							 -->
-							
-							<ul>
-								<li id="sideLi">
-								</li>
-							</ul>
-							 
-						</nav>
-	
-					<!-- Section -->
-						<section>
-							<header class="major">
-								<h2>Get in touch</h2>
-							</header>
-							<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="contact">
-								<li class="icon solid fa-envelope"><a href="#">lsbinnn7@gmail.com</a></li>
-								<li class="icon solid fa-phone">010-0000-0000</li>
-								<li class="icon solid fa-home">https://www.tistory.com/</li>
-							</ul>
-						</section>
-	
-					<!-- Footer -->
-						<footer id="footer">
-							<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-						</footer>
-	
-				</div>
-			</div>
+	<!-- Sidebar -->
+	<div id="sidebar">
+		<div class="inner">
+			<section id="search" class="alt">
+				<form method="post" action="/boardSearchList.do">
+					<div id="search_btn">
+						<input type="text" name="keyword" value="${keyword}" placeholder="게시글, 댓글, 작성자 검색" />
+						<button type="submit"><img src="/images/search_icon.png"></button>
+					</div>
+				</form>
+			</section>
+			<!-- Menu -->
+			<nav id="menu">
+				<header class="major">
+					<h2>Menu</h2>
+				</header>
+				<!-- 
+				<ul id="sideUl">
+				</ul>
+				 -->
+				
+				<ul>
+					<li id="sideLi">
+					</li>
+				</ul>
+				 
+			</nav>
+
+			<!-- Section -->
+			<section>
+				<header class="major">
+					<h2>Get in touch</h2>
+				</header>
+				<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+				<ul class="contact">
+					<li class="icon solid fa-envelope"><a href="#">lsbinnn7@gmail.com</a></li>
+					<li class="icon solid fa-phone">010-0000-0000</li>
+					<li class="icon solid fa-home">https://www.tistory.com/</li>
+				</ul>
+			</section>
+
+			<!-- Footer -->
+			<footer id="footer">
+				<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+			</footer>
+
+		</div>
+	</div>
 <!-- Scripts -->
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>

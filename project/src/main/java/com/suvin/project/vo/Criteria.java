@@ -13,6 +13,9 @@ public class Criteria {
 	private String cName;
 	private String sName;
 	private String userId;
+	private String title;
+	private String cnotent;
+	private String keyword;
 	
 	public Criteria() {
 		this.page = 1;
@@ -108,11 +111,39 @@ public class Criteria {
 		this.userId = userId;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getCnotent() {
+		return cnotent;
+	}
+
+	public void setCnotent(String cnotent) {
+		this.cnotent = cnotent;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getKeyword(String keyword) {
+		return keyword;
+	}
+	
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", rowStart=" + rowStart + ", rowEnd=" + rowEnd
 				+ ", cNo=" + cNo + ", bNo=" + bNo + ", cName=" + cName + ", sName=" + sName + ", userId=" + userId
-				+ "]";
+				+ ", title=" + title + ", cnotent=" + cnotent + ", keyword=" + keyword + "]";
 	}
-	
+
 }

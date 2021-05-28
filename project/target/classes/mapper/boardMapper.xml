@@ -53,6 +53,49 @@
 		WHERE CNO = #{cNo}
 	</select>
 	
+	
+	<!-- 게시판 카테고리 별 게시글 조회 페이징 테스트 -->
+	<select id="boardSearchList" resultType="boardVO" parameterType="criteria"> 
+		SELECT  BNO, 
+		        TITLE, 
+		        CONTENT,
+		        CNT,
+		        BDATE,
+		        WRITER, 
+		        CNO,
+		        CNAME,
+		        SNAME
+		FROM (SELECT B.BNO,
+		           B.TITLE,
+		           B.CONTENT,
+		           B.CNT,
+		           B.BDATE,
+		           B.WRITER,
+		           B.CNO,
+		           C.CNAME,
+		           C.SNAME,
+		           ROW_NUMBER() OVER(ORDER BY B.BNO DESC) AS RNUM
+		    FROM BOARD B, CATEGORY C 
+		    WHERE B.CNO = C.CNO ) BD
+	    <include refid="search" />
+		ORDER BY BNO DESC
+	</select>
+	
+	<!-- 검색한 글 수 -->
+	<select id="boardSearchCount" resultType="int">
+		SELECT COUNT(BNO)
+		FROM BOARD
+		<include refid="search" />
+	</select>
+	
+	<sql id="search">
+        WHERE  
+	        USERID LIKE '%'||#{keyword}||'%'
+	        OR CONTENT LIKE '%' || #{keyword}||'%'
+	        OR TITLE LIKE '%'||#{keyword}||'%'
+	        AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
+    </sql>
+	
 	<!-- 조회수 증가 -->
 	<update id="boardUpdateCnt">
 		UPDATE

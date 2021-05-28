@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.suvin.project.service.BoardService;
@@ -60,6 +61,22 @@ public class BoardController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
+		mv.addObject("pageMaker", pageMaker);
+		
+		return mv;
+	}
+	
+	// 게시글, 댓글, 작성자 검색
+	@RequestMapping(value = "/boardSearchList.do")
+	public ModelAndView boardSearchList(Criteria cri, @RequestParam(defaultValue="") String keyword) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/board/boardSearchList");
+		cri.getKeyword(keyword);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(service.boardSearchCount(cri));
+		mv.addObject("list",service.boardSearchList(cri));
 		mv.addObject("pageMaker", pageMaker);
 		
 		return mv;

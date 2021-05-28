@@ -21,6 +21,12 @@ public interface BoardService {
 	// 총 글 개수(페이징 처리에 사용)
 	public int listCount(Criteria cri) throws Exception;
 	
+	// 게시글 카테고리 별 조회 (페이징 처리)
+	public List<BoardVO> boardSearchList(Criteria cri) throws Exception;
+	
+	// 총 글 개수(페이징 처리에 사용)
+	public int boardSearchCount(Criteria cri);
+	
 	// 게시글 등록
 	public int boardInsert(BoardVO vo);
 		

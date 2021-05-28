@@ -32,6 +32,16 @@ public class BoardDAO {
 		return mybatis.selectOne("BoardDAO.listCount",cri);
 	}
 	
+	// 게시글 카테고리 별 조회 (페이징 처리)
+	public List<BoardVO> boardSearchList(Criteria cri) throws Exception {
+		return mybatis.selectList("BoardDAO.boardSearchList",cri);
+	}
+	
+	// 총 글 개수(페이징 처리에 사용)
+	public int boardSearchCount(Criteria cri) {
+		return mybatis.selectOne("BoardDAO.boardSearchCount",cri);
+	}
+	
 	// 게시글 등록
 	public int boardInsert(BoardVO vo) {
 		return mybatis.insert("BoardDAO.boardInsert",vo);

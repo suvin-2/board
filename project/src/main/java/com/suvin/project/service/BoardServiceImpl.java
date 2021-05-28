@@ -39,7 +39,15 @@ public class BoardServiceImpl implements BoardService {
 	public int listCount(Criteria cri) throws Exception {
 		return dao.listCount(cri); 
 	}
-	
+	@Override
+	public List<BoardVO> boardSearchList(Criteria cri) throws Exception {
+		return dao.boardSearchList(cri);
+	}
+	@Override
+	public int boardSearchCount(Criteria cri) {
+		return dao.boardSearchCount(cri);
+	}
+
 	@Override
 	public int boardInsert(BoardVO vo) {
 		return dao.boardInsert(vo);
@@ -107,6 +115,4 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
 		return dao.boardLikeAllSelect(vo);
 	}
-
-
 }
