@@ -360,6 +360,9 @@ function board_like_all_select() {
 				<section id="banner">
 					<div class="content">
 						<c:forEach var="item" items="${list}">
+						<c:set value="${item.bNo}" var="bNoCopy"/>
+						<c:set value="${item.sName}" var="sNameCopy"/>
+						<c:set value="${item.writer}" var="writerCopy"/>
 						<input type="hidden" id="bNo" value="${item.bNo}">
 						<input type="hidden" id="userId" value="<%= userId %>">
 						<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
@@ -398,6 +401,7 @@ function board_like_all_select() {
 						<div id="reply" class="box">
 							<ol class="replyList">
 								<c:forEach items="${replyList}" var="replyList">
+								<c:set value="${item.cNo}" var="cNoCopy"/>
 								<input type="hidden" id="rNo" value="${replyList.rNo}">
 									<li id="reply_li_${replyList.rNo}">
 												<p id="reply_writer">${replyList.rWriter}</p>
@@ -413,6 +417,25 @@ function board_like_all_select() {
 											</li>
 								</c:forEach>   
 							</ol>
+							<div class="pagingBnt">
+								  <ul class="pagination" id="paging_ul">
+								    <c:if test="${pageMaker.prev}"> 
+								    <li> 
+								        <a href='<c:url value="${path}/boardSelectDetail.do?bNo=${bNoCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&writer=${writerCopy}&page=${pageMaker.startPage-1}"/>' class="button"></a>
+								    </li>
+								    </c:if>
+								    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="pageNum">
+								    <li>
+								        <a href='<c:url value="${path}/boardSelectDetail.do?bNo=${bNoCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&writer=${writerCopy}&page=${pageNum}"/>' class="page">${pageNum}</a>
+								    </li>
+								    </c:forEach>
+								    <c:if test="${pageMaker.next && pageMaker.endPage>0}">
+								    <li>
+								        <a href='<c:url value="${path}/boardSelectDetail.do?bNo=${bNoCopy}&sName=${sNameCopy}&cNo=${cNoCopy}&writer=${writerCopy}&page=${pageMaker.endPage+1}"/>' class="button"></a>
+								    </li>
+								    </c:if>
+								</ul>
+							</div>
 						</div>
 						
 						<%  

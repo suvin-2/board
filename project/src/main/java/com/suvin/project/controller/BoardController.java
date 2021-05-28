@@ -94,13 +94,12 @@ public class BoardController {
 		mv.addObject("list",list);
 		
 		// 댓글 select
-		List<ReplyVO> replyList = service.replySelect(vo.getbNo());
-		
+		List<ReplyVO> replyList = service.replySelect(cri);
 		mv.addObject("replyList",replyList);
 		
 		PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
-        mv.addObject("page",cri.getPage());
+        pageMaker.setTotalCount(service.boardReplyCount(cri));
         mv.addObject("pageMaker", pageMaker);
 		
 		return mv;
@@ -200,52 +199,52 @@ public class BoardController {
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo, @ModelAttribute("bNo") int bNo) throws Exception {
 		return service.boardLikeAllSelect(vo);
 	}
-	
-	// 내 작성글 목록 (ajax)
-	@ResponseBody
-	@RequestMapping(value = "/writingList.do", method = RequestMethod.GET)
-	public HashMap<String, Object> writingList(Criteria cri, Model model) throws Exception {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.listCount(cri));
-		map.put("list", service.writingList(cri));
-		map.put("pageMaker", pageMaker);
-		
-		return map;
-	}
-	
-	// 내 작성 댓글 목록 (ajax)
-	@ResponseBody
-	@RequestMapping(value = "/replyList.do", method = RequestMethod.GET)
-	public HashMap<String, Object> replyList(Criteria cri, Model model) throws Exception {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.listCount(cri));
-		map.put("list", service.replyList(cri));
-		map.put("pageMaker", pageMaker);
-		
-		return map;
-	}
-	
-	// 내가 좋아요 한 글 목록 (ajax)
-	@ResponseBody
-	@RequestMapping(value = "/likeList.do", method = RequestMethod.GET)
-	public HashMap<String, Object> likeList(Criteria cri, Model model) throws Exception {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.listCount(cri));
-		map.put("list", service.likeList(cri));
-		map.put("pageMaker", pageMaker);
-		
-		return map;
-	}
+//	
+//	// 내 작성글 목록 (ajax)
+//	@ResponseBody
+//	@RequestMapping(value = "/writingList.do", method = RequestMethod.GET)
+//	public HashMap<String, Object> writingList(Criteria cri, Model model) throws Exception {
+//		
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		
+//		PageMaker pageMaker = new PageMaker();
+//		pageMaker.setCri(cri);
+//		pageMaker.setTotalCount(service.writingListCount(cri));
+//		map.put("list", service.writingList(cri));
+//		map.put("pageMaker", pageMaker);
+//		
+//		return map;
+//	}
+//	
+//	// 내 작성 댓글 목록 (ajax)
+//	@ResponseBody
+//	@RequestMapping(value = "/replyList.do", method = RequestMethod.GET)
+//	public HashMap<String, Object> replyList(Criteria cri, Model model) throws Exception {
+//		
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		
+//		PageMaker pageMaker = new PageMaker();
+//		pageMaker.setCri(cri);
+//		pageMaker.setTotalCount(service.replyListCount(cri));
+//		map.put("list", service.replyList(cri));
+//		map.put("pageMaker", pageMaker);
+//		
+//		return map;
+//	}
+//	
+//	// 내가 좋아요 한 글 목록 (ajax)
+//	@ResponseBody
+//	@RequestMapping(value = "/likeList.do", method = RequestMethod.GET)
+//	public HashMap<String, Object> likeList(Criteria cri, Model model) throws Exception {
+//		
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		
+//		PageMaker pageMaker = new PageMaker();
+//		pageMaker.setCri(cri);
+//		pageMaker.setTotalCount(service.likeListCount(cri));
+//		map.put("list", service.likeList(cri));
+//		map.put("pageMaker", pageMaker);
+//		
+//		return map;
+//	}
 }

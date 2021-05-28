@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.suvin.project.dao.UserDAO;
+import com.suvin.project.vo.BoardVO;
+import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.UserVO;
 
 @Service("userService")
@@ -77,4 +79,28 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public List<BoardVO> writingList(Criteria cri) throws Exception {
+		return dao.writingList(cri);
+	}
+	@Override
+	public List<BoardVO> replyList(Criteria cri) throws Exception {
+		return dao.replyList(cri);
+	}
+	@Override
+	public List<BoardVO> likeList(Criteria cri) throws Exception {
+		return dao.likeList(cri);
+	}
+	@Override
+	public int writingListCount(Criteria cri) {
+		return dao.writingListCount(cri);
+	}
+	@Override
+	public int replyListCount(Criteria cri) {
+		return dao.replyListCount(cri);
+	}
+	@Override
+	public int likeListCount(Criteria cri) {
+		return dao.likeListCount(cri);
+	}
 }

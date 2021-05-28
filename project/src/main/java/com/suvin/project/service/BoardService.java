@@ -40,7 +40,7 @@ public interface BoardService {
 	public int boardUpdateCnt(BoardVO vo);
 	
 	// 댓글 조회
-	public List<ReplyVO> replySelect(int bNo);
+	public List<ReplyVO> replySelect(Criteria cri);
 	
 	// 댓글 등록
 	public int replyInsert(ReplyVO vo);
@@ -50,6 +50,9 @@ public interface BoardService {
 	
 	// 댓글 삭제
 	public int replyDelete(int rNo);
+	
+	// 게시글 별 댓글  count
+	public int boardReplyCount(Criteria cri) throws Exception;
 	
 	// 게시글 좋아요 여부 조회
 	public BoardVO boardLikeSelect(BoardVO vo);
@@ -63,13 +66,4 @@ public interface BoardService {
 	// 게시글 좋아요 총 개수
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo);
 	
-	// 내가 작성한 게시글 목록 (페이징 처리)
-	public List<BoardVO> writingList(Criteria cri) throws Exception;
-	
-	// 내가 작성한 댓글 목록 (페이징 처리)
-	public List<BoardVO> replyList(Criteria cri) throws Exception;
-	
-	// 내가 좋아요 한 게시글 목록 (페이징 처리)
-	public List<BoardVO> likeList(Criteria cri) throws Exception;
-
 }

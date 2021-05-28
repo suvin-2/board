@@ -71,8 +71,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<ReplyVO> replySelect(int bNo) {
-		return dao.replySelect(bNo);
+	public List<ReplyVO> replySelect(Criteria cri) {
+		return dao.replySelect(cri);
 	}
 	
 	@Override
@@ -86,6 +86,10 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int replyDelete(int rNo) {
 		return dao.replyDelete(rNo);
+	}
+	@Override
+	public int boardReplyCount(Criteria cri) throws Exception {
+		return dao.boardReplyCount(cri);
 	}
 	@Override
 	public BoardVO boardLikeSelect(BoardVO vo) {
@@ -103,17 +107,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
 		return dao.boardLikeAllSelect(vo);
 	}
-	@Override
-	public List<BoardVO> writingList(Criteria cri) throws Exception {
-		return dao.writingList(cri);
-	}
-	@Override
-	public List<BoardVO> replyList(Criteria cri) throws Exception {
-		return dao.replyList(cri);
-	}
-	@Override
-	public List<BoardVO> likeList(Criteria cri) throws Exception {
-		return dao.likeList(cri);
-	}
+
 
 }
