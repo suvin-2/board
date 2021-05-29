@@ -64,15 +64,20 @@ $(function(){
 			
 			var labels = [];
 			var myData = [];
-			
+			var date_format = [];
 			//맵안에 list 였으니 for문으로 돌린다
 			$.each(data.list,function (k,v){
 				labels.push(v.reg_date);
 				myData.push(v.count);
 			});
+			for(var i=0;i<data.length;i++) {
+				date_format.push(moment(data[i].bList.bDate).format('YYYY-MM-DD'));
+				console.log(moment(data[i].bList.bDate).format('YYYY-MM-DD'));
+			}
 			var newLabels = labels.slice(-5);
 			var newMyData = myData.slice(-5);
 
+			console.log(date_format);
 			// Chart.js 선그래프 그리기
 			var ctx = $('#myChart');
 			makeChart(ctx, 'line', newLabels, newMyData);
@@ -246,8 +251,9 @@ canvas {
 							<h2>새글/새댓글 통계</h2>
 						</header>
 						<div class="box">
-							<p>새글/새댓글 통계 차트</p>
 							<canvas id="myChart" align="center"></canvas>
+							<p>새글/새댓글 통계 차트</p>
+							
 						</div>
 					</section>
 	

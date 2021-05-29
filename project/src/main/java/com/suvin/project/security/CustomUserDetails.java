@@ -16,6 +16,7 @@ public class CustomUserDetails implements UserDetails {
 	private String username; // userId
 	private String password; // userPw
 	private String auth;
+	private boolean enabled;
 	private List<GrantedAuthority> authorities;
 	
 	// setter
@@ -75,7 +76,7 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	// 계정이 활성화 되었는가?
 	public boolean isEnabled() {
-		return true;
+		return enabled;
 	}
 
 

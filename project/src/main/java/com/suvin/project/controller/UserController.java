@@ -53,30 +53,30 @@ public class UserController {
 	}
 	
 	// 회원 로그인
-//	@RequestMapping(value="/userLogin")
-//	public UserVO userLogin(String userId) throws Exception {
-//		return null;
-//	}
+	@RequestMapping(value="/user/userLogin")
+	public String userLogin(String userId) throws Exception {
+		return "home";
+	}
 	
 	// 회원가입 화면
 	@RequestMapping(value="/userJoin")
 	public String userJoin() throws Exception {
 		return "/user/userJoin";
 	}
-	
-	// 로그인 실패 시 화면
-	@RequestMapping(value="/loginError")
-	public String userLoginFales(HttpServletResponse response) throws Exception {
-		logger.info("로그인 실패로 loginError controller in");
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script>alert('로그인 실패');</script>");
-		out.flush();
-		
-		return "/user/userLogin";
-	}
-	
+//	
+//	// 로그인 실패 시 화면
+//	@RequestMapping(value="/loginError")
+//	public String userLoginFales(HttpServletResponse response) throws Exception {
+//		logger.info("로그인 실패로 loginError controller in");
+//		
+//		response.setContentType("text/html; charset=UTF-8");
+//		PrintWriter out = response.getWriter();
+//		out.println("<script>alert('로그인 실패');</script>");
+//		out.flush();
+//		
+//		return "/user/userLogin";
+//	}
+//	
 	// 회원가입 시 아이디 중복 체크(ajax)
 	@RequestMapping(value="/userIdCheck/{id}", method= RequestMethod.GET)
 	@ResponseBody

@@ -33,6 +33,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 				System.out.println("----- Found user : "+vo);
 				users.setUsername(vo.getUserId());
 				users.setPassword(vo.getUserPw());
+				users.setAuth(vo.getAuth());
+				System.out.println("-- user details user users : " + users.getUsername() + ",  "+users.getAuth());
 				// 사용자 권한 select해서 받아온 List<String> 객체 주입
 				//users.setAuthorities(dao.selectUserAuth(userId));
 			}

@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="css/main.css" />
 <script type="text/javascript">
 $(function(){
+	
 	$("#submit").click(function(){
 		
 		if($("#userId").val().length==0) { 
@@ -59,17 +60,18 @@ $(function(){
 							         </div>
 							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							         <br>
+							         <p>${requestScope.loginFailMsg}</p>
+							         <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+							         <p>${loginFailMsg}</p>
 							         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
 									    <font color="red" name="ERRORMSG">
-									        <p>Your login attempt was not successful due to <br/>
-									            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+									        <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
 									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
 									    </font>
 									</c:if>
 									<c:if test="${param.error != null}">
 										<font color="red">
-									        <p> 아이디와 비밀번호를 다시 확인해 주세요. <br/>
-									            ${requestScope.loginFailMsg}</p>
+									        <p> ${requestScope.loginFailMsg}</p>
 									    </font>
 									</c:if>
 									<input type="submit" id="submit" class="button primary" value="Login"/>
