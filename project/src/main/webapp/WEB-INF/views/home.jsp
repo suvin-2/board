@@ -200,7 +200,6 @@
 	}
 	
 	function category3(){
-		console.log("cno3 : " + ${cNo3})
 		location.href = "${path}/boardList.do?cName="+cName3+"&sName="+sName3+"&cNo="+${cNo3};
 	}
 </script>

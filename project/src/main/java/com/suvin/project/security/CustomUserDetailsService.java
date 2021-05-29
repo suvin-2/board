@@ -25,19 +25,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 		try {
 			
 			UserVO vo = dao.userLogin(userId);
-			System.out.println("-- user details user vo : " + vo + " --");
 			
 			if(vo == null) {
 				throw new UsernameNotFoundException(userId);
 			} else {		// 사용자 정보 있을 경우 로직 전개 (userDetails에 데이터 넣기)
-				System.out.println("----- Found user : "+vo);
 				users.setUsername(vo.getUserId());
 				users.setPassword(vo.getUserPw());
 				users.setAuth(vo.getAuth());
 				users.setEnabled(vo.getEnabled());
-				System.out.println("-- user details user users : " + users.getUsername() + ",  "+users.getAuth());
-				// 사용자 권한 select해서 받아온 List<String> 객체 주입
-				//users.setAuthorities(dao.selectUserAuth(userId));
 			}
 			
 		} catch (Exception e) {

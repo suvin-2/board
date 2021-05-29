@@ -52,7 +52,6 @@ $(function(){
 				var userName;
 				var email;
 				
-				console.log(data);
 				for(var i=0;i<data.length;i++){
 					
 					if($("#id_email").val() == data[i].email && $("#userName").val() == data[i].userName) {
@@ -62,7 +61,6 @@ $(function(){
 						userId = data[i].userId;
 					}
 				}
-				console.log(userName+', '+email+', '+userId);
 
 				if(id_find_check == "N") {
 					alert("이름과 이메일을 다시 확인해주세요");
@@ -104,7 +102,6 @@ $(function(){
 				var userId;
 				var email;
 				
-				console.log(data);
 				for(var i=0;i<data.length;i++){
 					
 					if($("#userId").val() == data[i].userId && $("#pw_email").val() == data[i].email) {
@@ -114,7 +111,6 @@ $(function(){
 						userId = data[i].userId;
 					}
 				}
-				console.log(userName+', '+email+', '+userId);
 
 				if(pw_find_check == "N") {
 					alert("아이디와 이메일을 다시 확인해주세요");
@@ -136,7 +132,6 @@ $(function(){
 							console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 						},
 						success : function(data) {
-							console.log(data);
 							alert('회원님의 메일로 임시 비밀번호가 전송되었습니다.');
 						}
 					});

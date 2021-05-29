@@ -33,8 +33,6 @@ function category_select(){
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log(data);
-			
 			var unique_cName = [];
 			var itemsFound = {};
 			var j=0;
@@ -49,8 +47,6 @@ function category_select(){
 				unique_cName.push(data[i].cName);
 				itemsFound[stringified] = true;
 			}
-			
-			console.log(unique_cName);
 			
 			// 카테고리 category_tbody에 append
 			for(var i=0;i<unique_cName.length;i++){
@@ -75,8 +71,6 @@ function category_update_form(cName, k){
 	$("#category_update_div").show();
 	$("#category_add_div").hide();
 	
-	console.log('cName : '+cName+', k : '+k);
-	
 	// 카테고리 다시 조회(category controller)
 	$.ajax({
 		url : '/categoryList.do',
@@ -100,7 +94,6 @@ function category_update_form(cName, k){
 			for(var i=0;i<data.length;i++){
 				if(cName == data[i].cName){
 					
-					console.log(data[i].sName);
 					table_html += "<tr class='update_sName_value'>";
 					table_html += "<th>소분류</th>";
 					table_html += "<td><input type='text' id='UD_sName"+UD_cnt+"' value='"+data[i].sName+"'></td>";
@@ -150,8 +143,6 @@ function category_update(cName){
 	var sName = [];
 	var sName_cnt = $(".update_sName_value").length;
 	
-	console.log('sName cnt : '+sName_cnt);
-	
 	for(var i=1;i<=sName_cnt;i++){
 		sName[i] = $("#UD_sName"+i).val();
 	}
@@ -170,7 +161,6 @@ function category_update(cName){
 	}
 	
 	if(input_cName != "") {
-		console.log('기존 cName : '+cName+', 입력한 cName : '+input_cName);
 		
 		$.ajax({
 			url : '/cNameDuplicationSelect.do',
@@ -244,7 +234,6 @@ function category_update(cName){
 									console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 								},
 								success : function(data) {
-									console.log('기존 카테고리 수정 완.');
 								}
 							});
 							if(insert_data.length > 0) {
@@ -263,7 +252,6 @@ function category_update(cName){
 										console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 									},
 									success : function(data) {
-										console.log('추가 카테고리 등록 완.');
 									}
 								});
 							}
@@ -344,7 +332,6 @@ function category_delete(cName, sName, cnt){
 			alert(sName+'이(가) 삭제되지 않았습니다.');
 		}
 	}
-	console.log('cName value : '+cName+', sName : '+sName);
 }
 
 // 카테고리 추가 등록까지 완료 ------------------------------------------------------------------
@@ -428,10 +415,6 @@ function category_add(){
 				} else {
 					insert_data.push({"cName":cName, "sName":$("#add_sName0").val()});
 				}
-				
-				console.log(insert_data);
-				//var insert_data_json = JSON.stringify(insert_data);
-				//console.log(insert_data_json);
 				
 				// spring security 때문에 csrf 토큰 꼭 hidden으로 보내줘야 post로 전송 가능
 				var token = $("input[name='_csrf']").val();

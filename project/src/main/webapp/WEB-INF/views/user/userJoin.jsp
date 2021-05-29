@@ -47,15 +47,9 @@ $(function(){
 	var auth_code;
 	
 	$("#submit").click(function(){
-		
-		console.log('idCheck : ' + idCheck);
-		
-		
+				
 		birthday = yyyy.value+mm.value+dd.value;
 		document.getElementById("birthday").value = birthday;
-		
-		console.log('생년월일 : ' + birthday);
-		console.log('태어난 년도 : ' + yyyy.value);
 		
 		if(idCheck == "N") {
 			alert("아이디 중복확인을 해주세요.");
@@ -196,7 +190,6 @@ $(function(){
 			return false;
 	    } else if($("#userId").val().length != 0) {
 	    	var userId = userId_jsp.value;
-			console.log('입력한 id : ' + userId);
 			
 			$.ajax({
 				url : '${pageContext.request.contextPath}/userIdCheck/'+userId,
@@ -242,8 +235,6 @@ $(function(){
 		    	// dot(.) 앞까지 자른 이메일
 		    	var email = full_email.split('.');
 		    	
-		    	console.log('email 앞 :'+email[0]+', 이메일 뒤 : '+email[1]);
-		    	
 		    	$.ajax({
 					url : "/userEmailCheck/"+email,
 					type : "get",
@@ -268,7 +259,6 @@ $(function(){
 								},
 								success : function(data) {
 									
-									console.log('메일로 전송한 인증번호 : '+data);
 									auth_code = data;
 									document.getElementById('email').readOnly = true;
 									alert("인증번호가 메일로 발송되었습니다. 인증번호를 입력해주세요.");
@@ -290,7 +280,6 @@ $(function(){
 	
 	// 인증번호 비교 (인증번호를 입력 후 마우스로 다른곳을 클릭하면 실행)
 	$("#auth_num").blur(function(){
-		console.log('auth_code : '+auth_code+', auth_num value : '+$("#auth_num").val());
 		if(auth_code == $("#auth_num").val()) {
 			$("#auth_result").html("인증번호가 일치합니다.");
 			$("#auth_result").css("color","green");
@@ -321,7 +310,6 @@ $(function(){
 			return false;
 	    } else if($("#tel").val().length != 0) {
 	    	var tel = tel_jsp.value;
-			console.log('입력한 Tel : ' + tel);
 			
 			$.ajax({
 				url : 'userTelCheck/'+tel,

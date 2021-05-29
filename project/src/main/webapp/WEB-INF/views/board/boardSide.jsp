@@ -16,7 +16,6 @@
 $(function(){
 	
 	categoryInfo();
-	console.log(list);
 });
 
 var list = [];
@@ -41,8 +40,6 @@ function categoryInfo(){
 				list[i] = data[i];
 				cNameList[i] = data[i].cName;
 			}
-			console.log(list);
-			console.log("cName List : "+cNameList);
 			
 			// cName 중복제거
 			$.each(cNameList,function(i,value){
@@ -59,22 +56,6 @@ function categoryInfo(){
 					}
 				}
 			}
-			// class opener가 안먹음...
-			/*
-			for(var i=0;i<finalData.length;i++) {
-				$("#sideUl").append("<li id='sideLi"+i+"'></li>");
-				console.log($("#sideLi"+i).text());
-				
-				$("#sideLi"+i).append("<span id='cName' class='opener'>"+finalData[i]+"</span>");
-				$("#sideLi"+i).append("<ul id='chidUl"+i+"'></ul>");
-				
-				for(var j=0;j<cNameList.length;j++) {
-					if(finalData[i] == list[j].cName) {
-						$("#chidUl"+i).append("<li><a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a></li>");
-					}
-				}
-			}
-			*/
 		}
 	});
 }

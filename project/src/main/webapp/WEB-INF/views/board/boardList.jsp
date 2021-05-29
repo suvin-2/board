@@ -36,7 +36,6 @@
 				<%  
 					String sName = request.getParameter("sName"); 
 					String cNo = request.getParameter("cNo"); 
-					System.out.println("boardList.jsp 넘어온 sName : " + sName);
 				%>
 				<header class="major">
 						<h2 id="sName"><%= sName %></h2>
