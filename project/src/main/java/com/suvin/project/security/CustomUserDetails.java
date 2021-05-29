@@ -16,7 +16,8 @@ public class CustomUserDetails implements UserDetails {
 	private String username; // userId
 	private String password; // userPw
 	private String auth;
-	private boolean enabled;
+	private String enabled;
+	private boolean enabled_result;
 	private List<GrantedAuthority> authorities;
 	
 	// setter
@@ -55,6 +56,14 @@ public class CustomUserDetails implements UserDetails {
 		return auth;
 	}
 
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	// 계정이 만료 되지 않았는가?
 	public boolean isAccountNonExpired() {
@@ -76,7 +85,12 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	// 계정이 활성화 되었는가?
 	public boolean isEnabled() {
-		return enabled;
+		if(enabled.equals("1")) {
+			enabled_result = true;
+		} else {
+			enabled_result = false;
+		}
+		return enabled_result;
 	}
 
 

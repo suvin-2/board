@@ -62,7 +62,14 @@ public class UserServiceImpl implements UserService {
 		return vo;
 		
 	}
-
+	@Override
+	public UserVO selectUserAuth(String userId) throws Exception {
+		return dao.selectUserAuth(userId);
+	}
+	@Override
+	public int userRandomPw(UserVO vo) {
+		return dao.userRandomPw(vo);
+	}
 	// 회원 정보 조회
 	@Override
 	public UserVO userInfoSelect(UserVO vo) {
@@ -103,4 +110,5 @@ public class UserServiceImpl implements UserService {
 	public int likeListCount(Criteria cri) {
 		return dao.likeListCount(cri);
 	}
+
 }

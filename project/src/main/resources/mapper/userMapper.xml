@@ -47,6 +47,13 @@
 		WHERE USERID=#{userId}
 	</select>
 	
+	<!-- 임시 비밀번호 변경 -->
+	<update id="userRandomPw">
+		UPDATE B_USER
+		SET USERPW = #{userPw}
+		WHERE USERID = #{userId}
+	</update>
+	
 	<!-- 회원 로그인 (권한조회)-->
 	<select id="selectUserAuth" resultType="com.suvin.project.security.CustomUserDetails">
 		SELECT AUTH

@@ -31,6 +31,12 @@ public interface UserService {
 	// 회원 로그인 (security)
 	public UserVO userLogin(String userId) throws Exception;
 	
+	// 회원 권한 조회
+	public UserVO selectUserAuth(String userId) throws Exception;
+	
+	// 임시 비밀번호 변경
+	public int userRandomPw(UserVO vo);
+		
 	// 회원 정보 조회
 	public UserVO userInfoSelect(UserVO vo);
 	

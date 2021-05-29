@@ -79,7 +79,7 @@ $(function(){
 							    </form>
 							    <div class="dropdown-divider"></div>
 							    <br>
-							    <a class="dropdown-item" href="#">Forgot password?</a>
+							    <a class="dropdown-item" href="/userFindAccountForm">Forgot password?</a>
 							</div>
 							
 						</section>

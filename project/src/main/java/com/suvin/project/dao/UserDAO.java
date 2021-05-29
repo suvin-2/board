@@ -48,8 +48,13 @@ public class UserDAO {
 	}
 	
 	// 회원 권한 조회
-	public List<String> selectUserAuth(String userId) throws Exception {
+	public UserVO selectUserAuth(String userId) throws Exception {
 		return mybatis.selectOne("UserDAO.selectUserAuth",userId);
+	}
+	
+	// 임시 비밀번호 변경
+	public int userRandomPw(UserVO vo) {
+		return mybatis.update("UserDAO.userRandomPw",vo);
 	}
 	
 	// 회원 로그인 (사용X)

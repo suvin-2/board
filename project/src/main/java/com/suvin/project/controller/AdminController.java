@@ -104,7 +104,7 @@ public class AdminController {
 
 		String userId = vo.getUserId();
 		String email = vo.getEmail();
-		int enabled = vo.getEnabled();
+		String enabled = vo.getEnabled();
 		
 		// 이메일 보내기
         String setFrom = "lsbinnn7@gmail.com";
@@ -125,7 +125,7 @@ public class AdminController {
                 "해당 계정의 활성화를 원하시면 본 메일로 답신주세요.";
         
         
-        if(enabled == 1) {
+        if(enabled == "1") {
     		try {
                 
                 MimeMessage message = mailSender.createMimeMessage();
