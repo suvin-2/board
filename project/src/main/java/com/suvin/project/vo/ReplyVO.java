@@ -16,6 +16,7 @@ public class ReplyVO {
 	private String sName;
 	private int cnt;
 	private int cNo;
+	private String sDate;
 	
 	public int getbNo() {
 		return bNo;
@@ -89,10 +90,16 @@ public class ReplyVO {
 	public void setcNo(int cNo) {
 		this.cNo = cNo;
 	}
+	public String getsDate() {
+		return sDate;
+	}
+	public void setsDate(String sDate) {
+		this.sDate = sDate;
+	}
 	@Override
 	public String toString() {
 		return "ReplyVO [bNo=" + bNo + ", rNo=" + rNo + ", title=" + title + ", rContent=" + rContent + ", writer="
 				+ writer + ", rWriter=" + rWriter + ", rDate_string=" + rDate_string + ", rDate=" + rDate + ", uDate="
-				+ uDate + ", sName=" + sName + ", cnt=" + cnt + ", cNo=" + cNo + "]";
+				+ uDate + ", sName=" + sName + ", cnt=" + cnt + ", cNo=" + cNo + ", sDate=" + sDate + "]";
 	}
 }

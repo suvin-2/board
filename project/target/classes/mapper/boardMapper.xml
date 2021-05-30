@@ -16,35 +16,9 @@
 		       C.SNAME
 		FROM BOARD B, CATEGORY C
 		WHERE B.CNO = C.CNO
-		ORDER BY BNO DESC
+		ORDER BY BDATE DESC
 	</select>
-		
-	<!-- 좋아요 1개 이상인 글 전체 조회 -->
-	<select id="boardCntReplyCnt" resultType="replyVO">
-		SELECT 
-			A.BNO, B.RNO, SYSDATE AS BDATE
-		FROM 
-			(SELECT COUNT(*) BNO FROM BOARD) A,
-			(SELECT COUNT(*) RNO FROM B_REPLY) B
-	</select>
-	<!-- 좋아요 1개 이상인 글 전체 조회 -->
-	<select id="BoardCntChart" resultType="boardVO">
-		 <![CDATA[
-			SELECT BDATE AS BDATE, COUNT(*) AS BNO
-			FROM BOARD
-			WHERE BDATE >= '2021-01-01' AND BDATE < TO_CHAR(SYSDATE,'YYYY-MM-DD')
-			GROUP BY BDATE
-		 ]]>
-	</select>
-	<!-- 좋아요 1개 이상인 글 전체 조회 -->
-	<select id="ReplyCntChart" resultType="replyVO">
-		 <![CDATA[
-			SELECT TO_CHAR(RDATE,'YYYY-MM-DD') AS RDATE_STRING, COUNT(*) AS RNO
-			FROM B_REPLY
-			WHERE RDATE >= '2021-01-01' AND RDATE < TO_CHAR(SYSDATE,'YYYY-MM-DD')
-			GROUP BY TO_CHAR(RDATE,'YYYY-MM-DD')
-		 ]]>
-	</select>
+
 	
 	<!-- 게시판 카테고리 별 게시글 조회 페이징 테스트 -->
 	<select id="boardCategorySelect" resultType="boardVO" parameterType="criteria"> 
@@ -232,7 +206,7 @@
 		             ROW_NUMBER() OVER(ORDER BY RNO DESC) AS RNUM
 		    FROM B_REPLY) BD
 		WHERE BNO = #{bNo} AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
-		ORDER BY BNO DESC
+		ORDER BY RDATE
 	</select>
 	
 	<!-- 댓글 등록 -->

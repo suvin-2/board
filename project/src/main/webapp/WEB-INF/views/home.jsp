@@ -58,9 +58,9 @@
 								<table border="1">
 									<thead>
 									  <tr>
-									  	<th>순번</th>
 									    <th>제목</th>
 									    <th>카테고리</th>
+									  	<th>작성자</th>
 									    <th>작성일</th>
 									  </tr>
 									</thead>
@@ -69,9 +69,9 @@
 									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
 									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
 									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-									    <td id="bNo">${item.bNo}</td>
 									    <td id="title">${item.title}</td>
 									    <td id="cName">${item.cName}</td>
+									    <td id="writer">${item.writer}</td>
 									    <td id="bDate">${bDate}</td>
 									  </tr>
 									</c:forEach>

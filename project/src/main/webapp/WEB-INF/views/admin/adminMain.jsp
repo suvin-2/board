@@ -9,6 +9,7 @@
 <head>
 <title>suvin's cooking class admin page</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -20,38 +21,15 @@
 $(function(){
 	new_user_list();
 	board_like_list();
-	
-	function randomColor(labels) {
-		var colors = [];
-		for (let i = 0; i < labels.length; i++) {
-			colors.push("#" + Math.round(Math.random() * 0xffffff).toString(16));
-		}
-		return colors;
-	}
-	
-	function makeChart(ctx, type, labels, data) {
-		var myChart = new Chart(ctx, {
-		    type: type,
-		    data: {
-		        labels: labels,
-		        datasets: [{
-		            label: '날짜별 게시글, 댓글 등록 현황',
-		            data: data,
-		            backgroundColor: randomColor(labels)
-		        }]
-		    },
-		    options: {
-			    responsive: false,
-		        scales: {
-		            yAxes: [{
-		                ticks: {
-		                    beginAtZero: true
-		                }
-		            }]
-		        }
-		    }
-		});
-	}
+});
+
+// 차트 그리기
+google.charts.load('current', {
+    'packages': ['corechart']
+});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
 	
 	$.ajax({
 		
@@ -59,31 +37,52 @@ $(function(){
 		url: "boardCntReplyCnt.do",
 		dataType : "json",
 		success: function(data, status, xhr) {
-			
 			console.log(data);
 			
-			var labels = [];
-			var myData = [];
-			var date_format = [];
+			var b_labels = [];
+			var b_cnt = [];
+			var r_cnt = [];
+			var list = [];
 			//맵안에 list 였으니 for문으로 돌린다
-			$.each(data.list,function (k,v){
-				labels.push(v.reg_date);
-				myData.push(v.count);
+			$.each(data.bList,function (k,v){
+				b_labels.push(v.sDate);
+				b_cnt.push(v.cnt);
 			});
-			for(var i=0;i<data.length;i++) {
-				date_format.push(moment(data[i].bList.bDate).format('YYYY-MM-DD'));
-				console.log(moment(data[i].bList.bDate).format('YYYY-MM-DD'));
+			$.each(data.rList,function (k,v){
+				r_cnt.push(v.cnt);
+			});
+			
+			for(var i=0;i<data.bList.length;i++) {
+				list.push(data.bList[i].sDate+','+data.bList[i].cnt+','+data.rList[i].cnt);
 			}
-			var newLabels = labels.slice(-5);
-			var newMyData = myData.slice(-5);
+			
+			
+			console.log(list);
+			 
+			var data = google.visualization.arrayToDataTable([
+		    	
+		        ['날짜', '게시글', '댓글'],
+		        list
+		    ]);
 
-			console.log(date_format);
-			// Chart.js 선그래프 그리기
-			var ctx = $('#myChart');
-			makeChart(ctx, 'line', newLabels, newMyData);
+		    var options = {
+		        hAxis: {
+		          title: '게시글/댓글 등록 현황',
+		          titleTextStyle: {
+		            color: '#333'
+		          }
+		        },
+		        vAxis: {
+		            minValue: 0
+		        }
+		    };
+
+		    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+		    chart.draw(data, options);
 		}
 	});
-});
+	
+}
 
 //신규 가입자(최근 10명)
 function new_user_list() {
@@ -251,9 +250,8 @@ canvas {
 							<h2>새글/새댓글 통계</h2>
 						</header>
 						<div class="box">
+							<div id="chart_div" style="width: 100%; height: 500px;"></div>
 							<canvas id="myChart" align="center"></canvas>
-							<p>새글/새댓글 통계 차트</p>
-							
 						</div>
 					</section>
 	

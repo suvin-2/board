@@ -18,6 +18,51 @@
 		WHERE B.CNO = C.CNO
 		ORDER BY BNO DESC
 	</select>
+			
+	<!-- 날짜별 글 수 (chart) -->
+	<select id="BoardCntChart" resultType="boardVO">
+		 <![CDATA[
+			SELECT TO_TIMESTAMP(B.DT, 'YYYY-MM-DD') AS SDATE
+			     , NVL(SUM(A.CNT), 0) CNT
+			FROM (SELECT TO_CHAR(BDATE, 'YYYY-MM-DD') AS SDATE
+			            , COUNT(*) CNT
+			      FROM BOARD
+			      WHERE TO_CHAR(BDATE,'YYYY-MM-DD') BETWEEN TO_DATE('2021-05-13', 'YYYY-MM-DD')
+			                         AND TO_DATE(#{sDate}, 'YYYY-MM-DD') 
+			      GROUP BY BDATE
+			    ) A,
+			    ( SELECT TO_DATE('2021-05-13','YYYY-MM-DD') + LEVEL - 1 AS DT
+			      FROM DUAL 
+			      CONNECT BY LEVEL <= (TO_DATE(#{sDate},'YYYY-MM-DD') 
+			                        - TO_DATE('2021-05-13','YYYY-MM-DD') + 1)
+			    ) B
+			WHERE B.DT = A.SDATE(+)
+			GROUP BY B.DT
+			ORDER BY B.DT
+		 ]]>
+	</select>
+	<!-- 날짜별 댓글 수 (chart) -->
+	<select id="ReplyCntChart" resultType="replyVO">
+		 <![CDATA[
+			SELECT TO_TIMESTAMP(B.DT, 'YYYY-MM-DD') AS SDATE
+			     , NVL(SUM(A.CNT), 0) CNT
+			FROM (SELECT TO_CHAR(RDATE, 'YYYY-MM-DD') AS SDATE
+			            , COUNT(*) CNT
+			      FROM B_REPLY
+			      WHERE TO_CHAR(RDATE,'YYYY-MM-DD') BETWEEN TO_DATE('2021-05-13', 'YYYY-MM-DD')
+			                         AND TO_DATE(#{sDate}, 'YYYY-MM-DD') 
+			      GROUP BY RDATE
+			    ) A,
+			    ( SELECT TO_DATE('2021-05-13','YYYY-MM-DD') + LEVEL - 1 AS DT
+			      FROM DUAL 
+			      CONNECT BY LEVEL <= (TO_DATE(#{sDate},'YYYY-MM-DD') 
+			                        - TO_DATE('2021-05-13','YYYY-MM-DD') + 1)
+			    ) B
+			WHERE B.DT = A.SDATE(+)
+			GROUP BY B.DT
+			ORDER BY B.DT
+		 ]]>
+	</select>
 	
 	<!-- 게시판 카테고리 별 게시글 조회 페이징 테스트 -->
 	<select id="boardCategorySelect" resultType="boardVO" parameterType="criteria"> 

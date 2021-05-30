@@ -20,20 +20,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
-		return dao.boardSelect(vo);
-	}
-	@Override
-	public List<ReplyVO> boardCntReplyCnt(ReplyVO vo) {
-		return dao.boardCntReplyCnt(vo);
-	}
-	@Override
-	public List<ReplyVO> BoardCntChart(ReplyVO vo) {
-		return dao.BoardCntChart(vo);
-	}
-	@Override
-	public List<ReplyVO> ReplyCntChart(ReplyVO vo) {
-		return dao.ReplyCntChart(vo);
+	public List<BoardVO> boardSelect() throws Exception {
+		return dao.boardSelect();
 	}
 	@Override
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {

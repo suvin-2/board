@@ -10,19 +10,10 @@ import com.suvin.project.vo.ReplyVO;
 public interface BoardService {
 
 	// 게시글 전체 조회
-	public List<BoardVO> boardSelect(BoardVO vo) throws Exception;
-	
-	// 글 개수, 댓글 개수
-	public List<ReplyVO> boardCntReplyCnt(ReplyVO vo);
+	public List<BoardVO> boardSelect() throws Exception;
 	
 	// 게시글 카테고리 별 조회 페이징 테스트
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception;
-	
-	// 글 개수 (chart)
-	public List<ReplyVO> BoardCntChart(ReplyVO vo);
-	
-	// 댓글 개수 (chart)
-	public List<ReplyVO> ReplyCntChart(ReplyVO vo);
 	
 	// 총 글 개수(페이징 처리에 사용)
 	public int listCount(Criteria cri) throws Exception;

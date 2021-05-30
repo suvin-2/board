@@ -1,14 +1,23 @@
 package com.suvin.project.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -24,6 +33,7 @@ import com.suvin.project.service.AdminService;
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.PageMaker;
+import com.suvin.project.vo.ReplyVO;
 import com.suvin.project.vo.UserVO;
 
 @Controller
@@ -42,6 +52,40 @@ public class AdminController {
 	@RequestMapping(value="/adminMainForm.do")
 	public String adminMain() throws Exception {
 		return "/admin/adminMain";
+	}
+	
+	
+	// 게시글 개수, 댓글 개수
+	// jsp에서 date type의 데이터를 받을 땐 @DateTimeFormat를 설정해줘야함
+	@ResponseBody
+	@RequestMapping(value = "/boardCntReplyCnt.do")
+	public String boardCntReplyCnt(BoardVO bVo, ReplyVO rVo) throws Exception {
+		
+		//원하는 데이터 포맷 지정
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd"); 
+		// 오늘 날짜
+		Date now = new Date();
+		String strNowDate = simpleDateFormat.format(now);
+		
+		bVo.setsDate(strNowDate);
+		rVo.setsDate(strNowDate);
+		
+		List<BoardVO> bList = service.BoardCntChart(bVo);
+		List<ReplyVO> rList = service.ReplyCntChart(rVo);
+		
+		HashMap map = new HashMap();
+		
+		map.put("bList",bList);
+		map.put("rList",rList);
+
+		String json = null;
+		try {
+			json = new ObjectMapper().writeValueAsString(map);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return json;
 	}
 	
 	// 신규 회원 조회 (ajax)

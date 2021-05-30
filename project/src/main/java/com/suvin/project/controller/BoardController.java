@@ -42,40 +42,15 @@ public class BoardController {
 	// url mapping
 	// 기본, 루트 페이지 -> home메서드 호출
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(BoardVO vo, CategoryVO cVo, Locale locale, Model model) throws Exception {
+	public ModelAndView home(Locale locale) throws Exception {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("home");
-		mv.addObject("list",service.boardSelect(vo));
+		mv.addObject("list",service.boardSelect());
 		
 		return mv;
-	}
-	
-	// 게시글 개수, 댓글 개수
-	@ResponseBody
-	@RequestMapping(value = "/boardCntReplyCnt.do")
-	public String boardCntReplyCnt(@ModelAttribute("boardVO") ReplyVO vo, HttpServletRequest request) throws Exception {
-		
-		List<ReplyVO> list = service.boardCntReplyCnt(vo);
-		List<ReplyVO> bList = service.BoardCntChart(vo);
-		List<ReplyVO> rList = service.ReplyCntChart(vo);
-		
-		request.setAttribute("list", list);
-		HashMap map = new HashMap();
-		map.put("list",list);
-		map.put("bList",bList);
-		map.put("rList",rList);
-		
-		String json = null;
-		try {
-			json = new ObjectMapper().writeValueAsString(map);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-					
-		return json;
 	}
 	
 	// 게시판 카테고리 별 글 목록
