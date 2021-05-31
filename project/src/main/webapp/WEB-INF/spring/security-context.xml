@@ -30,7 +30,15 @@
 				delete-cookies="true"
 		    />
         </http>
-        
+        <!-- 
+        <beans:bean id="userLoginFailHandler" class="com.suvin.project.security.UserLoginFailHandler">
+		    <beans:property name="loginidname" value="userId"/>
+		    <beans:property name="loginpwdname" value="userPw"/>
+		    <beans:property name="errormsgname" value="ERRORMSG"/>
+		    <beans:property name="defaultFailureUrl" value="/userLoginForm"/>
+		</beans:bean>
+		<beans:bean id="userAuthProvider" class="com.suvin.project.security.CustomAuthenticationProvider"/>
+		 -->
         <authentication-manager>
             <authentication-provider user-service-ref="userLoginService">
                 <!-- <user-service>

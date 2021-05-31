@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class BoardVO {
 
+	private int pRank;
 	private Integer bNo;
 	private String title;
 	private String content;
@@ -17,6 +18,12 @@ public class BoardVO {
 	private int enabled;
 	private String sDate;
 	
+	public int getpRank() {
+		return pRank;
+	}
+	public void setpRank(int pRank) {
+		this.pRank = pRank;
+	}
 	public Integer getbNo() {
 		return bNo;
 	}
@@ -95,8 +102,8 @@ public class BoardVO {
 	}
 	@Override
 	public String toString() {
-		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
-				+ ", writer=" + writer + ", userId=" + userId + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName
-				+ ", enabled=" + enabled + ", sDate=" + sDate + "]";
+		return "BoardVO [pRank=" + pRank + ", bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt
+				+ ", bDate=" + bDate + ", writer=" + writer + ", userId=" + userId + ", cNo=" + cNo + ", cName=" + cName
+				+ ", sName=" + sName + ", enabled=" + enabled + ", sDate=" + sDate + "]";
 	}
 }

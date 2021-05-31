@@ -49,6 +49,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("home");
 		mv.addObject("list",service.boardSelect());
+		mv.addObject("pList",service.boardPopularList());
 		
 		return mv;
 	}

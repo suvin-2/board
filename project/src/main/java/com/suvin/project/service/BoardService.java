@@ -12,6 +12,9 @@ public interface BoardService {
 	// 게시글 전체 조회
 	public List<BoardVO> boardSelect() throws Exception;
 	
+	// 인기글 (메인화면)
+	public List<BoardVO> boardPopularList() throws Exception;
+		
 	// 게시글 카테고리 별 조회 페이징 테스트
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception;
 	

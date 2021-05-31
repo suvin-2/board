@@ -19,6 +19,15 @@ $(function (){
 	
 	var userId = $("#userId").val();
 	
+	if($("#reply_title").html() == undefined) {
+		$("#user_reply_table").empty();
+		$("#none_list_div").empty();
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>작성한 게시글이 없습니다.</p></div>");
+	} else {
+		$("#user_reply_table").show();
+		$("#none_list_div").empty();
+	}
+	
 	//탭 컨텐츠 숨기기
 	$(".tab_content").hide();
 
@@ -135,7 +144,7 @@ $(function (){
 				</div>
 				<!-- 작성한 댓글 출력 -->
 				<div id="tab2" class="tab_content">
-					<table border="1">
+					<table border="1" id="user_reply_table">
 						<thead>
 							<tr>
 							  	<th>카테고리</th>
@@ -160,6 +169,7 @@ $(function (){
 						    </c:forEach>
 						</tbody>
 					</table>
+					<div id="none_list_div"></div>
 					<!-- 페이징 -->
 					<div class="pagingBnt">
 						  <ul class="pagination" id="paging_ul">

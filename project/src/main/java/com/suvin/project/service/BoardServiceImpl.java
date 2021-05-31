@@ -24,6 +24,10 @@ public class BoardServiceImpl implements BoardService {
 		return dao.boardSelect();
 	}
 	@Override
+	public List<BoardVO> boardPopularList() throws Exception {
+		return dao.boardPopularList();
+	}
+	@Override
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
 		return dao.boardCategorySelect(cri);
 	}	
@@ -107,6 +111,4 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> boardLikeAllSelect(BoardVO vo) {
 		return dao.boardLikeAllSelect(vo);
 	}
-
-
 }
