@@ -48,7 +48,7 @@
 						</ul>
 					</div>
 					<span class="image object">
-						<img src="images/pic10.jpg" alt="" />
+						<img src="images/waffles.jpg" alt="" />
 					</span>
 				</section>
 
@@ -85,14 +85,19 @@
 							</tbody>
 						</table>
 				</section>
-
+				<br>
+				<div class="content">
+					<span class="image object">
+						<img src="images/table_deco.jpg" alt="" style="width:100%;" />
+					</span>
+				</div>
+				<br><br>
 				<!-- Section -->
 				<section>
 					<header class="major">
 						<h2>실시간 인기글</h2>
 					</header>
 					<article>
-						<h3>한식</h3>
 						<table border="1">
 							<thead>
 							    <tr>

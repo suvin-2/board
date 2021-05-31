@@ -22,7 +22,7 @@ $(function (){
 	if($("#like_title").html() == undefined) {
 		$("#user_like_table").empty();
 		$("#none_list_div").empty();
-		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>작성한 게시글이 없습니다.</p></div>");
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>좋아요를 누른 게시글이 없습니다.</p></div>");
 	} else {
 		$("#user_like_table").show();
 		$("#none_list_div").empty();

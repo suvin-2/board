@@ -112,11 +112,16 @@ function boardSearch(){
 				<header class="major">
 					<h2>Get in touch</h2>
 				</header>
-				<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+				<p>
+					안녕하세요 관리자입니다.<br>
+					제 사이트에 방문해 주셔서 감사합니다.<br>
+					궁금한 점이나 문의사항이 있으시면 <br>
+					아래의 메일로 회신 부탁드립니다.
+				</p>
 				<ul class="contact">
-					<li class="icon solid fa-envelope"><a href="#">lsbinnn7@gmail.com</a></li>
+					<li class="icon solid fa-envelope"><a href="mailto:﻿lsbinnn7@gmail.com">lsbinnn7@gmail.com</a></li>
 					<li class="icon solid fa-phone">010-0000-0000</li>
-					<li class="icon solid fa-home">https://www.tistory.com/</li>
+					<li class="icon solid fa-home"><a href="https://dailymao.tistory.com/">https://dailymao.tistory.com/</a></li>
 				</ul>
 			</section>
 

@@ -22,7 +22,7 @@ $(function (){
 	if($("#reply_title").html() == undefined) {
 		$("#user_reply_table").empty();
 		$("#none_list_div").empty();
-		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>작성한 게시글이 없습니다.</p></div>");
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>댓글을 작성한 게시글이 없습니다.</p></div>");
 	} else {
 		$("#user_reply_table").show();
 		$("#none_list_div").empty();

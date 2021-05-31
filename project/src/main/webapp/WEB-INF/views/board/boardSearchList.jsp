@@ -14,6 +14,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script>
+$(function (){
+	
+	if($("#title").html() == undefined) {
+		$("#list_table").empty();
+		$("#none_list_div").empty();
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>검색된 게시글이 없습니다.</p></div>");
+	} else {
+		$("#list_table").show();
+		$("#none_list_div").empty();
+	}
+	
+});
+</script>
 <style type="text/css">
 .pagingBnt li {list-style: none; float: middle; padding: 10px;}
 .pagingBnt {align : center;}
@@ -63,6 +77,7 @@
 				    </c:forEach>
 					</tbody>
 				</table>
+				<div id="none_list_div"></div>
 				<div class="pagingBnt">
 					  <ul class="btn-group pagination">
 					    <c:if test="${pageMaker.prev }"> 
