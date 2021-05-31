@@ -3,6 +3,7 @@ package com.suvin.project.security;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 
-import com.suvin.project.controller.UserController;
 
 // 로그인 실패 대응 로직
 @Service
@@ -34,8 +34,7 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException exception) throws IOException, ServletException {
-		
+			AuthenticationException exception) throws IOException, ServletException, NullPointerException {
 		
 		String userId = request.getParameter(loginidname);
 		String userPw = request.getParameter(loginpwdname);
@@ -69,8 +68,13 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 		} else if(exception instanceof CredentialsExpiredException) {
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
 		}
-
+		
 		response.sendRedirect(request.getContextPath()+defaultFailureUrl);
+		
+		//ServletContext context = request.getSession().getServletContext();
+		//dispatcher = context.getRequestDispatcher(defaultFailureUrl);		
+		
+		//response.sendRedirect(request.getContextPath()+defaultFailureUrl);
 		
 		// 로그인 페이지로 다시 포워딩
 		//RequestDispatcher dispatcher = request.getRequestDispatcher(defaultFailureUrl);

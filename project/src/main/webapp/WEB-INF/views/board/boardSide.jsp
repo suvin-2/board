@@ -70,7 +70,7 @@ function boardSearch(){
 <style>
 #keyword {
 	display : inline;
-	width : 85%
+	width : 80%
 }
 #search_btn {
 	vertical-align : -5px;

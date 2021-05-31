@@ -30,9 +30,14 @@ $(function(){
 			return false; 
 		}
 	});
-});
 
+});
 </script>
+<style>
+#errorMsg {
+	color : red;
+}
+</style>
 </head>
 <body class="is-preload" onload="document.userLoginForm.userId.focus();">
 	<!-- Wrapper -->
@@ -49,6 +54,7 @@ $(function(){
 							</header>
 							<div style="padding: 0 200px 0 200px; height: auto; min-height: 100px; overflow: auto;">
 							     <form name="userLoginForm" action="/login" method="post">
+							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
 							         <div class="form-group">
 							             <label >ID</label>
 							             <input type="text" class="form-control" name="userId" id="userId" placeholder="id" />
@@ -58,28 +64,17 @@ $(function(){
 							             <label>Password</label>
 							             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" />
 							         </div>
-							         <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
-							         <br>
-							         <p>${requestScope.loginFailMsg}</p>
-							         <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-							         <p>${loginFailMsg}</p>
-							         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-									    <font color="red" name="ERRORMSG">
-									        <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-									        <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session"/>
-									    </font>
-									</c:if>
-									<c:if test="${param.error != null}">
-										<font color="red">
-									        <p> ${requestScope.loginFailMsg}</p>
-									    </font>
-									</c:if>
-									<input type="submit" id="submit" class="button primary" value="Login"/>
-							        <!-- <button type="submit" class="btn btn-primary">Login</button> -->
+							         <c:if test="${param.error!=null}">
+										<br><br><p id="errorMsg">아이디또는 비밀번호를 확인해주세요.
+										<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
+										</p>
+									 </c:if>
+							         <p id="loginFailMsg">${loginFailMsg}</p>
+									 <input type="submit" id="submit" class="button primary" value="Login"/>
+									 
 							    </form>
-							    <div class="dropdown-divider"></div>
 							    <br>
-							    <a class="dropdown-item" href="/userFindAccountForm">Forgot password?</a>
+							    <a class="dropdown-item" href="/userFindAccountForm">Forgot user account?</a>
 							</div>
 							
 						</section>

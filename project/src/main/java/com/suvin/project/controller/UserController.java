@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.suvin.project.service.UserService;
 import com.suvin.project.vo.BoardVO;
@@ -49,7 +51,7 @@ public class UserController {
 	public List<UserVO> allUserSelect(UserVO vo) throws Exception {
 		return service.userSelect(vo);
 	}
-
+	
 	// 로그인 화면
 	@RequestMapping(value="/userLoginForm")
 	public String userLoginForm() throws Exception {
