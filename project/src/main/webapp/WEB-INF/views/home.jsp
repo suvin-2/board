@@ -38,20 +38,40 @@
 				<section id="banner">
 					<div class="content">
 						<header>
-							<h1>Hi, I’m Editorial<br />
-							by HTML5 UP</h1>
-							<p>A free and fully responsive site template</p>
+							<h1>Cooking Class<br />
+							by suvin</h1>
+							<p>요리가 생활이 되는 쉬운 레시피</p>
 						</header>
-						<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
-						<ul class="actions">
-							<li><a href="#" class="button big">Learn More</a></li>
-						</ul>
+						<p>
+							매일 SNS에 올리고 싶은 센스 넘치는 플레이팅, 당장이라도 입에 넣고 싶은 음식들, 
+							직접 만든 내 요리들을 모두가 맛볼 수 있도록 나만의 꿀팁 대방출!<br>
+							여러 회원들의 레시피로 요리해보세요 :)
+						</p>
 					</div>
 					<span class="image object">
 						<img src="images/waffles.jpg" alt="" />
 					</span>
 				</section>
-
+				<hr><br>
+				<!-- Section -->
+				<section>
+					<div class="features">
+						<article>
+							<span class="icon solid style2 major fa-hashtag"></span>
+							<div class="content">
+								<h3>다양한 레시피</h3>
+								<p>여러분이 정성껏 만든 음식의 레시피를 자랑하세요!<br>다양한 레시피들로 새로운 요리를 만들어보세요 :)</p>
+							</div>
+						</article>
+						<article>
+							<span class="icon solid major fa-pencil-alt"></span>
+							<div class="content">
+								<h3>자유게시판</h3>
+								<p>요리뿐 아니라 서로의 일상을 소통할 수 있어요.<br>여러분의 취미생활은 무엇인가요?</p>
+							</div>
+						</article>
+					</div>
+				</section><br><br>
 				<!-- Section -->
 				<section>
 					<header class="major">
@@ -126,6 +146,33 @@
 							</tbody>
 						</table>
 					</article>
+				</section>
+				
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>Gallery</h2>
+					</header>
+					<div class="posts">
+						<article>
+							<a class="image"><img src="images/food1.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food2.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food3.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food4.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food5.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food6.jpg" alt="" /></a>
+						</article>
+					</div>
 				</section>
 			</div>
 		</div>

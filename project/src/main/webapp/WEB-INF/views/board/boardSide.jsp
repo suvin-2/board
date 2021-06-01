@@ -49,7 +49,7 @@ function categoryInfo(){
 			});
 			
 			for(var i=0;i<finalData.length;i++) {
-				$("#sideLi").append("<span id='cName' style='font-weight : bold;'>"+finalData[i]+"</span>");
+				$("#sideLi").append("<hr class='cName_hr'><span id='cName' style='font-weight : bold;'>"+finalData[i]+"</span><hr class='cName_hr'>");
 				for(var j=0;j<cNameList.length;j++) {
 					if(finalData[i] == list[j].cName) {
 						$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a>");
@@ -75,6 +75,9 @@ function boardSearch(){
 #search_btn {
 	vertical-align : -5px;
 	margin : 0 0 0 10px;
+}
+.cName_hr {
+	margin : 0 0 0 0;
 }
 </style>
 </head>
