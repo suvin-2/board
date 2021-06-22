@@ -445,7 +445,7 @@ select {
 				                        <h4>아이디</h4>
 				                        <div id="id_wrap">
 					                        <div id="id_input">
-					                        	<input type="text" id="userId" name="userId" class="int" maxlength="20" placeholder="아이디 입력">
+					                        	<input type="text" id="userId" name="userId" class="int" maxlength="20" placeholder=" 4~19자 영문 소문자, 숫자 입력">
 					                        </div>
 					                        <div id="id_btn">
 					                        	<input type="button" id="userIdCheck" class="button" value="중복확인"/>
@@ -456,7 +456,7 @@ select {
 					                <div>
 					                    <h4>비밀번호</h4>
 					                    <div>
-					                    	<input type="password" id="userPw1" name="userPw" class="int" maxlength="20" placeholder="비밀번호 입력">
+					                    	<input type="password" id="userPw1" name="userPw" class="int" maxlength="20" placeholder=" 8~20자 영문 소문자(대문자), 숫자, 특수문자 입력">
 					                    </div>
 					                </div>
 					                <!-- PW2 -->

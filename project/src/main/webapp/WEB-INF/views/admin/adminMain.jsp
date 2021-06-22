@@ -161,7 +161,7 @@ function new_user_list() {
 				}
 			} else {
 				$("#new_user").empty();
-				$("#new_user").append("<div class='box'><p style='text-align: right;'>신규 가입자가 없습니다.</p></div>");
+				$("#new_user").append("<div class='box'><p style='text-align: center;'>신규 가입자가 없습니다.</p></div>");
 			}
 			
 		}

@@ -123,7 +123,7 @@ function boardSearch(){
 				</p>
 				<ul class="contact">
 					<li class="icon solid fa-envelope"><a href="mailto:﻿lsbinnn7@gmail.com">lsbinnn7@gmail.com</a></li>
-					<li class="icon solid fa-phone">010-0000-0000</li>
+					<li class="icon solid fa-phone">010-9611-9327</li>
 					<li class="icon solid fa-home"><a href="https://dailymao.tistory.com/">https://dailymao.tistory.com/</a></li>
 				</ul>
 			</section>
