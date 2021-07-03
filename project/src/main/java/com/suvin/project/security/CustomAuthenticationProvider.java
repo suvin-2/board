@@ -7,11 +7,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.suvin.project.service.UserService;
 
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
 	private UserDetailsService service;
+		
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -22,6 +26,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         
         CustomUserDetails users = (CustomUserDetails) service.loadUserByUsername(userId);
 
+        if(users == null) {
+            throw new UsernameNotFoundException(userId);
+        }
+        
         if(!matchPassword(userPw, users.getPassword())) {
             throw new BadCredentialsException(userId);
         }

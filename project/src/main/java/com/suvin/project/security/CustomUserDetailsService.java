@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			UserVO vo = dao.userLogin(userId);
 			
 			if(vo == null) {
-				throw new UsernameNotFoundException(userId);
+				throw new UsernameNotFoundException(userId+"는 없는 회원입니다.");
 			} else {		// 사용자 정보 있을 경우 로직 전개 (userDetails에 데이터 넣기)
 				users.setUsername(vo.getUserId());
 				users.setPassword(vo.getUserPw());

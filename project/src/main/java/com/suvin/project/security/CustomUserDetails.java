@@ -85,12 +85,7 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	// 계정이 활성화 되었는가?
 	public boolean isEnabled() {
-		if(enabled.equals("1")) {
-			enabled_result = true;
-		} else {
-			enabled_result = false;
-		}
-		return enabled_result;
+		return true;
 	}
 
 

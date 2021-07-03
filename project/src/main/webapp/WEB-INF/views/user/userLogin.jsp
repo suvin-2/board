@@ -71,7 +71,6 @@ $(function(){
 									 </c:if>
 							         <p id="loginFailMsg">${loginFailMsg}</p>
 									 <input type="submit" id="submit" class="button primary" value="Login"/>
-									 
 							    </form>
 							    <br>
 							    <a class="dropdown-item" href="/userFindAccountForm">Forgot user account?</a>
