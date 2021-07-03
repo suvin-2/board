@@ -69,7 +69,6 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
 		}
 		
-		response.sendRedirect(request.getContextPath()+defaultFailureUrl);
 		
 		//ServletContext context = request.getSession().getServletContext();
 		//dispatcher = context.getRequestDispatcher(defaultFailureUrl);		
@@ -79,7 +78,7 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler {
 		// 로그인 페이지로 다시 포워딩
 		//RequestDispatcher dispatcher = request.getRequestDispatcher(defaultFailureUrl);
 		//dispatcher.forward(request, response);
-		//request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
+		request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
 	}
 
 	public String getLoginidname() {

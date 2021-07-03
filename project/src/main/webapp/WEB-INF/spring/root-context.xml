@@ -61,7 +61,6 @@
 	    </property>
     </bean>
 	
-	
 	<!-- 로그인 시 실패 메시지가 저장된 파일을 읽는다 -->
  	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">

@@ -39,6 +39,11 @@
 		</beans:bean>
 		<beans:bean id="userAuthProvider" class="com.suvin.project.security.CustomAuthenticationProvider"/>
 		 -->
+		 <!-- enabled가 활성화(1)인 회원만 로그인 가능 -->
+		 <jdbc-user-service data-source-ref="dataSource" id="userLoginService"
+		    users-by-username-query="SELECT USERID as userId, USERPW as userPw, ENABLED FROM B_USER WHERE USERID=?"
+		    authorities-by-username-query="SELECT USERID as userId, AUTH FROM B_USER WHERE USERID=?"
+		/>
         <authentication-manager>
             <authentication-provider user-service-ref="userLoginService">
                 <!-- <user-service>

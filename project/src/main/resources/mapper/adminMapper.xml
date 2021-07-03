@@ -146,7 +146,8 @@
 		       EMAIL, 
 		       TEL, 
 		       ENABLED, 
-		       JOINDATE
+		       JOINDATE,
+		       AUTH
 		FROM (SELECT ROWNUM,
 		             USERID, 
 		             USERNAME, 
@@ -156,9 +157,10 @@
 		             TEL, 
 		             ENABLED, 
 		             JOINDATE,
+		             AUTH,
 		             ROW_NUMBER() OVER(ORDER BY JOINDATE DESC) AS RNUM
 		    FROM B_USER ) BD
-		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		WHERE AUTH = 'ROLE_USER' AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY JOINDATE DESC
 	</select>
 	
