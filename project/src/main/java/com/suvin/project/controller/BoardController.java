@@ -145,7 +145,7 @@ public class BoardController {
 	
 	// 게시글 등록
 	@RequestMapping(value = "/boardInsert.do")
-	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception {
+	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo) throws Exception {
 		service.boardInsert(vo);
 		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo()+"&writer="+vo.getWriter();
 	}
@@ -161,7 +161,7 @@ public class BoardController {
 	
 	// 게시글 수정
 	@RequestMapping(value = "/boardUpdate.do")
-	public String boardUpdate(@ModelAttribute("boardVO") BoardVO vo, Model model) {
+	public String boardUpdate(@ModelAttribute("boardVO") BoardVO vo) {
 		service.boardUpdate(vo);
 		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo();
 	}

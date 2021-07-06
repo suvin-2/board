@@ -41,10 +41,11 @@ $(function (){
 	
 	//탭메뉴 클릭 이벤트
 	$(".tabs li a").click(function () {
-	  
+	  /*
 		$(this).parent().siblings("li").removeClass("active");
-		$(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
-		
+		$(this).parent().addClass("active"); 
+		$(this).parent().parent().parent().parent().find(".tab_content").hide();
+	  */
 		var activeTab = $(this).attr("rel");
 		if(activeTab == "tab1"){
 			$("#" + activeTab).fadeIn();
