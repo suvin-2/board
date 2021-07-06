@@ -106,7 +106,7 @@ public class BoardController {
 	
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
-	public ModelAndView boardSelectDetail(BoardVO vo, Criteria cri, Model model) throws Exception {
+	public ModelAndView boardSelectDetail(BoardVO vo, Criteria cri) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/board/boardDetail");
