@@ -35,8 +35,6 @@ $(function(){
 			}
 		}
 		
-		console.log('cName : '+select_cName+', sName : '+select_sName+', cNo : '+select_cNo);
-		
 		if(select_cName == 'allCategory') {
 			category_select();
 			// 페이지 새로고침
@@ -53,7 +51,6 @@ $(function(){
 					console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 				},
 				success : function(data) {
-					console.log(data);
 					if(data.list.length < 1) {
 						$("#paging_ul").empty();
 						$("#boardList_table").hide();
@@ -154,8 +151,6 @@ function category_select(){
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log(data);
-			
 			var unique_cName = [];
 			var itemsFound = {};
 			var j=0;

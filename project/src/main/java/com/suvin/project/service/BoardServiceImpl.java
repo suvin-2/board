@@ -20,21 +20,17 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
-		return dao.boardSelect(vo);
+	public List<BoardVO> boardSelect() throws Exception {
+		return dao.boardSelect();
 	}
-/*
 	@Override
-	public List<BoardVO> boardCategorySelect(BoardVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.boardCategorySelect(vo);
+	public List<BoardVO> boardPopularList() throws Exception {
+		return dao.boardPopularList();
 	}
-*/
 	@Override
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
 		return dao.boardCategorySelect(cri);
-	}
-	
+	}	
 	@Override
 	public int listCount(Criteria cri) throws Exception {
 		return dao.listCount(cri); 

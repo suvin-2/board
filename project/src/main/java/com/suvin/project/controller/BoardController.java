@@ -6,7 +6,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,13 +42,14 @@ public class BoardController {
 	// url mapping
 	// 기본, 루트 페이지 -> home메서드 호출
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(BoardVO vo, CategoryVO cVo, Locale locale, Model model) throws Exception {
+	public ModelAndView home(Locale locale) throws Exception {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("home");
-		mv.addObject("list",service.boardSelect(vo));
+		mv.addObject("list",service.boardSelect());
+		mv.addObject("pList",service.boardPopularList());
 		
 		return mv;
 	}
@@ -60,6 +64,7 @@ public class BoardController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listCount(cri));
+		mv.addObject("count",service.boardReplyCount(cri));
 		mv.addObject("list",service.boardCategorySelect(cri));
 		mv.addObject("pageMaker", pageMaker);
 		
@@ -67,7 +72,7 @@ public class BoardController {
 	}
 	
 	// 게시글, 댓글, 작성자 검색
-	@RequestMapping(value = "/boardSearchList.do")
+	@RequestMapping(value = "/boardSearchList.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView boardSearchList(Criteria cri, @RequestParam(defaultValue="") String keyword) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
@@ -101,7 +106,7 @@ public class BoardController {
 	
 	// 게시글 단건 조회 (detail)
 	@RequestMapping(value = "/boardSelectDetail.do", method= RequestMethod.GET)
-	public ModelAndView boardSelectDetail(BoardVO vo, Criteria cri, Model model) throws Exception {
+	public ModelAndView boardSelectDetail(BoardVO vo, Criteria cri) throws Exception {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/board/boardDetail");
@@ -140,7 +145,7 @@ public class BoardController {
 	
 	// 게시글 등록
 	@RequestMapping(value = "/boardInsert.do")
-	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo, Model model) throws Exception {
+	public String boardInsert(@ModelAttribute("boardVO") BoardVO vo) throws Exception {
 		service.boardInsert(vo);
 		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo()+"&writer="+vo.getWriter();
 	}
@@ -156,7 +161,7 @@ public class BoardController {
 	
 	// 게시글 수정
 	@RequestMapping(value = "/boardUpdate.do")
-	public String boardUpdate(@ModelAttribute("boardVO") BoardVO vo, Model model) {
+	public String boardUpdate(@ModelAttribute("boardVO") BoardVO vo) {
 		service.boardUpdate(vo);
 		return "redirect:/boardSelectDetail.do?bNo="+vo.getbNo();
 	}

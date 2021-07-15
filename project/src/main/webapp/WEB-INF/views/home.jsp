@@ -19,6 +19,9 @@
 #title {
 	text-align : left;
 }
+#pTitle {
+	text-align : left;
+}
 </style>
 </head>
 <body class="is-preload">
@@ -27,183 +30,154 @@
 		<!-- side var -->
 		<jsp:include page="board/boardSide.jsp" flush="false"/>
 		<!-- Main -->
-			<div id="main">
-				<div class="inner">	
-					<!-- Header -->
-					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
-					<!-- Banner -->
-						<section id="banner">
+		<div id="main">
+			<div class="inner">	
+				<!-- Header -->
+				<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
+				<!-- Banner -->
+				<section id="banner">
+					<div class="content">
+						<header>
+							<h1>Cooking Class<br />
+							by suvin</h1>
+							<p>요리가 생활이 되는 쉬운 레시피</p>
+						</header>
+						<p>
+							매일 SNS에 올리고 싶은 센스 넘치는 플레이팅, 당장이라도 입에 넣고 싶은 음식들, 
+							직접 만든 내 요리들을 모두가 맛볼 수 있도록 나만의 꿀팁 대방출!<br>
+							여러 회원들의 레시피로 요리해보세요 :)
+						</p>
+					</div>
+					<span class="image object">
+						<img src="images/waffles.jpg" alt="" />
+					</span>
+				</section>
+				<hr><br>
+				<!-- Section -->
+				<section>
+					<div class="features">
+						<article>
+							<span class="icon solid style2 major fa-hashtag"></span>
 							<div class="content">
-								<header>
-									<h1>Hi, I’m Editorial<br />
-									by HTML5 UP</h1>
-									<p>A free and fully responsive site template</p>
-								</header>
-								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
-								<ul class="actions">
-									<li><a href="#" class="button big">Learn More</a></li>
-								</ul>
+								<h3>다양한 레시피</h3>
+								<p>여러분이 정성껏 만든 음식의 레시피를 자랑하세요!<br>다양한 레시피들로 새로운 요리를 만들어보세요 :)</p>
 							</div>
-							<span class="image object">
-								<img src="images/pic10.jpg" alt="" />
-							</span>
-						</section>
-	
-					<!-- Section -->
-						<section>
-							<header class="major">
-								<h2>전체글</h2>
-							</header>
-								<!-- 카페 내 전체 글 -->
-								<table border="1">
-									<thead>
-									  <tr>
-									  	<th>순번</th>
-									    <th>제목</th>
-									    <th>카테고리</th>
-									    <th>작성일</th>
-									  </tr>
-									</thead>
-									<tbody>
-									<c:forEach var="item" items="${list}" begin="0" end="9">
-									<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-									<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-									  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-									    <td id="bNo">${item.bNo}</td>
-									    <td id="title">${item.title}</td>
-									    <td id="cName">${item.cName}</td>
-									    <td id="bDate">${bDate}</td>
-									  </tr>
-									</c:forEach>
-									</tbody>
-								</table>
-						</section>
-	
-					<!-- Section -->
-						<section>
-							<header class="major">
-								<h2>인기 카테고리</h2>
-							</header>
-							<div class="posts">
-								<article>
-									<h3>한식</h3>
-									<table border="1">
-											<thead>
-											  <tr>
-											    <th>제목</th>
-											    <th>작성일</th>
-											  </tr>
-											</thead>
-											<tbody>
-											<c:forEach var="item" items="${list}">
-											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-											<c:if test="${item.sName eq '한식'}">
-											<c:set value="${item.cNo}" var="cNo1"/>
-											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-											    <td id="title">${item.title}</td>
-											    <td id="bDate">${bDate}</td>
-											    <td><input type="hidden" id="cName1" value="${item.cName}"/></td>
-											    <td><input type="hidden" id="sName1" value="${item.sName}"/></td>
-											  </tr> 
-											</c:if>
-											</c:forEach>
-											</tbody>
-										</table>
-										<ul class="actions">
-											<li><button class="button" onclick="category1()">More</button></li>
-										</ul>
-								</article>
-								<article>
-									<h3>중식</h3>
-									<table border="1">
-											<thead>
-											  <tr>
-											    <th>제목</th>
-											    <th>작성일</th>
-											  </tr>
-											</thead>
-											<tbody>
-											<c:forEach var="item" items="${list}">
-											<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
-											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-											<c:if test="${item.sName eq '중식'}">
-											<c:set value="${item.cNo}" var="cNo2"/>
-											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-											    <td id="title">${item.title}</td>
-											    <td id="bDate">${bDate}</td>
-											    <td><input type="hidden" id="cName2" value="${item.cName}"/></td>
-											    <td><input type="hidden" id="sName2" value="${item.sName}"/></td>
-											  </tr>
-											</c:if>
-											</c:forEach>
-											</tbody>
-										</table>
-										<ul class="actions">
-											<li><button class="button" onclick="category2()">More</button></li>
-										</ul>
-								</article>
-								<article>
-									<h3 id="title3"><a name="Title3" id="Title3">빵</a></h3>
-									<table border="1">
-											<thead>
-											  <tr>
-											    <th>제목</th>
-											    <th>작성일</th>
-											  </tr>
-											</thead>
-											<tbody>
-											<c:forEach var="item" items="${list}">
-											<!-- 날짜 포맷 변환 (taglib 추가해야함) --> 
-											<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
-											<c:if test="${item.sName eq '빵'}">
-											<c:set value="${item.cNo}" var="cNo3"/>
-											<c:set var="listCopy" value="${list}"/>
-											  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
-											    <td id="title">${item.title}</td>
-											    <td id="bDate">${bDate}</td>
-											    <td><input type="hidden" id="cName3" value="${item.cName}"/></td>
-											    <td><input type="hidden" id="sName3" value="${item.sName}"/></td>
-											  </tr>
-											</c:if>
-											</c:forEach>
-											</tbody>
-										</table>
-										<ul class="actions">
-											<li><button class="button" onclick="category3()">More</button></li>
-										</ul>
-								</article>
+						</article>
+						<article>
+							<span class="icon solid major fa-pencil-alt"></span>
+							<div class="content">
+								<h3>자유게시판</h3>
+								<p>요리뿐 아니라 서로의 일상을 소통할 수 있어요.<br>여러분의 취미생활은 무엇인가요?</p>
 							</div>
-						</section>
+						</article>
+					</div>
+				</section><br><br>
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>전체글</h2>
+					</header>
+						<!-- 카페 내 전체 글 -->
+						<table border="1">
+							<thead>
+							    <tr>
+							    	<th>No.</th>
+								    <th>제목</th>
+								    <th>카테고리</th>
+								  	<th>작성자</th>
+								    <th>작성일</th>
+								    <th>조회수</th>
+							    </tr>
+							</thead>
+							<tbody>
+							<c:forEach var="item" items="${list}" begin="0" end="9">
+							<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+							<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+							  <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
+							    <td id="rownum">${item.pRank}</td>
+							    <td id="title">${item.title}</td>
+							    <td id="cName">${item.cName}</td>
+							    <td id="writer">${item.writer}</td>
+							    <td id="bDate">${bDate}</td>
+							    <td id="cnt">${item.cnt}</td>
+							  </tr>
+							</c:forEach>
+							</tbody>
+						</table>
+				</section>
+				<br>
+				<div class="content">
+					<span class="image object">
+						<img src="images/table_deco.jpg" alt="" style="width:100%;" />
+					</span>
 				</div>
+				<br><br>
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>실시간 인기글</h2>
+					</header>
+					<article>
+						<table border="1">
+							<thead>
+							    <tr>
+							    	<th>No.</th>
+								    <th>제목</th>
+								    <th>카테고리</th>
+								  	<th>작성자</th>
+								    <th>작성일</th>
+								    <th>조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="item" items="${pList}">
+								<!-- 날짜 포맷 변환 (taglib 추가해야함) -->
+								<fmt:formatDate var="bDate" value="${item.bDate}" pattern="yyyy-MM-dd HH:MM"/>
+								<c:set value="${item.cNo}" var="cNo1"/>
+								    <tr onClick = "location.href='${path}/boardSelectDetail.do?bNo=${item.bNo}&sName=${item.sName}&writer=${item.writer}'">
+									    <td id="pNo">${item.pRank}</td>
+									    <td id="pTitle">${item.title}</td>
+									    <td id="pcName">${item.cName}</td>
+									    <td id="pWriter">${item.writer}</td>
+									    <td id="pbDate">${bDate}</td>
+									    <td id="pCnt">${item.cnt}</td>
+								    </tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</article>
+				</section>
+				
+				<!-- Section -->
+				<section>
+					<header class="major">
+						<h2>Gallery</h2>
+					</header>
+					<div class="posts">
+						<article>
+							<a class="image"><img src="images/food1.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food2.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food3.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food4.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food5.jpg" alt="" /></a>
+						</article>
+						<article>
+							<a class="image"><img src="images/food6.jpg" alt="" /></a>
+						</article>
+					</div>
+				</section>
 			</div>
+		</div>
 	</div>
 <!-- Scripts -->
-<script>
-
-	// 인기 카테고리 more 버튼 클릭 시 페이지 이동
-	var cName1 = $("#cName1").val();
-	var sName1 = $("#sName1").val();
-	
-	var cName2 = $("#cName2").val();
-	var sName2 = $("#sName2").val();
-	
-	var cName3 = $("#cName3").val();
-	var sName3 = $("#sName3").val();
-	
-	function category1(){
-		location.href = "${path}/boardList.do?cName="+cName1+"&sName="+sName1+"&cNo="+${cNo1};
-	}
-	
-	function category2(){
-		location.href = "${path}/boardList.do?cName="+cName2+"&sName="+sName2+"&cNo="+${cNo2};
-	}
-	
-	function category3(){
-		console.log("cno3 : " + ${cNo3})
-		location.href = "${path}/boardList.do?cName="+cName3+"&sName="+sName3+"&cNo="+${cNo3};
-	}
-</script>
 <script src="js/jquery.min.js"></script>
 <script src="js/browser.min.js"></script>
 <script src="js/breakpoints.min.js"></script>

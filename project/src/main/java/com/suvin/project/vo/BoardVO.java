@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class BoardVO {
 
+	private int pRank;
 	private Integer bNo;
 	private String title;
 	private String content;
@@ -15,7 +16,14 @@ public class BoardVO {
 	private String cName;
 	private String sName;
 	private int enabled;
+	private String sDate;
 	
+	public int getpRank() {
+		return pRank;
+	}
+	public void setpRank(int pRank) {
+		this.pRank = pRank;
+	}
 	public Integer getbNo() {
 		return bNo;
 	}
@@ -82,16 +90,20 @@ public class BoardVO {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
+	public String getsDate() {
+		return sDate;
+	}
+	public void setsDate(String sDate) {
+		this.sDate = sDate;
+	}
 	// 게시글 단건조회 (boardUpdate.jsp)
 	public Integer getbNo(int bNo) {
 		return bNo;
 	}
-	
 	@Override
 	public String toString() {
-		return "BoardVO [bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt + ", bDate=" + bDate
-				+ ", writer=" + writer + ", userId=" + userId + ", cNo=" + cNo + ", cName=" + cName + ", sName=" + sName
-				+ ", enabled=" + enabled + "]";
+		return "BoardVO [pRank=" + pRank + ", bNo=" + bNo + ", title=" + title + ", content=" + content + ", cnt=" + cnt
+				+ ", bDate=" + bDate + ", writer=" + writer + ", userId=" + userId + ", cNo=" + cNo + ", cName=" + cName
+				+ ", sName=" + sName + ", enabled=" + enabled + ", sDate=" + sDate + "]";
 	}
-	
 }

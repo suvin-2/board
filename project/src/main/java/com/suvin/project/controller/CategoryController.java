@@ -43,7 +43,6 @@ public class CategoryController {
 		
 		List<CategoryVO> list = service.categorySelect(vo);
 		logger.info(list.toString());
-		//System.out.println("category list : " + list);
 		
 		return list;
 	}
@@ -52,7 +51,6 @@ public class CategoryController {
 	@ResponseBody
 	@RequestMapping(value = "/cNameDuplicationSelect.do")
 	public List<CategoryVO> cNameDuplicationSelect(CategoryVO vo) throws Exception {
-		System.out.println("넘어온 cName : "+vo);
 		return service.cNameDuplicationSelect(vo);
 	}
 	
@@ -61,8 +59,6 @@ public class CategoryController {
 	@RequestMapping(value = "/newCategoryInsert", method = {RequestMethod.GET, RequestMethod.POST}, consumes = "application/json")
 	public int newCategoryInsert(@RequestBody List<Map<String,String>> list) throws Exception {
 				
-		System.out.println("넘어온 list : "+list);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		

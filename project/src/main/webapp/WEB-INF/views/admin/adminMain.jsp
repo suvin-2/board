@@ -9,6 +9,12 @@
 <head>
 <title>suvin's cooking class admin page</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -19,7 +25,99 @@
 $(function(){
 	new_user_list();
 	board_like_list();
+	drawChart();	
 });
+
+// 차트 그리기
+function drawChart() {
+	
+	// Themes begin
+	am4core.useTheme(am4themes_material);
+	am4core.useTheme(am4themes_animated);
+	// Themes end
+
+	// Create chart instance
+	var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+	// Add data
+	chart.data = [${cntChart}];
+	console.log(${cntChart});
+	
+	// Set input format for the dates
+	chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+
+	// Create axes
+	var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+	var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+	// Create series
+	var series = chart.series.push(new am4charts.LineSeries());
+	series.dataFields.valueY = "value1";
+	series.dataFields.dateX = "date";
+	series.tooltipText = "[bold]게시글 :[/] {value1}"
+	series.strokeWidth = 2;
+	series.minBulletDistance = 15;
+	
+	// Create series
+	var series2 = chart.series.push(new am4charts.LineSeries());
+	series2.dataFields.valueY = "value2";
+	series2.dataFields.dateX = "date";
+	series2.tooltipText = "[bold]댓글 :[/] {value2}"
+	series2.strokeWidth = 2;
+	series2.minBulletDistance = 15;
+
+	// Drop-shaped tooltips
+	series.tooltip.background.cornerRadius = 20;
+	series.tooltip.background.strokeOpacity = 0;
+	series.tooltip.pointerOrientation = "vertical";
+	series.tooltip.label.minWidth = 40;
+	series.tooltip.label.minHeight = 40;
+	series.tooltip.label.textAlign = "middle";
+	series.tooltip.label.textValign = "middle";
+	
+	// Drop-shaped tooltips
+	series2.tooltip.background.cornerRadius = 20;
+	series2.tooltip.background.strokeOpacity = 0;
+	series2.tooltip.pointerOrientation = "vertical";
+	series2.tooltip.label.minWidth = 40;
+	series2.tooltip.label.minHeight = 40;
+	series2.tooltip.label.textAlign = "middle";
+	series2.tooltip.label.textValign = "middle";
+
+	// Make bullets grow on hover
+	var bullet = series.bullets.push(new am4charts.CircleBullet());
+	bullet.circle.strokeWidth = 2;
+	bullet.circle.radius = 4;
+	bullet.circle.fill = am4core.color("#fff");
+
+	// Make bullets grow on hover
+	var bullet2 = series2.bullets.push(new am4charts.CircleBullet());
+	bullet2.circle.strokeWidth = 2;
+	bullet2.circle.radius = 4;
+	bullet2.circle.fill = am4core.color("#fff");
+	
+	var bullethover = bullet.states.create("hover");
+	bullethover.properties.scale = 1.3;
+	
+	// Make a panning cursor
+	chart.cursor = new am4charts.XYCursor();
+	chart.cursor.behavior = "panXY";
+	chart.cursor.xAxis = dateAxis;
+
+	// Create vertical scrollbar and place it before the value axis
+	chart.scrollbarY = new am4core.Scrollbar();
+	chart.scrollbarY.parent = chart.leftAxesContainer;
+	chart.scrollbarY.toBack();
+
+	// Create a horizontal scrollbar with previe and place it underneath the date axis
+	chart.scrollbarX = new am4charts.XYChartScrollbar();
+	chart.scrollbarX.series.push(series);
+	chart.scrollbarX.series.push(series2);
+	chart.scrollbarX.parent = chart.bottomAxesContainer;
+	
+	dateAxis.start = 0.79;
+	dateAxis.keepSelection = true;
+}
 
 //신규 가입자(최근 10명)
 function new_user_list() {
@@ -158,6 +256,21 @@ function board_like_list() {
 #title {
 	text-align : left;
 }
+#chart-container {
+	float: right;
+	position: center;
+	left: -50;
+}
+canvas {
+    float: right;
+    width: 40%;
+    position: right;
+    left: -30%;
+}
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
 </style>
 </head>
 <body class="is-preload">
@@ -170,23 +283,13 @@ function board_like_list() {
 				<div class="inner">	
 					<!-- Header -->
 					<%@ include file="/WEB-INF/views/board/boardHead.jsp"%>
-					<!-- 방문자 통계 -->
-					<section>
-						<header class="major">
-							<h2>방문자 통계</h2>
-						</header>
-						<div class="box">
-							<p>방문자 통계 차트</p>
-						</div>
-					</section>
-					
 					<!-- 새글/새댓글 통계 -->
 					<section>
 						<header class="major">
-							<h2>새글/새댓글 통계</h2>
+							<h2>게시글/댓글 등록 현황</h2>
 						</header>
 						<div class="box">
-							<p>새글/새댓글 통계 차트</p>
+							<div id="chartdiv"></div>
 						</div>
 					</section>
 	

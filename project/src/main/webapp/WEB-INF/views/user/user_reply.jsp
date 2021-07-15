@@ -19,10 +19,19 @@ $(function (){
 	
 	var userId = $("#userId").val();
 	
+	if($("#reply_title").html() == undefined) {
+		$("#user_reply_table").empty();
+		$("#none_list_div").empty();
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>댓글을 작성한 게시글이 없습니다.</p></div>");
+	} else {
+		$("#user_reply_table").show();
+		$("#none_list_div").empty();
+	}
+	
 	//탭 컨텐츠 숨기기
 	$(".tab_content").hide();
 
-	// 첫번째 탭콘텐츠 보이기
+	// 두번째 탭콘텐츠 보이기
 	$(".tab_container").each(function () {
 		$(this).children(".tabs li:first").addClass("active"); //Activate first tab
 		$("#tab2").fadeIn();
@@ -34,7 +43,8 @@ $(function (){
 	$(".tabs li a").click(function () {
 	  
 		$(this).parent().siblings("li").removeClass("active");
-		$(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
+		$(this).parent().addClass("active"); 
+		$(this).parent().parent().parent().parent().find(".tab_content").hide();
 		
 		var activeTab = $(this).attr("rel");
 		if(activeTab == "tab1"){
@@ -135,7 +145,7 @@ $(function (){
 				</div>
 				<!-- 작성한 댓글 출력 -->
 				<div id="tab2" class="tab_content">
-					<table border="1">
+					<table border="1" id="user_reply_table">
 						<thead>
 							<tr>
 							  	<th>카테고리</th>
@@ -160,6 +170,7 @@ $(function (){
 						    </c:forEach>
 						</tbody>
 					</table>
+					<div id="none_list_div"></div>
 					<!-- 페이징 -->
 					<div class="pagingBnt">
 						  <ul class="pagination" id="paging_ul">

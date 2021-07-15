@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="css/main.css" />
 <%  String sName = request.getParameter("sName"); 
 	String cNo = request.getParameter("cNo"); 
-	System.out.println("boardInsert.jsp 넘어온 sName : " + sName);
 %>
 <script type="text/javascript">
 $(function(){
@@ -54,23 +53,10 @@ $(function(){
 	$("#category").change(function(){
 		
 		var cNoType = $(this).val();
-		console.log($(this).val()); //value값 가져오기
 		// string -> number 변환
 		cNoType = Number(cNoType);
 		
-		console.log($("#category option:selected").text()); //text값 가져오기
-		console.log($("#category option:selected").val()); //text값 가져오기
 	});
-	
-	function cNoSelected() {
-		
-		console.log('sName : '+<%= sName %>);
-		console.log('cNoSelect : '+$("#category").text());
-		
-		<%-- if($("#cNoSelect").val()=="<%= sName %>") {
-			$("#cNoSelect").attr("selected","selected");
-		} --%>
-	}
 	
 });
 

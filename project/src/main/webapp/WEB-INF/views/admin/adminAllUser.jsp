@@ -44,7 +44,6 @@ function userActivity(userId, email, enabled) {
 								console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 							},
 							success : function(data) {
-								console.log(data);
 								alert(userId+'님에게 활동중지 관련 메일이 전송되었습니다.');
 								// 페이지 새로고침
 								location.href = location.href;
@@ -80,7 +79,6 @@ function userActivity(userId, email, enabled) {
 								console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 							},
 							success : function(data) {
-								console.log(data);
 								alert(userId+'님에게 활동재개 관련 메일이 전송되었습니다.');
 								// 페이지 새로고침
 								location.href = location.href;

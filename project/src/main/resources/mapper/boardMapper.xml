@@ -5,7 +5,8 @@
 
 	<!-- 게시판 글 모두 조회  -->
 	<select id="boardSelect" resultType="boardVO">
-		SELECT B.BNO,
+		SELECT ROW_NUMBER() OVER(ORDER BY BDATE) AS PRANK,
+			   B.BNO,
 		       B.TITLE,
 		       B.CONTENT,
 		       B.CNT,
@@ -16,8 +17,37 @@
 		       C.SNAME
 		FROM BOARD B, CATEGORY C
 		WHERE B.CNO = C.CNO
-		ORDER BY BNO DESC
+		ORDER BY BDATE DESC
 	</select>
+	
+	<!-- 인기글 (메인화면)  -->
+	<select id="boardPopularList" resultType="boardVO">
+		SELECT  ROW_NUMBER() OVER(ORDER BY CNT DESC) AS PRANK,
+		        BNO, 
+		        TITLE, 
+		        CONTENT,
+		        CNT,
+		        BDATE,
+		        WRITER, 
+		        CNO,
+		        CNAME,
+		        SNAME
+		FROM (SELECT B.BNO,
+		           B.TITLE,
+		           B.CONTENT,
+		           B.CNT,
+		           B.BDATE,
+		           B.WRITER,
+		           B.CNO,
+		           C.CNAME,
+		           C.SNAME,
+		           ROW_NUMBER() OVER(ORDER BY B.CNT DESC) AS RNUM
+		    FROM BOARD B, CATEGORY C 
+		    WHERE B.CNO = C.CNO ) BD
+		WHERE RNUM BETWEEN 1 AND 10
+		ORDER BY CNT DESC
+	</select>
+
 	
 	<!-- 게시판 카테고리 별 게시글 조회 페이징 테스트 -->
 	<select id="boardCategorySelect" resultType="boardVO" parameterType="criteria"> 
@@ -85,15 +115,22 @@
 	<select id="boardSearchCount" resultType="int">
 		SELECT COUNT(BNO)
 		FROM BOARD
-		<include refid="search" />
+		<include refid="search_cnt" />
 	</select>
 	
 	<sql id="search">
         WHERE  
-	        USERID LIKE '%'||#{keyword}||'%'
+	        WRITER LIKE '%'||#{keyword}||'%'
 	        OR CONTENT LIKE '%' || #{keyword}||'%'
 	        OR TITLE LIKE '%'||#{keyword}||'%'
 	        AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
+    </sql>
+    
+    <sql id="search_cnt">
+        WHERE  
+	        WRITER LIKE '%'||#{keyword}||'%'
+	        OR CONTENT LIKE '%' || #{keyword}||'%'
+	        OR TITLE LIKE '%'||#{keyword}||'%'
     </sql>
 	
 	<!-- 조회수 증가 -->
@@ -198,7 +235,7 @@
 		             ROW_NUMBER() OVER(ORDER BY RNO DESC) AS RNUM
 		    FROM B_REPLY) BD
 		WHERE BNO = #{bNo} AND RNUM BETWEEN #{rowStart} AND #{rowEnd}
-		ORDER BY BNO DESC
+		ORDER BY RDATE
 	</select>
 	
 	<!-- 댓글 등록 -->

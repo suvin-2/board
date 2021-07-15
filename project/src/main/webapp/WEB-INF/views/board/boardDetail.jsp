@@ -63,7 +63,6 @@ $(function(){
 //댓글 수정폼 rNo : db에서 받아온 rNo
 function reply_update_form(rNo,rWriter,rContent) {
 	
-	console.log('onclick으로 넘긴 값 : '+rNo+', '+rWriter+', '+rContent);
 	
 	// 클릭한 수정버튼이 있는 li
 	var reply_li_id = $("#reply_li_"+rNo).attr('id');
@@ -120,8 +119,6 @@ function reply_update_cancle() {
 //댓글 삭제
 function reply_delete(rNo) {
 	
-	console.log('rNo : '+rNo);
-	
 	$.ajax({
 		url : '/replyDelete.do/'+rNo,
 		type : 'GET',
@@ -155,7 +152,6 @@ function board_like() {
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log('board_like enabled :'+data.enabled);
 			if(data.enabled == 1) {
 				document.getElementById('like').src = "/images/full_love_icon.png";
 			}
@@ -182,8 +178,6 @@ function board_like_click() {
 			console.log("상태값 : "+status+", Http 에러메시지 : "+msg);
 		},
 		success : function(data) {
-			console.log('data : '+data);
-			
 			// 좋아요를 눌렀을 때 (update 해주기)
 			if(data.enabled == 0) {
 				

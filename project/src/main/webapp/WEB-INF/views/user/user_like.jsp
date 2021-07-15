@@ -19,10 +19,19 @@ $(function (){
 	
 	var userId = $("#userId").val();
 	
+	if($("#like_title").html() == undefined) {
+		$("#user_like_table").empty();
+		$("#none_list_div").empty();
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>좋아요를 누른 게시글이 없습니다.</p></div>");
+	} else {
+		$("#user_like_table").show();
+		$("#none_list_div").empty();
+	}
+	
 	//탭 컨텐츠 숨기기
 	$(".tab_content").hide();
 
-	// 첫번째 탭콘텐츠 보이기
+	// 세번째 탭콘텐츠 보이기
 	$(".tab_container").each(function () {
 		$(this).children(".tabs li:first").addClass("active"); //Activate first tab
 		$("#tab3").fadeIn();
@@ -33,7 +42,8 @@ $(function (){
 	$(".tabs li a").click(function () {
 	  
 		$(this).parent().siblings("li").removeClass("active");
-		$(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
+		$(this).parent().addClass("active"); 
+		$(this).parent().parent().parent().parent().find(".tab_content").hide();
 		
 		var activeTab = $(this).attr("rel");
 		if(activeTab == "tab1"){
@@ -134,7 +144,7 @@ $(function (){
 				</div>
 				<!-- 좋아요 한 글 출력 -->
 				<div id="tab3" class="tab_content">
-					<table border="1">
+					<table border="1" id="user_like_table">
 						<thead>
 							<tr>
 							  	<th>카테고리</th>
@@ -159,6 +169,7 @@ $(function (){
 						    </c:forEach>
 						</tbody>
 					</table>	
+					<div id="none_list_div"></div>
 					<!-- 페이징 -->
 					<div class="pagingBnt">
 						  <ul class="pagination" id="paging_ul">

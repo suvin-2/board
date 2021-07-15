@@ -1,14 +1,25 @@
 package com.suvin.project.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -24,6 +35,7 @@ import com.suvin.project.service.AdminService;
 import com.suvin.project.vo.BoardVO;
 import com.suvin.project.vo.Criteria;
 import com.suvin.project.vo.PageMaker;
+import com.suvin.project.vo.ReplyVO;
 import com.suvin.project.vo.UserVO;
 
 @Controller
@@ -38,10 +50,127 @@ public class AdminController {
 	private AdminService service;
 	
 	// admin main.jsp ------------------------------------------------------
-	// admin main 화면
+	// admin main 화면, 게시글/댓글 통계 데이터 같이 보냄
 	@RequestMapping(value="/adminMainForm.do")
-	public String adminMain() throws Exception {
-		return "/admin/adminMain";
+	public ModelAndView adminMain(BoardVO bVo, ReplyVO rVo) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		//원하는 데이터 포맷 지정
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd"); 
+		// 오늘 날짜
+		Date now = new Date();
+		String strNowDate = simpleDateFormat.format(now);
+		
+		bVo.setsDate(strNowDate);
+		rVo.setsDate(strNowDate);
+		
+		List<BoardVO> bList = service.BoardCntChart(bVo);
+		List<ReplyVO> rList = service.ReplyCntChart(rVo);
+		System.out.println("날짜 포맷 전 : "+bList.get(0).getsDate().substring(0,8));
+		System.out.println("날짜 포맷 후 : "+simpleDateFormat.parse(bList.get(0).getsDate().substring(0,8)));
+		
+		String str ="";
+		String cntChart = "";
+		int num = 0;
+		//str += "['날짜','게시글','댓글'],";
+
+		for(int i=0;i<bList.size();i++) {
+			str += "['";
+			str += bList.get(i).getsDate().substring(0,8);
+			str += "',";
+			str += bList.get(i).getCnt();
+			str += ",";
+			str += rList.get(i).getCnt();
+			str += "]";
+			
+			num++;
+			if(num<bList.size()) {
+				str += ",";
+			}
+		}
+		
+		int n = 0;
+		
+		for(int i=0;i<bList.size();i++) {
+			cntChart += "{date:'20";
+			cntChart += bList.get(i).getsDate().substring(0,8);
+			cntChart += "', value1:";
+			cntChart += bList.get(i).getCnt();
+			cntChart += ", value2:";
+			cntChart += rList.get(i).getCnt();
+			cntChart += "}";
+			
+			n++;
+			if(n<bList.size()) {
+				cntChart += ",";
+			}
+		}
+		
+		System.out.println("str : "+str);
+		System.out.println("cntChart : "+cntChart);
+		mv.setViewName("/admin/adminMain");
+		mv.addObject("str",str);
+		mv.addObject("cntChart",cntChart);
+		
+		return mv;
+	}
+	
+	
+	// 게시글 개수, 댓글 개수
+	// jsp에서 date type의 데이터를 받을 땐 @DateTimeFormat를 설정해줘야함
+	@ResponseBody
+	@RequestMapping(value = "/boardCntReplyCnt.do")
+	public ModelAndView boardCntReplyCnt(BoardVO bVo, ReplyVO rVo) throws Exception {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		//원하는 데이터 포맷 지정
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd"); 
+		// 오늘 날짜
+		Date now = new Date();
+		String strNowDate = simpleDateFormat.format(now);
+		
+		bVo.setsDate(strNowDate);
+		rVo.setsDate(strNowDate);
+		
+		List<BoardVO> bList = service.BoardCntChart(bVo);
+		List<ReplyVO> rList = service.ReplyCntChart(rVo);
+		
+		HashMap map = new HashMap();
+		
+		String str ="[";
+		int num = 0;
+		//str += "['날짜','게시글','댓글'],";
+
+		for(int i=0;i<bList.size();i++) {
+			str += "['";
+			str += bList.get(i).getsDate();
+			str += "',";
+			str += bList.get(i).getCnt();
+			str += ",";
+			str += rList.get(i).getCnt();
+			str += "]";
+			
+			num++;
+			if(num<bList.size()) {
+				str += ",";
+			}
+		}
+		str += "]";
+		System.out.println("str : "+str);
+		mv.addObject("str",str);
+		
+//		map.put("bList",bList);
+//		map.put("rList",rList);
+
+//		String json = null;
+//		try {
+//			json = new ObjectMapper().writeValueAsString(str);
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+		
+		return mv;
 	}
 	
 	// 신규 회원 조회 (ajax)
@@ -104,7 +233,7 @@ public class AdminController {
 
 		String userId = vo.getUserId();
 		String email = vo.getEmail();
-		int enabled = vo.getEnabled();
+		String enabled = vo.getEnabled();
 		
 		// 이메일 보내기
         String setFrom = "lsbinnn7@gmail.com";
@@ -125,7 +254,7 @@ public class AdminController {
                 "해당 계정의 활성화를 원하시면 본 메일로 답신주세요.";
         
         
-        if(enabled == 1) {
+        if(enabled == "1") {
     		try {
                 
                 MimeMessage message = mailSender.createMimeMessage();

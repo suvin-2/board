@@ -19,6 +19,15 @@ $(function (){
 	
 	var userId = $("#userId").val();
 	
+	if($("#board_title").html() == undefined) {
+		$("#user_writing_table").empty();
+		$("#none_list_div").empty();
+		$("#none_list_div").append("<div class='box'><p style='text-align: center;'>작성한 게시글이 없습니다.</p></div>");
+	} else {
+		$("#user_writing_table").show();
+		$("#none_list_div").empty();
+	}
+	
 	//탭 컨텐츠 숨기기
 	$(".tab_content").hide();
 
@@ -32,10 +41,11 @@ $(function (){
 	
 	//탭메뉴 클릭 이벤트
 	$(".tabs li a").click(function () {
-	  
+	  /*
 		$(this).parent().siblings("li").removeClass("active");
-		$(this).parent().addClass("active"); $(this).parent().parent().parent().parent().find(".tab_content").hide();
-		
+		$(this).parent().addClass("active"); 
+		$(this).parent().parent().parent().parent().find(".tab_content").hide();
+	  */
 		var activeTab = $(this).attr("rel");
 		if(activeTab == "tab1"){
 			$("#" + activeTab).fadeIn();
@@ -135,7 +145,7 @@ $(function (){
 				</div>
 				<!-- 작성한 글 출력 -->
 				<div id="tab1" class="tab_content">
-					<table border="1">
+					<table border="1" id="user_writing_table">
 						<thead>
 							<tr>
 							  	<th>카테고리</th>
@@ -160,6 +170,7 @@ $(function (){
 						    </c:forEach>
 						</tbody>
 					</table>
+					<div id="none_list_div"></div>
 					<!-- 페이징 -->
 					<div class="pagingBnt">
 						  <ul class="pagination" id="paging_ul">

@@ -22,6 +22,16 @@ public class AdminDAO {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return mybatis.selectList("BoardDAO.boardSelect",vo);
 	}
+	
+	// 글 개수 (chart)
+	public List<BoardVO> BoardCntChart(BoardVO vo) {
+		return mybatis.selectList("AdminDAO.BoardCntChart",vo);
+	}
+	
+	// 댓글 개수 (chart)
+	public List<ReplyVO> ReplyCntChart(ReplyVO vo) {
+		return mybatis.selectList("AdminDAO.ReplyCntChart",vo);
+	}
 
 	// 게시글 카테고리 별 조회 (페이징 처리)
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {

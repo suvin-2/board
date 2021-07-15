@@ -16,6 +16,8 @@ public class CustomUserDetails implements UserDetails {
 	private String username; // userId
 	private String password; // userPw
 	private String auth;
+	private String enabled;
+	private boolean enabled_result;
 	private List<GrantedAuthority> authorities;
 	
 	// setter
@@ -52,6 +54,14 @@ public class CustomUserDetails implements UserDetails {
 	
 	public String getAuth() {
 		return auth;
+	}
+
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

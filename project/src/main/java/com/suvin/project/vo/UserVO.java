@@ -13,7 +13,7 @@ public class UserVO {
 	private String email;
 	private String tel;
 	private String auth;
-	private int enabled;
+	private String enabled;
 	private Date joinDate;
 	
 	
@@ -71,10 +71,10 @@ public class UserVO {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
-	public int getEnabled() {
+	public String getEnabled() {
 		return enabled;
 	}
-	public void setEnabled(int enabled) {
+	public void setEnabled(String enabled) {
 		this.enabled = enabled;
 	}
 	public Date getJoinDate() {

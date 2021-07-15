@@ -18,8 +18,13 @@ public class BoardDAO {
 	private SqlSessionTemplate mybatis;
 	
 	// 게시글 전체 조회
-	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
-		return mybatis.selectList("BoardDAO.boardSelect",vo);
+	public List<BoardVO> boardSelect() throws Exception {
+		return mybatis.selectList("BoardDAO.boardSelect");
+	}
+	
+	// 인기글 (메인화면)
+	public List<BoardVO> boardPopularList() throws Exception {
+		return mybatis.selectList("BoardDAO.boardPopularList");
 	}
 
 	// 게시글 카테고리 별 조회 (페이징 처리)

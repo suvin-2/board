@@ -11,78 +11,73 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
+
+// boardInfo() 함수를 즉시 실행
+$(function(){
 	
-	// boardInfo() 함수를 즉시 실행
-	$(function(){
-		
-		categoryInfo();
-		console.log(list);
-	});
-	
-	var list = [];
-	// cName만 담긴 리스트
-	var cNameList = new Array();			// JSON.stringify(data);
-	// sName만 담긴 리스트
-	var sNameList = [];
-	// cName 중복 제거한 값만 담긴 리스트
-	var finalData = [];
-	
-	// 수정할 게시글 내용 가지고 오는 ajax
-	function categoryInfo(){
-		$.ajax({
-			url : '/categoryList.do', 
-			type : 'GET',
-			dataType : 'json',
-			error : function(xhr, status, msg) {
-				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
-			},
-			success : function(data) {
-				for(i in data) {
-					list[i] = data[i];
-					cNameList[i] = data[i].cName;
-				}
-				console.log(list);
-				console.log("cName List : "+cNameList);
-				
-				// cName 중복제거
-				$.each(cNameList,function(i,value){
-					if(finalData.indexOf(value) == -1) {
-						finalData.push(value);
-					}
-				});
-				
-				for(var i=0;i<finalData.length;i++) {
-					$("#sideLi").append("<span id='cName' style='font-weight : bold;'>"+finalData[i]+"</span>");
-					for(var j=0;j<cNameList.length;j++) {
-						if(finalData[i] == list[j].cName) {
-							$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a>");
-						}
-					}
-				}
-				// class opener가 안먹음...
-				/*
-				for(var i=0;i<finalData.length;i++) {
-					$("#sideUl").append("<li id='sideLi"+i+"'></li>");
-					console.log($("#sideLi"+i).text());
-					
-					$("#sideLi"+i).append("<span id='cName' class='opener'>"+finalData[i]+"</span>");
-					$("#sideLi"+i).append("<ul id='chidUl"+i+"'></ul>");
-					
-					for(var j=0;j<cNameList.length;j++) {
-						if(finalData[i] == list[j].cName) {
-							$("#chidUl"+i).append("<li><a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a></li>");
-						}
-					}
-				}
-				*/
+	categoryInfo();
+});
+
+var list = [];
+// cName만 담긴 리스트
+var cNameList = new Array();			// JSON.stringify(data);
+// sName만 담긴 리스트
+var sNameList = [];
+// cName 중복 제거한 값만 담긴 리스트
+var finalData = [];
+
+// 수정할 게시글 내용 가지고 오는 ajax
+function categoryInfo(){
+	$.ajax({
+		url : '/categoryList.do', 
+		type : 'GET',
+		dataType : 'json',
+		error : function(xhr, status, msg) {
+			alert("상태값 : "+status+", Http 에러메시지 : "+msg);
+		},
+		success : function(data) {
+			for(i in data) {
+				list[i] = data[i];
+				cNameList[i] = data[i].cName;
 			}
-		});
+			
+			// cName 중복제거
+			$.each(cNameList,function(i,value){
+				if(finalData.indexOf(value) == -1) {
+					finalData.push(value);
+				}
+			});
+			
+			for(var i=0;i<finalData.length;i++) {
+				$("#sideLi").append("<hr class='cName_hr'><span id='cName' style='font-weight : bold;'>"+finalData[i]+"</span><hr class='cName_hr'>");
+				for(var j=0;j<cNameList.length;j++) {
+					if(finalData[i] == list[j].cName) {
+						$("#sideLi").append("<a href='${path}/boardList.do?cName="+list[j].cName+"&sName="+list[j].sName+"&cNo="+list[j].cNo+"' id='sName'>"+list[j].sName+"</a>");
+					}
+				}
+			}
+		}
+	});
+}
+function boardSearch(){
+	if($("#keyword").val() == "") {
+		alert("검석어를 입력하세요.");
+	} else {
+		searchForm.submit();
 	}
-	
+}
 </script> 
 <style>
-#search_btn{
+#keyword {
 	display : inline;
+	width : 80%
+}
+#search_btn {
+	vertical-align : -5px;
+	margin : 0 0 0 10px;
+}
+.cName_hr {
+	margin : 0 0 0 0;
 }
 </style>
 </head>
@@ -90,11 +85,11 @@
 	<!-- Sidebar -->
 	<div id="sidebar">
 		<div class="inner">
-			<section id="search" class="alt">
-				<form method="post" action="/boardSearchList.do">
+			<section class="alt">
+				<form name="searchForm" method="get" action="/boardSearchList.do">
 					<div id="search_btn">
-						<input type="text" name="keyword" value="${keyword}" placeholder="게시글, 댓글, 작성자 검색" />
-						<button type="submit"><img src="/images/search_icon.png"></button>
+						<input type="text" id="keyword" name="keyword" value="${keyword}" placeholder="게시글, 댓글, 작성자 검색" />
+						<img src="/images/search_icon.png" id="search_btn" onclick="boardSearch()">
 					</div>
 				</form>
 			</section>
@@ -120,11 +115,16 @@
 				<header class="major">
 					<h2>Get in touch</h2>
 				</header>
-				<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+				<p>
+					안녕하세요 관리자입니다.<br>
+					제 사이트에 방문해 주셔서 감사합니다.<br>
+					궁금한 점이나 문의사항이 있으시면 <br>
+					아래의 메일로 회신 부탁드립니다.
+				</p>
 				<ul class="contact">
-					<li class="icon solid fa-envelope"><a href="#">lsbinnn7@gmail.com</a></li>
-					<li class="icon solid fa-phone">010-0000-0000</li>
-					<li class="icon solid fa-home">https://www.tistory.com/</li>
+					<li class="icon solid fa-envelope"><a href="mailto:﻿lsbinnn7@gmail.com">lsbinnn7@gmail.com</a></li>
+					<li class="icon solid fa-phone">010-9611-9327</li>
+					<li class="icon solid fa-home"><a href="https://dailymao.tistory.com/">https://dailymao.tistory.com/</a></li>
 				</ul>
 			</section>
 

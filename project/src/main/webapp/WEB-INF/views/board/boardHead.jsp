@@ -15,8 +15,6 @@
 <link rel="stylesheet" href="css/main.css" />
 <script type="text/javascript">
 	var userId = $("#securityLogin");
-	
-	console.log('board head user id : '+userId);
 </script>
 <style>
 #header {
@@ -91,7 +89,7 @@
 						<li><p><sec:authentication property="principal.username"/>님, 반갑습니다.</p></li>
 						<% if(userId.equals("admin")) { %>
 							<li><a href="/adminMainForm.do">ADMIN PAGE</a></li>
-						<% } %>
+						<% } else { %>
 						<li class="drop_menu_li">
 							<a href="#"><span class="label">MY PAGE</span></a>
 							<ul class="drop_menu_ul">
@@ -99,6 +97,7 @@
 								<li><a href="userWritingList.do?userId=<%=userId%>">WRITING/REPLY/LIKE</a></li>
 							</ul>
 						</li>
+						<% } %>
 						<li><a href="#" onclick="document.getElementById('logout-form').submit();"><span class="label">LOGOUT</span></a></li>
 					</sec:authorize>
 					<li><a href="https://github.com/suvin-2" class="icon brands fa-github"><span class="label">Github</span></a></li>

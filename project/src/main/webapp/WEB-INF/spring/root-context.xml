@@ -42,7 +42,7 @@
 		<property name="dataSource" ref="dataSource" /> 
 	</bean>
 	
-	<!-- navermail설정 -->
+	<!-- gmail설정 -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
 	    <property name="host" value="smtp.gmail.com"/> <!-- 메이서버 호스트 -->
 	    <property name="port" value="465"/> <!-- 메이서버 포트번호 -->
@@ -61,9 +61,8 @@
 	    </property>
     </bean>
 	
-	
 	<!-- 로그인 시 실패 메시지가 저장된 파일을 읽는다 -->
-<!-- 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+ 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>/WEB-INF/message/security_message</value>
@@ -71,7 +70,7 @@
         </property>
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="5"/>
-    </bean> -->
+    </bean> 
 	
 	<!-- 아노테이션 기반의 트랜잭션을 사용합니다. --> 
 	<tx:annotation-driven transaction-manager="transactionManager"/> 	

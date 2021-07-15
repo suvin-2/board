@@ -25,7 +25,14 @@ public class AdminServiceImpl implements AdminService {
 	public List<BoardVO> boardSelect(BoardVO vo) throws Exception {
 		return dao.boardSelect(vo);
 	}
-	
+	@Override
+	public List<BoardVO> BoardCntChart(BoardVO vo) {
+		return dao.BoardCntChart(vo);
+	}
+	@Override
+	public List<ReplyVO> ReplyCntChart(ReplyVO vo) {
+		return dao.ReplyCntChart(vo);
+	}
 	@Override
 	public List<BoardVO> boardCategorySelect(Criteria cri) throws Exception {
 		return dao.boardCategorySelect(cri);

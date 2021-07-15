@@ -18,13 +18,10 @@
 <script type="text/javascript">
 	var bNo = "<%= request.getParameter("bNo") %>";
 	 
-	console.log("bNo : "+bNo);
 	// boardInfo() 함수를 즉시 실행
 	$(function(){
 		
 		boardInfo();
-		console.log($("#category option:selected").text());
-		console.log($("#category option:selected").val());
 		
 		$("#submit").click(function(){
 			if($("#category option:selected").text()=='카테고리 선택') { 
@@ -60,8 +57,6 @@
 				alert("상태값 : "+status+", Http 에러메시지 : "+msg);
 			},
 			success : function(data) {
-				console.log(data);
-				console.log(data.sName);
 				$("#category").val(data.cNo).prop("selected",true);
 				$('input:text[name="title"]').val(data.title);
 				$('textarea[name="content"]:visible').val(data.content);
