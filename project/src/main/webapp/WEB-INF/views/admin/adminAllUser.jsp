@@ -135,12 +135,12 @@ table td {
 								<tbody>
 									<c:forEach var="item" items="${list}">
 									<fmt:formatDate var="joinDate" value="${item.joinDate}" pattern="yyyy-MM-dd HH:MM"/>
-									<fmt:parseDate value='${item.birthday}' var='birthday' pattern='yyyy-MM-dd HH:mm:ss.S'/>
-									<fmt:formatDate var="birthday" value="${birthday}" pattern="yyyy-MM-dd"/>
+									<fmt:parseDate value="${item.birthday}" var="birthday" pattern="yyyy-MM-dd HH:mm:ss"/>
+									<fmt:formatDate var="birthday2" value="${birthday}" pattern="yyyy-MM-dd"/>
 										<tr>
 										    <td id="userId">${item.userId}</td>
 										    <td id="userName">${item.userName}</td>
-										    <td id="birthday">${birthday}</td>
+										    <td id="birthday">${birthday2}</td>
 										    <c:choose>
 										    	<c:when test="${item.gender eq 'F'}">
 										    		<td id="gender">여자</td>
